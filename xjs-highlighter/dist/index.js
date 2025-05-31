@@ -1,0 +1,1 @@
+(function(){document.addEventListener(`DOMContentLoaded`,()=>{let e=document.querySelectorAll(`pre code`);e.forEach(e=>{console.log(e)})})})();
