@@ -10,24 +10,23 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:serif="http://www.serif.com/">
-    <g
-   id="g8"
-   style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
+     <script
+      type="text/javascript"
+      xlink:href="https://raw.githubusercontent.com/pastweb/components/refs/heads/master/xjs-highlighter/dist/index.js?token=GHSAT0AAAAAADE3DQ73ZUUB4DFSDFB7TPBQ2B23ZJA"
+    />
+     <g id="g8" style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
         <path
-   d="M 512,50 C 512,22.404 489.596,0 462,0 H 50 C 22.404,0 0,22.404 0,50 v 412 c 0,27.596 22.404,50 50,50 h 412 c 27.596,0 50,-22.404 50,-50 z"
-   style="fill:#8a53a6;fill-opacity:1"
-   id="path6" />
-        <g
-   id="g7"
-   serif:id="Shadowless version"
-   transform="translate(-42)"
-   style="display:inline">
-            <path
-   d="M 298.5369,-0.00205624 208.28573,512.00102 492.0346,512.94976 C 535.17366,513.094 554,489.63913 554,462.05487 V 50.498595 c 0,-27.58426 -17.24116,-51.6821536 -60.37866,-51.28911868 z"
-   style="display:inline;fill:#3178c6;fill-opacity:1;stroke-width:1.249;stroke-dasharray:none"
-   id="path7" />
+          d="M 512,50 C 512,22.404 489.596,0 462,0 H 50 C 22.404,0 0,22.404 0,50 v 412 c 0,27.596 22.404,50 50,50 h 412 c 27.596,0 50,-22.404 50,-50 z"
+          style="fill:#8a53a6;fill-opacity:1"
+          id="path6"
+        />
+        <g id="g7" serif:id="Shadowless version" transform="translate(-42)" style="display:inline">
+          <path
+            d="M 298.5369,-0.00205624 208.28573,512.00102 492.0346,512.94976 C 535.17366,513.094 554,489.63913 554,462.05487 V 50.498595 c 0,-27.58426 -17.24116,-51.6821536 -60.37866,-51.28911868 z"
+            style="display:inline;fill:#3178c6;fill-opacity:1;stroke-width:1.249;stroke-dasharray:none"
+            id="path7"
+          />
         </g>
-        
     </g>
     <g
    id="S"

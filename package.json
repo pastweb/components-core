@@ -1,0 +1,22 @@
+{
+  "name": "components",
+  "version": "1.0.0",
+  "description": "set of styles and mediators for web component definition",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pastweb/components.git"
+  },
+  "keywords": [
+    "components"
+  ],
+  "author": "Domenico Pasto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pastweb/components/issues"
+  },
+  "homepage": "https://github.com/pastweb/components#readme"
+}
