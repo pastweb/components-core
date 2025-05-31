@@ -12,7 +12,7 @@
    xmlns:serif="http://www.serif.com/">
      <script
       type="text/javascript"
-      xlink:href="https://raw.githubusercontent.com/pastweb/components/refs/heads/master/xjs-highlighter/dist/index.js?token=GHSAT0AAAAAADE3DQ73ZUUB4DFSDFB7TPBQ2B23ZJA"
+      src="https://raw.githubusercontent.com/pastweb/components/refs/heads/master/xjs-highlighter/dist/index.js?token=GHSAT0AAAAAADE3DQ73ZUUB4DFSDFB7TPBQ2B23ZJA"
     />
      <g id="g8" style="clip-rule:evenodd;display:inline;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2">
         <path
