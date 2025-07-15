@@ -1,0 +1,62 @@
+.RangeSlider {
+  --RangeSlider_background-color: var(--pw_control_background-color);
+  --RangeSlider_border-color: var(--pw_border-color);
+  --RangeSlider_border-width: var(--pw_border-width);
+  --RangeSlider_border-style: var(--pw_border-style);
+  --RangeSlider_color_box-shadow: var(--pw_color_box-shadow);
+  --RangeSlider_size_box-shadow: var(--pw_size_box-shadow);
+  --RangeSlider_transition-duration: var(--pw_transition-duration);
+  --RangeSlider_disabled_opacity: var(--pw_disabled_opacity);
+  --RangeSlider_thumb_width: 1.562em;
+  --RangeSlider_thumb_height: var(--RangeSlider_thumb_width);
+  --RangeSlider_thumb_border-radius: 50%;
+  --RangeSlider_track_height: 0.8em;
+  --RangeSlider_track_border-radius: var(--pw_border-radius);
+
+
+  display: flex;
+  min-width: 300px;
+
+  &.is-full-width { width: 100%; }
+
+  /* The slider itself */
+  &.is-disabled {
+    cursor: none;
+    opacity: var(--RangeSlider_disasbled_opacity);
+  }
+
+  .slider {
+    appearance: none;
+    font-size: inherit;
+    width: 100%; /* Full-width */
+    height: var(--RangeSlider_track_height); /* Specified height */
+    background-color: var(--RangeSlider_background-color); /* Grey background */
+    outline: none; /* Remove outline */
+    border: var(--RangeSlider_border-width) var(--RangeSlider_border-style) var(--RangeSlider_border-color);
+    border-radius: var(--RangeSlider_track_border-radius);
+
+    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    &::-webkit-slider-thumb {
+      border: var(--RangeSlider_border-width) var(--RangeSlider_border-style) var(--RangeSlider_border-color);
+      border-radius: var(--RangeSlider_thumb_border-radius);
+      appearance: none;
+      width: var(--RangeSlider_thumb_width); /* Set a specific slider handle width */
+      height: var(--RangeSlider_thumb_height); /* Slider handle height */
+      background-color: var(--RangeSlider_background-color); /* Grey background */
+      transition: all var(--RangeSlider_transition-duration) ease;
+      cursor: pointer; /* Cursor on hover */
+
+      &:hover { background-color: var(--pw_background-color); }
+    }
+
+    &::-moz-range-thumb {
+      width: var(--RangeSlider_thumb_width); /* Set a specific slider handle width */
+      height: var(--RangeSlider_thumb_height); /* Slider handle height */
+      background-color: var(--RangeSlider_background-color); /* Grey background */
+      transition: all var(--RangeSlider_transition-duration) ease;
+      cursor: pointer; /* Cursor on hover */
+
+      &:hover { background-color: var(--pw_background-color); }
+    }
+  }
+}

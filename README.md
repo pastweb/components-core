@@ -1,5 +1,25 @@
 # Components
 
+## Development
+
+- Install dependencies:
+
+```bash
+npm install
+```
+
+- Run the unit tests:
+
+```bash
+npm test
+```
+
+- Build the library:
+
+```bash
+npm build
+```
+
 
 ```xts
 import { withDefaultProps } from '@pastweb/x';
@@ -11,11 +31,11 @@ export function Button(props: ButtonProps) {
 
   return (
     <button
-      :ref={p.ref}
-      :class={p.cls('Button', p.className)}
-      :@click={p.onClick}
-      :disabled={p.disabled}
-      :tabIndex={p.tabIndex}
+      ref={p.ref}
+      class={p.cls('Button', p.className)}
+      @click={p.onClick}
+      disabled={p.disabled}
+      tabIndex={p.tabIndex}
     >
       <children #each={child}>
         <span>

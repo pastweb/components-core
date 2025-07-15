@@ -1,0 +1,1 @@
+export { onClosePortal } from './onClosePortal';

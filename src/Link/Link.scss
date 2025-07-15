@@ -1,0 +1,28 @@
+.Link {
+  --Link_text_color: var(--pw_link_color);
+  --Link_hover_text_color: var(--pw_link_hover_color);
+  --Link_font-size: var(--pw_link_font-size);
+  --Link_font-weight: var(--pw_link_font-weight);
+  --Link_line-height: var(--pw_link_line-height);
+  --Link_disabled_opacity: var(--pw_disabled_opacity);
+
+
+  display: flex;
+  align-items: center;
+  width: max-content;
+  color: var(--Link_text_color);
+  
+  font-size: var(--Link_font-size);
+  font-weight: var(--Link_font-weight);
+  line-height: var(--Link_line-height);
+
+  &:hover { color: var(--Link_hover_text_color); }
+
+  &.is-disabled {
+    pointer-events: none;
+    text-decoration: none;
+    opacity: var(--Link_disabled_opacity);
+  }
+
+  i { margin: 0 5px; }
+}

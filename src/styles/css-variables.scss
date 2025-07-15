@@ -1,0 +1,99 @@
+$pw_text_color: hsl(0, 0%, 29%) !default;
+$pw_text_strong_color: hsl(0, 0%, 21%) !default;
+$pw_label_text_color: hsl(0, 0%, 21%) !default;
+$pw_transition-duration: 0.2s !default;
+$pw_disabled_opacity: 0.4 !default;
+$pw_background-color: #fff !default;
+$pw_control_background-color: #fafafa !default;
+$pw_backdrop_background-color: rgba(0,0,0,.15) !default;
+// border
+$pw_outline_color: blue !default;
+$pw_outline_style: auto !default;
+$pw_outline_width: 1px !default;
+$pw_outline: $pw_outline_color $pw_outline_style $pw_outline_width !default;
+$pw_border-width: 1px !default;
+$pw_border-style: solid !default;
+$pw_border-color: #e3e3e3 !default;
+$pw_border-radius: 0.5em !default;
+$pw_small_border-radius: 0.375em !default;
+$pw_rounded_border-radius: 2em !default;
+// shadow
+$pw_size_box-shadow: 0 0 0.2em 0.07em !default;
+$pw_color_box-shadow: #e3e3e3 !default;
+$pw_inset_color_box-shadow: $pw_color_box-shadow !default;
+
+$pw_horizontal_padding: 1em !default;
+$pw_vertical_padding: 0.5em !default;
+
+$pw_horizontal_margin: 0.625em !default;
+$pw_vertical_margin: 0.312em !default;
+
+$pw_icon_color: $pw_text_color !default;
+$pw_icon_size: inherit !default;
+// Fonts
+$pw_font-size: 1rem !default;
+$pw_small_font-size: 0.7em !default;
+$pw_medium_font-size: 1.3em !default;
+
+$pw_semibold_font-weight: 600 !default;
+$pw_bold_font-weight: 700 !default;
+
+$pw_line-height: 1.25em !default;
+
+$pw_link_color: hsl(229, 53%,  53%) !default;
+$pw_link_hover_color: hsl(0, 0%, 21%) !default;
+$pw_link_font-size: 1em !default;
+$pw_link_font-weight: 600 !default;
+$pw_link_line-height: 1.25em !default;
+
+:root {
+  --pw_text_color: #{ $pw_text_color };
+  --pw_text_strong_color: #{ $pw_text_strong_color };
+  --pw_label_text_color: #{ $pw_label_text_color };
+  --pw_transition-duration: #{ $pw_transition-duration };
+  --pw_disabled_opacity: #{ $pw_disabled_opacity };
+  --pw_background-color: #{ $pw_background-color };
+  --pw_control_background-color: #{ $pw_control_background-color };
+  --pw_backdrop_background-color: #{ $pw_backdrop_background-color };
+  // Border
+  --pw_outline_color: #{ $pw_outline_color };
+  --pw_outline_style: #{ $pw_outline_style };
+  --pw_outline_width: #{ $pw_outline_width };
+  --pw_outline: var(--pw_outline_color) var(--pw_outline_style) var(--pw_outline_width);
+  --pw_border-width: #{ $pw_border-width };
+  --pw_border-style: #{ $pw_border-style };
+  --pw_border-color: #{ $pw_border-color };
+  --pw_border-radius: #{ $pw_border-radius };
+  --pw_small_border-radius: #{ $pw_small_border-radius };
+  --pw_rounded_border-radius: #{ $pw_rounded_border-radius };
+  // Shadow
+  --pw_size_box-shadow: #{ $pw_size_box-shadow };
+  --pw_color_box-shadow: #{ $pw_color_box-shadow };
+  --pw_inset_color_box-shadow: #{ $pw_inset_color_box-shadow };
+  // Padding
+  --pw_horizontal_padding: #{ $pw_horizontal_padding };
+  --pw_vertical_padding: #{ $pw_vertical_padding };
+  --pw_padding: var(--pw_vertical_padding) var(--pw_horizontal_padding);
+  // Margin
+  --pw_horizontal_margin: #{ $pw_horizontal_margin };
+  --pw_vertical_margin: #{ $pw_vertical_margin };
+  --pw_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
+  // Icon
+  --pw_icon_color: #{ $pw_icon_color };
+  --pw_icon_size: #{ $pw_icon_size };
+  // Fonts
+  --pw_font-size: #{ $pw_link_font-size };
+  --pw_small_font-size: #{ $pw_small_font-size };
+  --pw_medium_font-size: #{ $pw_medium_font-size };
+
+  --pw_semibold_font-weight: #{ $pw_semibold_font-weight };
+  --pw_bold_font-weight: #{ $pw_bold_font-weight };
+
+  --pw_line-height: #{ $pw_link_line-height };
+  // Link
+  --pw_link_color: #{ $pw_link_color };
+  --pw_link_hover_color: #{ $pw_link_hover_color };
+  --pw_link_font-size: #{ $pw_link_font-size };
+  --pw_link_font-weight: #{ $pw_link_font-weight };
+  --pw_link_line-height: #{ $pw_link_line-height };
+}

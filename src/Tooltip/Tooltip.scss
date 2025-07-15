@@ -1,0 +1,63 @@
+.Tooltip {
+  --Tooltip_background-color: var(--pw_background-color);
+  --Tooltip_border-radius: var(--pw_small_border-radius);
+  --Tooltip_border-width: var(--pw_border-width);
+  --Tooltip_border-style: var(--pw_border-style);
+  --Tooltip_border-color: var(--pw_border-color);
+  --Tooltip_drop-shadow_size: var(--pw_size_box-shadow);
+  --Tooltip_drop-shadow_color: var(--pw_size_box-color);
+  --Tooltip_color: var(--pw_text_color);
+  --Tooltip_arrow_size: 1rem;
+  --Tooltip_content_padding: 0.25rem var(--pw_horizontal_padding);
+
+  display: contents;
+
+  .tooltipContent {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0;
+
+    background-color: var(--Tooltip_background-color);
+    color: var(--Tooltip_color);
+    border-radius: var(--Tooltip_border-radius);
+    border: var(--Tooltip_border-width) var(--Tooltip_border-style) var(--Tooltip_border-color);
+    padding: var(--Tooltip_content_padding);
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: var(--Tooltip_drop-shadow_size) var(--Tooltip_drop-shadow_color);
+
+    &.is-visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 0;
+      width: calc(var(--Tooltip_arrow_size) * 2);
+      height: calc(var(--Tooltip_arrow_size) * 2);
+
+      .triangle {
+        position: relative;
+
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          border-width: var(--Tooltip_arrow_size); /* Controls the size of the triangle */
+          border-style: var(--Tooltip_border-style);
+        }
+      
+        &::before { 
+          z-index: -1;
+          border-color: transparent transparent var(--Tooltip_border-color) transparent;
+        }
+      
+        &::after {
+          border-color: transparent transparent var(--Tooltip_background-color) transparent;
+          top: var(--Tooltip_border-width);
+          z-index: 1;
+        }
+      }
+    }
+  }
+}

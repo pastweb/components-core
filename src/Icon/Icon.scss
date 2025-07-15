@@ -1,0 +1,13 @@
+.Icon {
+  --Icon_text_color: var(--pw_text_strong_color);
+
+  color: var(--Icon_text_color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img, svg {
+    width: 1em;
+    height: 1em;
+  }
+}

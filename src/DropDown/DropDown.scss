@@ -1,0 +1,62 @@
+.DropDown {
+  --DropDown_background-color: var(--pw_background-color);
+  --DropDown_border-radius: var(--pw_small_border-radius);
+  --DropDown_border-width: var(--pw_border-width);
+  --DropDown_border-style: var(--pw_border-style);
+  --DropDown_border-color: var(--pw_border-color);
+  --DropDown_drop-shadow_size: var(--pw_size_box-shadow);
+  --DropDown_drop-shadow_color: var(--pw_size_box-color);
+  --DropDown_color: var(--pw_text_color);
+  --DropDown_arrow_size: 1rem;
+
+  position: relative;
+  display: contents;
+
+  .content {
+    pointer-events: none;
+    z-index: 1000;
+    white-space: nowrap;
+    opacity: 0;
+
+    background-color: var(--DropDown_background-color);
+    color: var(--DropDown_color);
+    border: var(--DropDown_border-width) var(--DropDown_border-style) var(--DropDown_border-color);
+    border-radius: var(--DropDown_border-radius);
+    padding: var(--Tooltip_content_padding) 0;
+    box-shadow: var(--DropDown_drop-shadow_size) var(--DropDown_drop-shadow_color);
+
+    &.is-visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 0;
+      width: calc(var(--DropDown_arrow_size) * 2);
+      height: calc(var(--DropDown_arrow_size) * 2);
+
+      .triangle {
+        position: relative;
+
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          border-width: var(--DropDown_arrow_size); /* Controls the size of the triangle */
+          border-style: var(--DropDown_border-style);
+        }
+      
+        &::before { 
+          z-index: -1;
+          border-color: transparent transparent var(--DropDown_border-color) transparent;
+        }
+      
+        &::after {
+          border-color: transparent transparent var(--DropDown_background-color) transparent;
+          top: var(--DropDown_border-width);
+          z-index: 1;
+        }
+      }
+    }
+  }
+}

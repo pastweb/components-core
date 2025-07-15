@@ -1,0 +1,33 @@
+.Pagination {
+  --Pagination_pageButton_margin: var(--pw_vertical_margin) 0.125em;
+  --Pagination_pageButton_background-color: var(--pw_background-color);
+
+  --Pagination_pageButton_active_color: var(--pw_text_strong_color);
+  --Pagination_pageButton_active_font-weight: var(--pw_bold_font-weight);
+  --Pagination_pageButton_active_background-color: var(--pw_control_background-color);
+
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.is-full-width { width: 100%; }
+
+  .pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: inherit;
+
+    .page {
+      margin: var(--Pagination_pageButton_margin);
+      background-color: var(--Pagination_pageButton_background-color);
+
+      &.is-active {
+        color: var(--Pagination_pageButton_active_color);
+        font-weight: var(--Pagination_pageButton_active_font-weight);
+        background-color: var(--Pagination_pageButton_active_background-color);
+      }
+    }
+  }
+}

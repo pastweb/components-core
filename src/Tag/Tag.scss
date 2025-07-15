@@ -1,0 +1,33 @@
+.Tag {
+  --Tag_color: var(--pw_text_color);
+  --Tag_background-color: var(--pw_control_background-color);
+  --Tag_border-radius: var(--pw_border-radius);
+  --Tag_rounded_border-radius: var(--pw_rounded_border-radius);
+  --Tag_border-color: var(--pw_border-color);
+  --Tag_border-width: var(--pw__border-width);
+  --Tag_border-style: var(--pw_border-style);
+  --Tag_padding: 2px 14px 2px 6px;
+  --Tag_font-size: var(--pw_small_font-size);
+  --Tag_font-weight: var(--pw_medium_font-size);
+
+
+  display: flex;
+  align-items: center;
+  width: max-content;
+  padding: var(--Tag_padding);
+  border-radius: var(--Tag_border-radius);
+  border: var(--Tag_border-width) var(--Tag_border-style) var(--Tag_border-color);
+  color: var(--Tag_color);
+  background-color: var(--Tag_background-color);
+
+  font-size: var(--Tag_font-size);
+  font-weight: var(--Tag_font-weight);
+
+  i {
+    color: var(--Tag_color);
+    font-size: var(--Tag_font-size);
+    margin: 0 4px;
+  }
+
+  &.is-rounded { border-radius: var(--Tag_rounded_borred-radius); }
+}

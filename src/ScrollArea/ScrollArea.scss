@@ -1,0 +1,28 @@
+.ScrollArea {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .hide-x { overflow-x: hidden; }
+  .hide-y { overflow-y: hidden; }
+  
+  .scroll-right {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  
+  .scroll-bottom {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}

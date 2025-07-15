@@ -1,0 +1,138 @@
+.Stepper {
+  --Stepper_background-color: var(--pw_background-color);
+  --Stepper_padding: 1em;
+
+  --Stepper_step_content_width: 1em;
+  --Stepper_step_content_height: 1em;
+  --Stepper_step_content_border-radius: var(--pw_rounded_border-radius);
+  --Stepper_step_content_border-width: var(--pw_border-width);
+  --Stepper_step_content_border-style: var(--pw_border-style);
+  --Stepper_step_content_border-color: var(--pw_border-color);
+  --Stepper_step_content_background-color: var(--pw_control_background-color);
+  --Stepper_step_content_color: var(--Stepper_step_content_border-color);
+  --Stepper_step_content_margin: var(--Stepper_padding);
+  --Stepper_step_content_padding: 1.5em;
+  --Stepper_step_content_font-size: var(--pw_font-size);
+  --Stepper_step_content_font-weight: var(--pw_semibold_font-weight);
+
+  --Stepper_active_step_content_border-color: var(--pw_strong_text_color);
+  --Stepper_active_step_content_color: var(--Stepper_active_step_content_border-color);
+  --Stepper_active_step_line_border-color: var(--Stepper_active_step_content_color);
+
+  --Stepper_done_step_content_background-color: var(--pw_text_color);
+  --Stepper_done_step_content_color: var(--pw_control_background-color);
+  --Stepper_done_step_line_border-color: var(--pw_text_color);
+
+  --Stepper_label_font-size: var(--pw_font-size);
+  --Stepper_label_font-weight: var(--pw_semibold_font-weight);
+  --Stepper_label_color: var(--pw_text_color);
+
+
+  display: flex;
+  background-color: var(--Stepper_backgroud-color);
+
+  .steps, .labels { display: flex; }
+  
+  &.is-horizontal {
+    width: 100%;
+    flex-direction: column;
+
+    &.is-reverse { flex-direction: column-reverse; }
+
+    .steps, .step, .line { width: 100%; }
+    
+    .labels {
+      width: 100%;
+      justify-content: space-between;
+
+      .label { align-items: center; }
+    }
+  }
+
+  &.is-vertical {
+    height: 100%;
+
+    &.is-reverse { flex-direction: row-reverse; }
+
+    .steps, .step, .line {
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .labels {
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+      padding: var(--Stepper_padding) 0;
+
+      .label { align-items: center; }
+    }
+  }
+
+  .step {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: var(--Stepper_step_content_border-width) var(--Stepper_step_content_border-style) var(--Stepper_step_content_border-color);
+    color: var(--Stepper_step_content_color);
+    width: var(--Stepper_step_content_width);
+    height: var(--Stepper_step_content_height);
+    border-radius: var(--Stepper_step_content_border-radius);
+    padding: Var(--Stepper_step_content_padding);
+    margin: var(--Stepper_step_content_margin);
+    font-size: var(--Stepper_step_content_font-size);
+    font-weight: var(--Stepper_step_content_font-weight);
+  }
+
+  .label {
+    display: flex;
+    flex-direction: column;
+    font-size: var(--Stepper_label_font-size);
+  
+    & > label, & > small {
+      max-width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    & > label {
+      font-weight: var(--Stepper_label_font-weight);
+      color: var(--Stepper_label_color);
+    }
+  }
+  
+  .line {
+    border: var(--Stepper_step_content_border-width) var(--Stepper_step_content_border-style) var(--Stepper_step_content_border-color);
+  }
+  
+  .is-active {
+    .content {
+      border-color: var(--Stepper_active_step_content_border-color);
+      color: var(--Stepper_active_step_content_color);
+    }
+
+    .line:first-child {
+      border-color: var(--Stepper_active_step_line_border-color);
+    }
+  }
+  
+  .is-done {
+    .content {
+      background-color: var(--Stepper_done_step_content_background-color);
+      border-color: var(--Stepper_done_step_content_border-color);
+      color: var(--Stepper_done_step_content_color);
+    }
+  
+    .line {
+      border-color: var(--Stepper_active_step_line_border-color);
+    }
+  }
+}

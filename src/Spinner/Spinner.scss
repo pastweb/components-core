@@ -1,0 +1,14 @@
+.Spinner {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: rotate 2s linear infinite;
+  width: inherit;
+  height: inherit;
+  color: inherit;
+}
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}

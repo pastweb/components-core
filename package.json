@@ -1,22 +1,679 @@
 {
-  "name": "components",
+  "name": "@pastweb/components",
   "version": "1.0.0",
-  "description": "set of styles and mediators for web component definition",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "A components tools package.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/pastweb/components#readme",
+  "bugs": {
+    "url": "https://github.com/pastweb/components/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pastweb/components.git"
   },
-  "keywords": [
-    "components"
-  ],
   "author": "Domenico Pasto",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/pastweb/components/issues"
+  "funding": "https://github.com/sponsors/pastweb",
+  "files": [
+    "/dist",
+    "README.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
   },
-  "homepage": "https://github.com/pastweb/components#readme"
+  "scripts": {
+    "lint": "eslint --cache .",
+    "lint:fix": "npm run lint --fix",
+    "build": "bun ../cli/src/cli/cli.ts build",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --cache --write .",
+    "release": "bumpp && npm publish",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@pastweb/tools": "^1.18.4"
+  },
+  "peerDependencies": {
+    "@floating-ui/dom": "^1.7.2",
+    "interactjs": "^1.10.27"
+  },
+  "devDependencies": {
+    "@floating-ui/dom": "^1.7.2",
+    "@sxzz/eslint-config": "^7.0.1",
+    "@sxzz/prettier-config": "^2.2.1",
+    "@types/node": "^22.15.17",
+    "bumpp": "^10.1.0",
+    "eslint": "^9.26.0",
+    "happy-dom": "^17.4.7",
+    "i18next": "^25.3.2",
+    "interactjs": "^1.10.27",
+    "prettier": "^3.5.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.3"
+  },
+  "prettier": "@sxzz/prettier-config",
+  "exports": {
+    "./Accordion/_index.scss": {
+      "import": "./dist/modules/Accordion/_index.scss",
+      "require": "./dist/modules/Accordion/_index.scss"
+    },
+    "./Accordion/_index": {
+      "import": "./dist/modules/Accordion/_index.scss",
+      "require": "./dist/modules/Accordion/_index.scss"
+    },
+    "./Accordion/accordionPanel": {
+      "import": "./dist/modules/Accordion/accordionPanel.mediator.mjs"
+    },
+    "./Accordion/constants": {
+      "import": "./dist/modules/Accordion/constants.mjs",
+      "require": "./dist/modules/Accordion/constants.cjs"
+    },
+    "./Accordion": {
+      "import": "./dist/modules/Accordion/index.mjs",
+      "require": "./dist/modules/Accordion/index.cjs"
+    },
+    "./Button/_index.scss": {
+      "import": "./dist/modules/Button/_index.scss",
+      "require": "./dist/modules/Button/_index.scss"
+    },
+    "./Button/_index": {
+      "import": "./dist/modules/Button/_index.scss",
+      "require": "./dist/modules/Button/_index.scss"
+    },
+    "./Button/constants": {
+      "import": "./dist/modules/Button/constants.mjs",
+      "require": "./dist/modules/Button/constants.cjs"
+    },
+    "./Button": {
+      "import": "./dist/modules/Button/index.mjs",
+      "require": "./dist/modules/Button/index.cjs"
+    },
+    "./Buttons/_index.scss": {
+      "import": "./dist/modules/Buttons/_index.scss",
+      "require": "./dist/modules/Buttons/_index.scss"
+    },
+    "./Buttons/_index": {
+      "import": "./dist/modules/Buttons/_index.scss",
+      "require": "./dist/modules/Buttons/_index.scss"
+    },
+    "./Checkbox/_index.scss": {
+      "import": "./dist/modules/Checkbox/_index.scss",
+      "require": "./dist/modules/Checkbox/_index.scss"
+    },
+    "./Checkbox/_index": {
+      "import": "./dist/modules/Checkbox/_index.scss",
+      "require": "./dist/modules/Checkbox/_index.scss"
+    },
+    "./Checkbox/checkbox": {
+      "import": "./dist/modules/Checkbox/checkbox.mediator.mjs"
+    },
+    "./Checkbox/contrants": {
+      "import": "./dist/modules/Checkbox/contrants.mjs",
+      "require": "./dist/modules/Checkbox/contrants.cjs"
+    },
+    "./Checkbox": {
+      "import": "./dist/modules/Checkbox/index.mjs",
+      "require": "./dist/modules/Checkbox/index.cjs"
+    },
+    "./DropDown/_index.scss": {
+      "import": "./dist/modules/DropDown/_index.scss",
+      "require": "./dist/modules/DropDown/_index.scss"
+    },
+    "./DropDown/_index": {
+      "import": "./dist/modules/DropDown/_index.scss",
+      "require": "./dist/modules/DropDown/_index.scss"
+    },
+    "./DropDown/constants": {
+      "import": "./dist/modules/DropDown/constants.mjs",
+      "require": "./dist/modules/DropDown/constants.cjs"
+    },
+    "./DropDown/dropdown": {
+      "import": "./dist/modules/DropDown/dropdown.mediator.mjs"
+    },
+    "./DropDown": {
+      "import": "./dist/modules/DropDown/index.mjs",
+      "require": "./dist/modules/DropDown/index.cjs"
+    },
+    "./Icon/_index.scss": {
+      "import": "./dist/modules/Icon/_index.scss",
+      "require": "./dist/modules/Icon/_index.scss"
+    },
+    "./Icon/_index": {
+      "import": "./dist/modules/Icon/_index.scss",
+      "require": "./dist/modules/Icon/_index.scss"
+    },
+    "./Icon/constants": {
+      "import": "./dist/modules/Icon/constants.mjs",
+      "require": "./dist/modules/Icon/constants.cjs"
+    },
+    "./Icon/icon": {
+      "import": "./dist/modules/Icon/icon.mediator.mjs"
+    },
+    "./Icon": {
+      "import": "./dist/modules/Icon/index.mjs",
+      "require": "./dist/modules/Icon/index.cjs"
+    },
+    "./Icon/util": {
+      "import": "./dist/modules/Icon/util.mjs",
+      "require": "./dist/modules/Icon/util.cjs"
+    },
+    "./Link/_index.scss": {
+      "import": "./dist/modules/Link/_index.scss",
+      "require": "./dist/modules/Link/_index.scss"
+    },
+    "./Link/_index": {
+      "import": "./dist/modules/Link/_index.scss",
+      "require": "./dist/modules/Link/_index.scss"
+    },
+    "./Link/constants": {
+      "import": "./dist/modules/Link/constants.mjs",
+      "require": "./dist/modules/Link/constants.cjs"
+    },
+    "./Link": {
+      "import": "./dist/modules/Link/index.mjs",
+      "require": "./dist/modules/Link/index.cjs"
+    },
+    "./Notification/_index.scss": {
+      "import": "./dist/modules/Notification/_index.scss",
+      "require": "./dist/modules/Notification/_index.scss"
+    },
+    "./Notification/_index": {
+      "import": "./dist/modules/Notification/_index.scss",
+      "require": "./dist/modules/Notification/_index.scss"
+    },
+    "./Notification/constants": {
+      "import": "./dist/modules/Notification/constants.mjs",
+      "require": "./dist/modules/Notification/constants.cjs"
+    },
+    "./Notification": {
+      "import": "./dist/modules/Notification/index.mjs",
+      "require": "./dist/modules/Notification/index.cjs"
+    },
+    "./Pagination/_index.scss": {
+      "import": "./dist/modules/Pagination/_index.scss",
+      "require": "./dist/modules/Pagination/_index.scss"
+    },
+    "./Pagination/_index": {
+      "import": "./dist/modules/Pagination/_index.scss",
+      "require": "./dist/modules/Pagination/_index.scss"
+    },
+    "./Pagination/constants": {
+      "import": "./dist/modules/Pagination/constants.mjs",
+      "require": "./dist/modules/Pagination/constants.cjs"
+    },
+    "./Pagination": {
+      "import": "./dist/modules/Pagination/index.mjs",
+      "require": "./dist/modules/Pagination/index.cjs"
+    },
+    "./Pagination/pagination": {
+      "import": "./dist/modules/Pagination/pagination.mediator.mjs"
+    },
+    "./Panel/_index.scss": {
+      "import": "./dist/modules/Panel/_index.scss",
+      "require": "./dist/modules/Panel/_index.scss"
+    },
+    "./Panel/_index": {
+      "import": "./dist/modules/Panel/_index.scss",
+      "require": "./dist/modules/Panel/_index.scss"
+    },
+    "./Panel/constants": {
+      "import": "./dist/modules/Panel/constants.mjs",
+      "require": "./dist/modules/Panel/constants.cjs"
+    },
+    "./Panel": {
+      "import": "./dist/modules/Panel/index.mjs",
+      "require": "./dist/modules/Panel/index.cjs"
+    },
+    "./Radio/_index.scss": {
+      "import": "./dist/modules/Radio/_index.scss",
+      "require": "./dist/modules/Radio/_index.scss"
+    },
+    "./Radio/_index": {
+      "import": "./dist/modules/Radio/_index.scss",
+      "require": "./dist/modules/Radio/_index.scss"
+    },
+    "./Radio/constants": {
+      "import": "./dist/modules/Radio/constants.mjs",
+      "require": "./dist/modules/Radio/constants.cjs"
+    },
+    "./Radio": {
+      "import": "./dist/modules/Radio/index.mjs",
+      "require": "./dist/modules/Radio/index.cjs"
+    },
+    "./Radio/radio": {
+      "import": "./dist/modules/Radio/radio.mediator.mjs"
+    },
+    "./RangeSlider.scss": {
+      "import": "./dist/modules/RangeSlider/RangeSlider.scss",
+      "require": "./dist/modules/RangeSlider/RangeSlider.scss"
+    },
+    "./RangeSlider": {
+      "import": "./dist/modules/RangeSlider/index.mjs",
+      "require": "./dist/modules/RangeSlider/index.cjs"
+    },
+    "./RangeSlider/_index.scss": {
+      "import": "./dist/modules/RangeSlider/_index.scss",
+      "require": "./dist/modules/RangeSlider/_index.scss"
+    },
+    "./RangeSlider/_index": {
+      "import": "./dist/modules/RangeSlider/_index.scss",
+      "require": "./dist/modules/RangeSlider/_index.scss"
+    },
+    "./RangeSlider/constants": {
+      "import": "./dist/modules/RangeSlider/constants.mjs",
+      "require": "./dist/modules/RangeSlider/constants.cjs"
+    },
+    "./RangeSlider/rangeSlider": {
+      "import": "./dist/modules/RangeSlider/rangeSlider.mediator.mjs"
+    },
+    "./RangeSlider/style.module.scss": {
+      "import": "./dist/modules/RangeSlider/style.module.scss",
+      "require": "./dist/modules/RangeSlider/style.module.scss"
+    },
+    "./RangeSlider/style.module": {
+      "import": "./dist/modules/RangeSlider/style.module.scss",
+      "require": "./dist/modules/RangeSlider/style.module.scss"
+    },
+    "./RangeSlider/style.scss": {
+      "import": "./dist/modules/RangeSlider/style.scss",
+      "require": "./dist/modules/RangeSlider/style.scss"
+    },
+    "./RangeSlider/style": {
+      "import": "./dist/modules/RangeSlider/style.scss",
+      "require": "./dist/modules/RangeSlider/style.scss"
+    },
+    "./ScrollArea/_index.scss": {
+      "import": "./dist/modules/ScrollArea/_index.scss",
+      "require": "./dist/modules/ScrollArea/_index.scss"
+    },
+    "./ScrollArea/_index": {
+      "import": "./dist/modules/ScrollArea/_index.scss",
+      "require": "./dist/modules/ScrollArea/_index.scss"
+    },
+    "./ScrollArea": {
+      "import": "./dist/modules/ScrollArea/index.mjs",
+      "require": "./dist/modules/ScrollArea/index.cjs"
+    },
+    "./Select/_index.scss": {
+      "import": "./dist/modules/Select/_index.scss",
+      "require": "./dist/modules/Select/_index.scss"
+    },
+    "./Select/_index": {
+      "import": "./dist/modules/Select/_index.scss",
+      "require": "./dist/modules/Select/_index.scss"
+    },
+    "./Select/constants": {
+      "import": "./dist/modules/Select/constants.mjs",
+      "require": "./dist/modules/Select/constants.cjs"
+    },
+    "./Select": {
+      "import": "./dist/modules/Select/index.mjs",
+      "require": "./dist/modules/Select/index.cjs"
+    },
+    "./Select/select": {
+      "import": "./dist/modules/Select/select.mediator.mjs"
+    },
+    "./SlideController/_index.scss": {
+      "import": "./dist/modules/SlideController/_index.scss",
+      "require": "./dist/modules/SlideController/_index.scss"
+    },
+    "./SlideController/_index": {
+      "import": "./dist/modules/SlideController/_index.scss",
+      "require": "./dist/modules/SlideController/_index.scss"
+    },
+    "./SlideController/constants": {
+      "import": "./dist/modules/SlideController/constants.mjs",
+      "require": "./dist/modules/SlideController/constants.cjs"
+    },
+    "./SlideController": {
+      "import": "./dist/modules/SlideController/index.mjs",
+      "require": "./dist/modules/SlideController/index.cjs"
+    },
+    "./SlideController/slideController": {
+      "import": "./dist/modules/SlideController/slideController.mediator.mjs"
+    },
+    "./SlideController/util/closeSlide": {
+      "import": "./dist/modules/SlideController/util/closeSlide/closeSlide.mjs",
+      "require": "./dist/modules/SlideController/util/closeSlide/closeSlide.cjs"
+    },
+    "./SlideController/util/getParentSlide": {
+      "import": "./dist/modules/SlideController/util/getParentSlide/getParentSlide.mjs",
+      "require": "./dist/modules/SlideController/util/getParentSlide/getParentSlide.cjs"
+    },
+    "./SlideController/util/onBackdropClick": {
+      "import": "./dist/modules/SlideController/util/onBackdropClick/onBackdropClick.mjs",
+      "require": "./dist/modules/SlideController/util/onBackdropClick/onBackdropClick.cjs"
+    },
+    "./SlideController/util/onClosePortal": {
+      "import": "./dist/modules/SlideController/util/onClosePortal/onClosePortal.mjs",
+      "require": "./dist/modules/SlideController/util/onClosePortal/onClosePortal.cjs"
+    },
+    "./SlideController/util/onKeyDown": {
+      "import": "./dist/modules/SlideController/util/onKeyDown/onKeyDown.mjs",
+      "require": "./dist/modules/SlideController/util/onKeyDown/onKeyDown.cjs"
+    },
+    "./SlideController/util/onMounted": {
+      "import": "./dist/modules/SlideController/util/onMounted/onMounted.mjs",
+      "require": "./dist/modules/SlideController/util/onMounted/onMounted.cjs"
+    },
+    "./Spinner/_index.scss": {
+      "import": "./dist/modules/Spinner/_index.scss",
+      "require": "./dist/modules/Spinner/_index.scss"
+    },
+    "./Spinner/_index": {
+      "import": "./dist/modules/Spinner/_index.scss",
+      "require": "./dist/modules/Spinner/_index.scss"
+    },
+    "./Spinner/constants": {
+      "import": "./dist/modules/Spinner/constants.mjs",
+      "require": "./dist/modules/Spinner/constants.cjs"
+    },
+    "./Spinner": {
+      "import": "./dist/modules/Spinner/index.mjs",
+      "require": "./dist/modules/Spinner/index.cjs"
+    },
+    "./SplitLayout/_index.scss": {
+      "import": "./dist/modules/SplitLayout/_index.scss",
+      "require": "./dist/modules/SplitLayout/_index.scss"
+    },
+    "./SplitLayout/_index": {
+      "import": "./dist/modules/SplitLayout/_index.scss",
+      "require": "./dist/modules/SplitLayout/_index.scss"
+    },
+    "./SplitLayout/constants": {
+      "import": "./dist/modules/SplitLayout/constants.mjs",
+      "require": "./dist/modules/SplitLayout/constants.cjs"
+    },
+    "./SplitLayout": {
+      "import": "./dist/modules/SplitLayout/index.mjs",
+      "require": "./dist/modules/SplitLayout/index.cjs"
+    },
+    "./SplitLayout/splitLayout": {
+      "import": "./dist/modules/SplitLayout/splitLayout.mediator.mjs"
+    },
+    "./Stepper/_index.scss": {
+      "import": "./dist/modules/Stepper/_index.scss",
+      "require": "./dist/modules/Stepper/_index.scss"
+    },
+    "./Stepper/_index": {
+      "import": "./dist/modules/Stepper/_index.scss",
+      "require": "./dist/modules/Stepper/_index.scss"
+    },
+    "./Stepper/constants": {
+      "import": "./dist/modules/Stepper/constants.mjs",
+      "require": "./dist/modules/Stepper/constants.cjs"
+    },
+    "./Stepper": {
+      "import": "./dist/modules/Stepper/index.mjs",
+      "require": "./dist/modules/Stepper/index.cjs"
+    },
+    "./Tabs/_index.scss": {
+      "import": "./dist/modules/Tabs/_index.scss",
+      "require": "./dist/modules/Tabs/_index.scss"
+    },
+    "./Tabs/_index": {
+      "import": "./dist/modules/Tabs/_index.scss",
+      "require": "./dist/modules/Tabs/_index.scss"
+    },
+    "./Tabs/constants": {
+      "import": "./dist/modules/Tabs/constants.mjs",
+      "require": "./dist/modules/Tabs/constants.cjs"
+    },
+    "./Tabs": {
+      "import": "./dist/modules/Tabs/index.mjs",
+      "require": "./dist/modules/Tabs/index.cjs"
+    },
+    "./Tabs/tabs": {
+      "import": "./dist/modules/Tabs/tabs.mediator.mjs"
+    },
+    "./Tag/_index.scss": {
+      "import": "./dist/modules/Tag/_index.scss",
+      "require": "./dist/modules/Tag/_index.scss"
+    },
+    "./Tag/_index": {
+      "import": "./dist/modules/Tag/_index.scss",
+      "require": "./dist/modules/Tag/_index.scss"
+    },
+    "./Tag/constants": {
+      "import": "./dist/modules/Tag/constants.mjs",
+      "require": "./dist/modules/Tag/constants.cjs"
+    },
+    "./Tag": {
+      "import": "./dist/modules/Tag/index.mjs",
+      "require": "./dist/modules/Tag/index.cjs"
+    },
+    "./TextArea/_index.scss": {
+      "import": "./dist/modules/TextArea/_index.scss",
+      "require": "./dist/modules/TextArea/_index.scss"
+    },
+    "./TextArea/_index": {
+      "import": "./dist/modules/TextArea/_index.scss",
+      "require": "./dist/modules/TextArea/_index.scss"
+    },
+    "./TextArea/constants": {
+      "import": "./dist/modules/TextArea/constants.mjs",
+      "require": "./dist/modules/TextArea/constants.cjs"
+    },
+    "./TextArea": {
+      "import": "./dist/modules/TextArea/index.mjs",
+      "require": "./dist/modules/TextArea/index.cjs"
+    },
+    "./TextInput/_index.scss": {
+      "import": "./dist/modules/TextInput/_index.scss",
+      "require": "./dist/modules/TextInput/_index.scss"
+    },
+    "./TextInput/_index": {
+      "import": "./dist/modules/TextInput/_index.scss",
+      "require": "./dist/modules/TextInput/_index.scss"
+    },
+    "./TextInput/constants": {
+      "import": "./dist/modules/TextInput/constants.mjs",
+      "require": "./dist/modules/TextInput/constants.cjs"
+    },
+    "./TextInput": {
+      "import": "./dist/modules/TextInput/index.mjs",
+      "require": "./dist/modules/TextInput/index.cjs"
+    },
+    "./TextInput/textInput": {
+      "import": "./dist/modules/TextInput/textInput.mediator.mjs"
+    },
+    "./ToastController/_index.scss": {
+      "import": "./dist/modules/ToastController/_index.scss",
+      "require": "./dist/modules/ToastController/_index.scss"
+    },
+    "./ToastController/_index": {
+      "import": "./dist/modules/ToastController/_index.scss",
+      "require": "./dist/modules/ToastController/_index.scss"
+    },
+    "./ToastController/constants": {
+      "import": "./dist/modules/ToastController/constants.mjs",
+      "require": "./dist/modules/ToastController/constants.cjs"
+    },
+    "./ToastController": {
+      "import": "./dist/modules/ToastController/index.mjs",
+      "require": "./dist/modules/ToastController/index.cjs"
+    },
+    "./ToastController/toastController": {
+      "import": "./dist/modules/ToastController/toastController.mediator.mjs"
+    },
+    "./ToastController/util/calculateTime": {
+      "import": "./dist/modules/ToastController/util/calculateTime/calculateTime.mjs",
+      "require": "./dist/modules/ToastController/util/calculateTime/calculateTime.cjs"
+    },
+    "./ToastController/util/calculateY": {
+      "import": "./dist/modules/ToastController/util/calculateY/calculateY.mjs",
+      "require": "./dist/modules/ToastController/util/calculateY/calculateY.cjs"
+    },
+    "./ToastController/util/closeToast": {
+      "import": "./dist/modules/ToastController/util/closeToast/closeToast.mjs",
+      "require": "./dist/modules/ToastController/util/closeToast/closeToast.cjs"
+    },
+    "./ToastController/util/getParentToast": {
+      "import": "./dist/modules/ToastController/util/getParentToast/getParentToast.mjs",
+      "require": "./dist/modules/ToastController/util/getParentToast/getParentToast.cjs"
+    },
+    "./ToastController/util/getToastIndex": {
+      "import": "./dist/modules/ToastController/util/getToastIndex/getToastIndex.mjs",
+      "require": "./dist/modules/ToastController/util/getToastIndex/getToastIndex.cjs"
+    },
+    "./ToastController/util/getToastY": {
+      "import": "./dist/modules/ToastController/util/getToastY/getToastY.mjs",
+      "require": "./dist/modules/ToastController/util/getToastY/getToastY.cjs"
+    },
+    "./ToastController/util/initData": {
+      "import": "./dist/modules/ToastController/util/initData/initData.mjs",
+      "require": "./dist/modules/ToastController/util/initData/initData.cjs"
+    },
+    "./ToastController/util/initState": {
+      "import": "./dist/modules/ToastController/util/initState/initState.mjs",
+      "require": "./dist/modules/ToastController/util/initState/initState.cjs"
+    },
+    "./ToastController/util/onClosePortal": {
+      "import": "./dist/modules/ToastController/util/onClosePortal/onClosePortal.mjs",
+      "require": "./dist/modules/ToastController/util/onClosePortal/onClosePortal.cjs"
+    },
+    "./ToastController/util/onKeyDown": {
+      "import": "./dist/modules/ToastController/util/onKeyDown/onKeyDown.mjs",
+      "require": "./dist/modules/ToastController/util/onKeyDown/onKeyDown.cjs"
+    },
+    "./ToastController/util/reCalculateY": {
+      "import": "./dist/modules/ToastController/util/reCalculateY/reCalculateY.mjs",
+      "require": "./dist/modules/ToastController/util/reCalculateY/reCalculateY.cjs"
+    },
+    "./Toggle/_index.scss": {
+      "import": "./dist/modules/Toggle/_index.scss",
+      "require": "./dist/modules/Toggle/_index.scss"
+    },
+    "./Toggle/_index": {
+      "import": "./dist/modules/Toggle/_index.scss",
+      "require": "./dist/modules/Toggle/_index.scss"
+    },
+    "./Toggle/constants": {
+      "import": "./dist/modules/Toggle/constants.mjs",
+      "require": "./dist/modules/Toggle/constants.cjs"
+    },
+    "./Toggle": {
+      "import": "./dist/modules/Toggle/index.mjs",
+      "require": "./dist/modules/Toggle/index.cjs"
+    },
+    "./Toggle/toggle": {
+      "import": "./dist/modules/Toggle/toggle.mediator.mjs"
+    },
+    "./Tooltip/_index.scss": {
+      "import": "./dist/modules/Tooltip/_index.scss",
+      "require": "./dist/modules/Tooltip/_index.scss"
+    },
+    "./Tooltip/_index": {
+      "import": "./dist/modules/Tooltip/_index.scss",
+      "require": "./dist/modules/Tooltip/_index.scss"
+    },
+    "./Tooltip/constants": {
+      "import": "./dist/modules/Tooltip/constants.mjs",
+      "require": "./dist/modules/Tooltip/constants.cjs"
+    },
+    "./Tooltip": {
+      "import": "./dist/modules/Tooltip/index.mjs",
+      "require": "./dist/modules/Tooltip/index.cjs"
+    },
+    "./Tooltip/tooltip": {
+      "import": "./dist/modules/Tooltip/tooltip.mediator.mjs"
+    },
+    "./WindowController/constants": {
+      "import": "./dist/modules/WindowController/constants.mjs",
+      "require": "./dist/modules/WindowController/constants.cjs"
+    },
+    "./WindowController": {
+      "import": "./dist/modules/WindowController/index.mjs",
+      "require": "./dist/modules/WindowController/index.cjs"
+    },
+    "./WindowController/util/bringToFront": {
+      "import": "./dist/modules/WindowController/util/bringToFront/bringToFront.mjs",
+      "require": "./dist/modules/WindowController/util/bringToFront/bringToFront.cjs"
+    },
+    "./WindowController/util/closeWindow": {
+      "import": "./dist/modules/WindowController/util/closeWindow/closeWindow.mjs",
+      "require": "./dist/modules/WindowController/util/closeWindow/closeWindow.cjs"
+    },
+    "./WindowController/util/getParentWindow": {
+      "import": "./dist/modules/WindowController/util/getParentWindow/getParentWindow.mjs",
+      "require": "./dist/modules/WindowController/util/getParentWindow/getParentWindow.cjs"
+    },
+    "./WindowController/util/onBackdropClick": {
+      "import": "./dist/modules/WindowController/util/onBackdropClick/onBackdropClick.mjs",
+      "require": "./dist/modules/WindowController/util/onBackdropClick/onBackdropClick.cjs"
+    },
+    "./WindowController/util/onClosePortal": {
+      "import": "./dist/modules/WindowController/util/onClosePortal/onClosePortal.mjs",
+      "require": "./dist/modules/WindowController/util/onClosePortal/onClosePortal.cjs"
+    },
+    "./WindowController/util/onKeyDown": {
+      "import": "./dist/modules/WindowController/util/onKeyDown/onKeyDown.mjs",
+      "require": "./dist/modules/WindowController/util/onKeyDown/onKeyDown.cjs"
+    },
+    "./WindowController/util/onMounted": {
+      "import": "./dist/modules/WindowController/util/onMounted/onMounted.mjs",
+      "require": "./dist/modules/WindowController/util/onMounted/onMounted.cjs"
+    },
+    "./WindowController/windowController": {
+      "import": "./dist/modules/WindowController/windowController.mediator.mjs"
+    },
+    "./_index.scss": {
+      "import": "./dist/modules/_index.scss",
+      "require": "./dist/modules/_index.scss"
+    },
+    "./_index": {
+      "import": "./dist/modules/_index.scss",
+      "require": "./dist/modules/_index.scss"
+    },
+    ".": {
+      "import": "./dist/modules/index.mjs",
+      "require": "./dist/modules/index.cjs"
+    },
+    "./styles/_index.scss": {
+      "import": "./dist/modules/styles/_index.scss",
+      "require": "./dist/modules/styles/_index.scss"
+    },
+    "./styles/_index": {
+      "import": "./dist/modules/styles/_index.scss",
+      "require": "./dist/modules/styles/_index.scss"
+    },
+    "./styles/css-variables.scss": {
+      "import": "./dist/modules/styles/css-variables.scss",
+      "require": "./dist/modules/styles/css-variables.scss"
+    },
+    "./styles/css-variables": {
+      "import": "./dist/modules/styles/css-variables.scss",
+      "require": "./dist/modules/styles/css-variables.scss"
+    },
+    "./styles/functions.scss": {
+      "import": "./dist/modules/styles/functions.scss",
+      "require": "./dist/modules/styles/functions.scss"
+    },
+    "./styles/functions": {
+      "import": "./dist/modules/styles/functions.scss",
+      "require": "./dist/modules/styles/functions.scss"
+    },
+    "./styles/mixins.scss": {
+      "import": "./dist/modules/styles/mixins.scss",
+      "require": "./dist/modules/styles/mixins.scss"
+    },
+    "./styles/mixins": {
+      "import": "./dist/modules/styles/mixins.scss",
+      "require": "./dist/modules/styles/mixins.scss"
+    },
+    "./styles/variables.scss": {
+      "import": "./dist/modules/styles/variables.scss",
+      "require": "./dist/modules/styles/variables.scss"
+    },
+    "./styles/variables": {
+      "import": "./dist/modules/styles/variables.scss",
+      "require": "./dist/modules/styles/variables.scss"
+    }
+  }
 }

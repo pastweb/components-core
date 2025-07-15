@@ -1,0 +1,51 @@
+.Buttons {
+  --Buttons_margin: var(--pw_margin);
+  --Buttons_border-radius: var(--pw_border-radius);
+  --Buttons_rounded_border-radius: var(--pw_rounded_border-radius);
+  --Buttons_color_box-shadow: var(--pw_color_box-shadow);
+  --Buttons_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
+  --Buttons_size_box-shadow: var(--pw_size_box-shadow);
+
+
+  display: flex;
+  margin: var(--Buttons_margin);
+
+  button {
+    margin: 0;
+    border-radius: 0;
+    
+    &:first-child {
+      border-radius: var(--Buttons_border-radius) 0 0 var(--Buttons_border-radius);
+
+      &:hover { box-shadow: inset var(--Buttons_size_box-shadow) var(--Buttons_inset_color_box-shadow); }
+
+      &:focus { box-shadow: var(--Buttons_size_box-shadow) var(--Buttons_color_box-shadow); }
+    }
+
+    &:not(:first-child):not(:hover) { border-left-color: transparent; }
+
+    &:last-child {
+      border-radius: 0 var(--Buttons_border-radius) var(--Buttons_border-radius) 0;
+    }
+  }
+
+  &.is-rounded {
+    button {
+      border-radius: 0;
+
+      &:first-child {
+        border-radius: var(--Buttons_rounded_border-radius) 0 0 var(--Buttons_rounded_border-radius);
+      }
+
+      &:last-child {
+        border-radius: 0 var(--Buttons_rounded_border-radius) var(--Buttons_rounded_border-radius) 0;
+      }
+    }
+  }
+  
+  &.is-full-width { 
+    width: 100%;
+  
+    button { width: 100% }
+  }
+}

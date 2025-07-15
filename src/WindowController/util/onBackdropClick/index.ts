@@ -1,0 +1,1 @@
+export { onBackdropClick } from './onBackdropClick';

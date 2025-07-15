@@ -1,0 +1,90 @@
+.SlideController {
+  --SlideController_backdrop_background-color: var(--pw_backdrop_background-color);
+  --SlideController_size_box-shabow: 2px 2px 8px 1px;
+  --SlideController_color_box-shabow: rgba(0,0,0,.2);
+  --SlideController_animation-duration: .4s;
+  --SlideController_animation-timing-function: ease;
+  --SlideController_animation-fill-mode: forwards;
+
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--SlideController_backdrop_background-color);
+  cursor: pointer;
+}
+
+.slide {
+  --SlideController_backdrop_background-color: var(--pw_backdrop_background-color);
+  --SlideController_size_box-shabow: 2px 2px 8px 1px;
+  --SlideController_color_box-shabow: rgba(0,0,0,.2);
+  --SlideController_animation-duration: .4s;
+  --SlideController_animation-timing-function: ease;
+  --SlideController_animation-fill-mode: forwards;
+
+  position: absolute;
+  top: 0;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  box-shadow: var(--SlideController_size_box-shabow) var(--SlideController_color_box-shadow);
+}
+
+.slide-open-left, .slide-close-left, .slide-open-right,
+.slide-close-right, .slide-open-up, .slide-close-up,
+.slide-open-down, .slide-close-down {
+  animation-duration: var(--SlideController_animation-duration);
+  animation-iteration-count: 1;
+  animation-timing-function: var(--SlideController_animation-iteration-count);
+  animation-fill-mode: var(--SlideController_animation-fill-mode);
+}
+
+.slide-open-left { animation-name: slideOpenLeft; }
+.slide-close-left { animation-name: slideCloseLeft; }
+.slide-open-right { animation-name: slideOpenRight; }
+.slide-close-right { animation-name: slideCloseRight; }
+.slide-open-up { animation-name: slideOpenUp; }
+.slide-close-up { animation-name: slideCloseUp; }
+.slide-open-down { animation-name: slideOpenDown; }
+.slide-close-down { animation-name: slideCloseDown; }
+
+@keyframes slideOpenLeft {
+  from { right: -100%; }
+  to { right: 0; }
+}
+@keyframes slideCloseLeft {
+  from { right: 0; }
+  to { right: -100%; }
+}
+@keyframes slideOpenRight {
+  from { left: -100%; }
+  to { left: 0; }
+}
+@keyframes slideCloseRight {
+  from { left: 0; }
+  to { left: -100%; }
+}
+@keyframes slideOpenUp {
+  from { margin-top: 100%; }
+  to { margin-top: 0%; }
+}
+@keyframes slideCloseUp {
+  from { margin-top: 0%; }
+  to { margin-top: 100%; }
+}
+@keyframes slideOpenDown {
+  from { margin-top: -100%; }
+  to { margin-top: 0%; }
+}
+@keyframes slideCloseDown {
+  from { margin-top: 0%; }
+  to { margin-top: -100%; }
+}

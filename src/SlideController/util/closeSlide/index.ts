@@ -1,0 +1,2 @@
+export { closeSlide } from './closeSlide';
+ 
