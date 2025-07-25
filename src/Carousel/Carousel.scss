@@ -1,0 +1,64 @@
+.Carousel {
+  --Carousel_controls_backgroud-color: rgba(0, 0, 0, 0.6);
+  --Carousel_controls_color: white;
+  --Carousel_controls_padding: 0.75em 1em;
+  --Carousel_controls_font-size: 1.25em;
+  --Carousel_controls_border-radius: var(--pw_border-radius);
+  --Carousel_controls_hover_background-color: rgba(0, 0, 0, 0.8);
+
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+
+  &.carousel3D {
+    perspective: 1000px;
+  }
+
+  .carouselInner {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .carouselItem {
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+
+    &.active {
+      z-index: 1;
+    }
+  }
+
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--Carousel_controls_backgroud-color);
+    color: var(--Carousel_controls_color);
+    border: none;
+    padding: var(--Carousel_controls_padding);
+    cursor: pointer;
+    font-size: var(--Carousel_controls_font-size);
+    z-index: 2;
+    border-radius: var(--Carousel_controls_border-radius);
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--Carousel_controls_hover_background-color);
+    }
+  }
+
+  .prev {
+    left: 15px;
+  }
+
+  .next {
+    right: 15px;
+  }
+}

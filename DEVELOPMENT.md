@@ -20,6 +20,12 @@ npm test
 npm build
 ```
 
+This component package Provide the style (in scss), the logic (in mediator function), and the component template documentation in XTS.
+XJS and XTS as it is easly understandable is a customised version of JSX/TSX, this need is for express concept commonly used in in many frameworks
+and other just in a few of them, using one single syntax.
+You can consider XJS/XTS as a virtual language which it doen't refer to any specific front end framework.
+
+
 
 ```xts
 import { withDefaultProps } from '@pastweb/x';
@@ -52,10 +58,3 @@ export function Button(props: ButtonProps) {
   );
 }
 ```
-
-![xts](https://raw.githubusercontent.com/pastweb/components/refs/heads/master/assets/xts-logo.svg?raw=true)
-
-<div style="text-align: center;">
-  <img src="https://raw.githubusercontent.com/pastweb/components/refs/heads/master/assets/xjs-logo.svg?token=GHSAT0AAAAAADE3DQ73VNVM7A7QDNS73QQA2B2ZV7Q" alt="xjs" style="width: 100%; max-width: 100px;">
-  <img src="https://raw.githubusercontent.com/pastweb/components/refs/heads/master/assets/xts-logo.svg?token=GHSAT0AAAAAADE3DQ73RSJUYHM7Z4WM3HI62B2ZWUQ" alt="xts" style="width: 100%; max-width: 100px;">
-</div>

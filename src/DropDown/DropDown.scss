@@ -39,18 +39,20 @@
       .triangle {
         position: relative;
 
-        &::before, &::after {
+        &::before,
+        &::after {
           content: '';
           position: absolute;
-          border-width: var(--DropDown_arrow_size); /* Controls the size of the triangle */
+          border-width: var(--DropDown_arrow_size);
+          /* Controls the size of the triangle */
           border-style: var(--DropDown_border-style);
         }
-      
-        &::before { 
+
+        &::before {
           z-index: -1;
           border-color: transparent transparent var(--DropDown_border-color) transparent;
         }
-      
+
         &::after {
           border-color: transparent transparent var(--DropDown_background-color) transparent;
           top: var(--DropDown_border-width);

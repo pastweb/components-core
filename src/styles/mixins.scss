@@ -1,10 +1,15 @@
-@use './functions.scss' as *;
+@use './functions' as *;
 
 @mixin defineCustomClass($className, $varsMap, $componentName: '') {
   $compName: $componentName;
 
-  @if componentName { $compName: --#{ $componentName }_; }
-  @else { $compName: '--'; }
+  @if componentName {
+    $compName: --#{ $componentName }_;
+  }
+
+  @else {
+    $compName: '--';
+  }
 
   .is-#{ $className } {
     @each $varName, $value in $varsMap {

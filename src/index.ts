@@ -1,5 +1,7 @@
 export * as Accordion from './Accordion';
 export * as Button from './Button';
+export * as Buttons from './Buttons';
+export * as Carousel from './Carousel';
 export * as Checkbox from './Checkbox';
 export * as DropDown from './DropDown';
 export * as Icon from './Icon';
