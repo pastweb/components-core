@@ -1,6 +1,6 @@
+import { arrow, computePosition, flip, offset, shift } from '@floating-ui/dom';
 import { createState } from '@pastweb/tools';
-import { computePosition, offset, shift, arrow, flip } from '@floating-ui/dom';
-import type { TooltipProps, TooltipMediator, TooltipState } from './types';
+import type { TooltipMediator, TooltipProps, TooltipState } from './types';
 
 export function tooltip(props: TooltipProps): TooltipMediator {
   const { state, setState } = createState<TooltipState>({ isVisible: false });
@@ -65,7 +65,7 @@ export function tooltip(props: TooltipProps): TooltipMediator {
         bottom: 'bottom',
         left: 'right',
       }[placement.split('-')[0]];
-      
+
       const sideValue: Record<string, string> = {
         left: `-${arrowWidth - 2}px`,
         right: `-${arrowWidth - 2}px`,
@@ -79,9 +79,9 @@ export function tooltip(props: TooltipProps): TooltipMediator {
         bottom: 0,
         left: 90,
       };
-      
+
       const finalPlacement = middlewareData.offset?.placement || placement;
-      
+
       Object.assign(arrowEl.style, {
         left: arrowX != null ? `${arrowX}px` : '',
         top: arrowY != null ? `${arrowY}px` : '',
@@ -91,9 +91,9 @@ export function tooltip(props: TooltipProps): TooltipMediator {
     });
   }
 
-  function onMounted(target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) {
-    reference = target;
-    referenceEl = reference.firstChild as HTMLElement;
+  function onMounted(root: HTMLElement, target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) {
+    reference = root;
+    referenceEl = target;
     tooltipEl = tooltip;
     arrowEl = arrow;
 

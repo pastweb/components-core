@@ -1,28 +1,36 @@
 ```tsx
-import { withDefaultProps, useMediator, useRef, useBeforeUnmount, useMounted } from '@pastweb/x';
 import { DEFAULT_PROPS, tooltip } from '@pastweb/components/Tooltip';
-import type { TooltipProps, TooltipDefaultProps, TooltipMediator } from './types';
+import { useBeforeUnmount, useMediator, useMounted, useRef, withDefaultProps } from '@pastweb/x';
+import type { TooltipDefaultProps, TooltipMediator, TooltipProps } from './types';
 
 export function Tooltip(props: TooltipProps) {
   const p = withDefaultProps<TooltipDefaultProps>(props, DEFAULT_PROPS);
   const m = useMediator<TooltipMediator>(tooltip, p);
   const s = m.state;
 
+  const rootRef = useRef<HTMLSpanElement | null>(null);
   const targetRef = useRef<HTMLSpanElement | null>(null);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const arrowRef = useRef<HTMLDivElement | null>(null);
 
   useMounted(() => {
+    const root = rootRef.value as HTMLSpanElement;
     const target = targetRef.value as HTMLSpanElement;
-    m.onMounted(target);
+    const tooltip = tooltipRef.value as HTMLDivElement;
+    const arrow = arrowRef.value as HTMLDivElement;
+    m.onMounted(root, target, tooltip, arrow);
   });
 
   useBeforeUnmount(() => m.beforeUnmount());
 
   return (
     <span #ref={targetRef} class={p.cls('Tooltip', p.className)}>
-      <children />
-      <div class={p.cls(`tooltipContent${s.isVisible ? ' is-visible' : ''}`, p.className)}>
+      <span #ref={targetRef}>
+        <children />
+      </span>
+      <div #ref={tooltipRef} class={p.cls(`tooltipContent${s.isVisible ? ' is-visible' : ''}`, p.className)}>
         {content}
-        <div class={p.cls('arrow')}>
+        <div #ref={arrowRef} class={p.cls('arrow')}>
           <div class={p.cls('triangle')}/>
         </div>
       </div>

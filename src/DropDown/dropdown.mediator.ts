@@ -1,7 +1,7 @@
+import { arrow, computePosition, flip, offset, shift } from '@floating-ui/dom';
 import { createState, effect } from '@pastweb/tools';
-import { computePosition, offset, shift, arrow, flip } from '@floating-ui/dom';
 import { CLICK_OUT_TIME_GAP } from './constants';
-import type { DropDownDefaultProps, DropDownState, DropDownMediator } from './types';
+import type { DropDownDefaultProps, DropDownMediator, DropDownState } from './types';
 
 export function dropdown(props: DropDownDefaultProps): DropDownMediator {
   const { state, setState } = createState<DropDownState>({ isVisible: !!props.isVisible });
@@ -67,10 +67,10 @@ export function dropdown(props: DropDownDefaultProps): DropDownMediator {
       }[placement.split('-')[0]];
 
       const sideValue: Record<string, string> = {
-        left: `-${arrowWidth}px`,
-        right: `-${arrowWidth}px`,
-        top: `${arrowWidth}px`,
-        bottom: `-${arrowWidth}px`,
+        left: `-${arrowWidth + 1}px`,
+        right: `-${arrowWidth + 1}px`,
+        top: `${arrowWidth + 1}px`,
+        bottom: `-${arrowWidth + 1}px`,
       };
 
       const arrowDeg: Record<string, number> = {
@@ -130,9 +130,9 @@ export function dropdown(props: DropDownDefaultProps): DropDownMediator {
     props.onMouseLeave();
   }
 
-  function onMounted(target: HTMLElement, content: HTMLElement, arrow: HTMLElement): void {
-    reference = target;
-    referenceEl = reference.firstChild as HTMLElement;
+  function onMounted(root: HTMLElement, target: HTMLElement, content: HTMLElement, arrow: HTMLElement): void {
+    reference = root;
+    referenceEl = target;
     contentEl = content;
     arrowEl = arrow;
 

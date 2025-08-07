@@ -1,5 +1,5 @@
-import type { ClassValue } from '@pastweb/tools';
 import type { Placement } from '@floating-ui/dom';
+import type { ClassValue } from '@pastweb/tools';
 
 export type { Placement } from '@floating-ui/dom';
 
@@ -45,6 +45,6 @@ export type DropDownState = {
 
 export type DropDownMediator = {
   state: DropDownState;
-  onMounted: (target: HTMLElement, content: HTMLElement, arrow: HTMLElement) => void;
+  onMounted: (root: HTMLElement, target: HTMLElement, content: HTMLElement, arrow: HTMLElement) => void;
   onUnmount: () => void;
 };

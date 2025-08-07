@@ -5,26 +5,29 @@ The DropDown Component implementation needs a 'props' extension for other 2 prop
 * `content`: the component to be rendered inside the DropDown.
 
 ```tsx
-import { withDefaultProps, useMediator, useRef, useMounted } from '@pastweb/x';
 import { dropdown } from '@pastweb/components/DropDown';
+import { useMediator, useMounted, useRef, withDefaultProps } from '@pastweb/x';
 import { DEFAULT_PROPS } from './constants';
-import { DropDownProps, DropDownDefaultProps, DropDownMediator } from './types';
+import { DropDownDefaultProps, DropDownMediator, DropDownProps } from './types';
 
 export function DropDown(props: DropDownProps) {
   const p = withDefaultProps<DropDownDefaultProps>(props, DEFAULT_PROPS);
   const m = useMediator<DropDownMediator>(dropdown, p);
   const s = m.state;
 
+  const rootRef = useRef<HTMLElement | null>(null);
   const targetRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLElement | null>(null);
-  const arroowRef = useRef<HTMLElement | null>(null);
+  const arrowRef = useRef<HTMLElement | null>(null);
 
-  useMounted(() => m.onMounted(targetRef, contentRef, arroowRef));
+  useMounted(() => m.onMounted(rootRef, targetRef, contentRef, arroowRef));
   useBeforeUnmount(m.onUnmounted);
 
   return (
-    <span #ref={targetRef} class={p.cls('DropDown', p.className)}>
+    <span #ref={rootRef} class={p.cls('DropDown', p.className)}>
+      <span #ref={targetRef}>
         {p.children}
+      </span>
       <div
         #ref={contentRef}
         class={p.cls('content', { ['is-visible']: s.isVisible })}

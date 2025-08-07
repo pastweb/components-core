@@ -1,5 +1,5 @@
-import type { ClassValue } from '@pastweb/tools';
 import type { Placement } from '@floating-ui/dom';
+import type { ClassValue } from '@pastweb/tools';
 
 export type { Placement } from '@floating-ui/dom';
 
@@ -25,6 +25,6 @@ export interface TooltipState {
 
 export interface TooltipMediator {
   state: TooltipState;
-  onMounted: (target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) => void;
+  onMounted: (root: HTMLElement, target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) => void;
   onUnmount: () => void;
 };
