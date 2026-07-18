@@ -1,4 +1,9 @@
-export { splitLayout } from './splitLayout.mediator';
-export { DEFAULT_PROPS } from './constants';
+export { splitLayoutMediator } from './splitLayout.mediator';
+export { DEFAULT_PROPS, SPLIT_LAYOUT_CONTEXT_KEY } from './constants';
 
-export type { SplitLayoutProps, SplitLayoutDefaultProps, SplitLayoutMediator } from './types';
+export type {
+  SplitLayoutDefaultProps,
+  SplitLayoutMediator,
+  SplitLayoutProps,
+  SplitLayoutContext,
+} from './types';

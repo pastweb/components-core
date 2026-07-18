@@ -1,5 +1,5 @@
 .DropDown {
-  --DropDown_background-color: var(--pw_background-color);
+  --DropDown_background-color: var(--pw_control_background-color);
   --DropDown_border-radius: var(--pw_small_border-radius);
   --DropDown_border-width: var(--pw_border-width);
   --DropDown_border-style: var(--pw_border-style);
@@ -12,22 +12,24 @@
   position: relative;
   display: contents;
 
-  .content {
+  .container {
     pointer-events: none;
     z-index: 1000;
     white-space: nowrap;
     opacity: 0;
 
-    background-color: var(--DropDown_background-color);
-    color: var(--DropDown_color);
-    border: var(--DropDown_border-width) var(--DropDown_border-style) var(--DropDown_border-color);
-    border-radius: var(--DropDown_border-radius);
-    padding: var(--Tooltip_content_padding) 0;
-    box-shadow: var(--DropDown_drop-shadow_size) var(--DropDown_drop-shadow_color);
-
     &.is-visible {
       opacity: 1;
       pointer-events: all;
+    }
+
+    .content {
+      background-color: var(--DropDown_background-color);
+      color: var(--DropDown_color);
+      border: var(--DropDown_border-width) var(--DropDown_border-style) var(--DropDown_border-color);
+      border-radius: var(--DropDown_border-radius);
+      padding: var(--Tooltip_content_padding) 0;
+      box-shadow: var(--DropDown_drop-shadow_size) var(--DropDown_drop-shadow_color);
     }
 
     .arrow {

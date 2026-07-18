@@ -1,25 +1,25 @@
-import { createState, noop } from '@pastweb/tools';
+import { reactive, noop } from '@pastweb/tools';
 import { TOAST_REMOVED_EVENT } from './constants';
 import {
-  initState,
-  initData,
-  getToastIndex,
+  closeToast as _closeToast,
+  getContext as _getContext,
+  onClosePortal as _onClosePortal,
+  onKeyDown as _onKeyDown,
+  reCalculateY as _reCalculateY,
   calculateTime,
   calculateY,
-  closeToast as _closeToast,
-  reCalculateY as _reCalculateY,
-  onClosePortal as _onClosePortal,
-  getParentToast as _getParentToast,
-  onKeyDown as _onKeyDown,
+  getToastIndex,
+  initData,
+  initState,
 } from './util';
 import type {
   ToastControllerDefaultProps,
-  ToastControllerState,
   ToastControllerMediator,
+  ToastControllerState,
 } from './types';
 
-export function toastController(props: ToastControllerDefaultProps): ToastControllerMediator {
-  const { state, setState } = createState<ToastControllerState>(initState(props));
+export function toastControllerMediator(props: ToastControllerDefaultProps): ToastControllerMediator {
+  const state = reactive<ToastControllerState>(initState(props));
 
   const data = initData(props);
   let toastRef: HTMLElement | null = null;
@@ -50,7 +50,7 @@ export function toastController(props: ToastControllerDefaultProps): ToastContro
     }
   });
 
-  const reCalculateY = _reCalculateY(data, () => calculateY(props, data, state, setState));
+  const reCalculateY = _reCalculateY(data, () => calculateY(props, data, state));
 
   const onClosePortal = _onClosePortal(data.toastId, closeToast);
 
@@ -58,7 +58,7 @@ export function toastController(props: ToastControllerDefaultProps): ToastContro
     _closeToast({
       props,
       confirmClose,
-      setState,
+      state,
       toastRef: toastRef as HTMLElement,
       observer,
       reCalculateY,
@@ -68,14 +68,13 @@ export function toastController(props: ToastControllerDefaultProps): ToastContro
 
   const onKeyDown = (e: any) => _onKeyDown(props, e, closeToast);
 
-  function getParentToast(inject: Record<string, any> = {}) {
-    return _getParentToast({
+  function getContext() {
+    return _getContext({
       props,
       data,
       closeToast,
       setConfirm: fn => confirmClose = fn,
       setTime: fn => setTime = fn,
-      inject,
     });
   }
 
@@ -106,7 +105,7 @@ export function toastController(props: ToastControllerDefaultProps): ToastContro
   return {
     state,
     data,
-    getParentToast,
+    getContext,
     onMouseOver,
     onMouseLeave,
     onMounted,

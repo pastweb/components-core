@@ -9,6 +9,7 @@ export interface TooltipProps {
   content: string;
   placement?: Placement;
   disabled?: boolean;
+  offset?: number;
 };
 
 export interface TooltipDefaultProps {
@@ -17,6 +18,7 @@ export interface TooltipDefaultProps {
   content: string;
   placement: Placement;
   disabled: boolean;
+  offset: number;
 };
 
 export interface TooltipState {
@@ -25,6 +27,7 @@ export interface TooltipState {
 
 export interface TooltipMediator {
   state: TooltipState;
-  onMounted: (root: HTMLElement, target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) => void;
-  onUnmount: () => void;
+  onMounted: (target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 };

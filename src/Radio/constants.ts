@@ -4,10 +4,10 @@ export const DEFAULT_PROPS = {
   className: '',
   orientation: 'horizontal',
   onChange: noop,
-  labelPosition: 'top',
+  labelPlacement: 'top-start',
   value: '',
 };
 
-export const DEFAULT_OPTIONS = {
+export const DEFAULT_RADIO_OPTIONS = {
   tabIndex: 0,
 };

@@ -1,3 +1,3 @@
 export { DEFAULT_PROPS } from './constants';
 
-export type { LinkProps, LinkDefaultProps } from './types';
+export type { LinkDefaultProps, LinkProps } from './types';

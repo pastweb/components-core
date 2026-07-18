@@ -1,0 +1,254 @@
+.Input {
+  --Input_min-width: 5em;
+  --Input_background-color: var(--pw_control_background-color);
+  --Input_text_color: var(--pw_text_color);
+  --Input_border-radius: var(--pw_border-radius);
+  --Input_rounded_border-radius: var(--pw_rounded_border-radius);
+  --Input_border-color: var(--pw_border-color);
+  --Input_border-width: var(--pw_border-width);
+  --Input_border-style: var(--pw_border-style);
+  --Input_size_box-shadow: var(--pw_size_box-shadow);
+  --Input_color_box-shadow: var(--pw_color_box-shadow);
+  --Input_horizontal_padding: var(--pw_horizontal_padding);
+  --Input_padding: var(--pw_padding);
+  --Input_margin: var(--pw_vertical_margin);
+  --Input_font-size: var(--pw_font-size);
+  --Input_font-weight: var(--pw_font-weight);
+  --Input_transition-duration: var(--pw_transition-duration);
+  --Input_disabled_opacity: var(--pw_disabled_opacity);
+  --Input_label_text_color: var(--pw_label_text_color);
+  --Input_label_font-weight: var(--pw_semibold_font-weight);
+  --Input__number_btn_width: 2em;
+  --Input__number_btn_font-size: 0.813em;
+
+
+  display: flex;
+  margin: var(--Input_margin);
+
+  &.label-top,
+  &.label-top-start,
+  &.label-top-end {
+    flex-direction: column-reverse;
+  }
+
+  &.label-bottom,
+  &.label-bottom-start,
+  &.label-bottom-end {
+    flex-direction: column;
+  }
+
+  &.label-left,
+  &.label-left-start,
+  &.label-left-end {
+    flex-direction: row-reverse;
+  }
+
+  &.label-right,
+  &.label-right-start,
+  &.label-right-end {
+    flex-direction: row;
+  }
+
+  &.label-top,
+  &.label-bottom,
+  &.label-left,
+  &.label-right {
+    align-items: center;
+  }
+
+  &.label-top-start,
+  &.label-bottom-start,
+  &.label-left-start,
+  &.label-right-start {
+    align-items: flex-start;
+  }
+
+  &.label-top-end,
+  &.label-bottom-end,
+  &.label-left-end,
+  &.label-right-end {
+    align-items: flex-end;
+  }
+
+  &.is-rounded {
+    border-radius: var(--Input_rounded_border-radius);
+
+    .input {
+      border-radius: var(--Input_rounded_border-radius);
+    }
+  }
+
+  &.is-full-width {
+    width: 100%;
+  }
+
+  .inputContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    transition: all var(--Input_transition-duration);
+    color: var(--Input_text_color);
+    box-shadow: 0cap;
+    border-radius: var(--Input_border-radius);
+    background-color: var(--Input_background-color);
+    border: var(--Input_border-width) var(--Input_border-style) var(--Input_border-color);
+    min-width: var(--Input_min-width);
+
+    .number-buttons {
+      display: flex;
+      flex-direction: column;
+      height: stretch;
+      width: var(--Input__number_btn_width);
+      border-left: var(--Input_border-width) var(--Input_border-style) var(--Input_border-color);
+    }
+
+    .number-btn {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: stretch;
+      background: transparent;
+      border: none;
+      font-size: var(--Input__number_btn_font-size);
+      color: var(--Input_text_color);
+      transition: all 0.2s ease;
+
+      &:first-child {
+        border-bottom: var(--Input_border-width) var(--Input_border-style) var(--Input_border-color);
+      }
+
+      &:hover:not(:disabled) {
+        background: var(--Input_text_color);
+        color: var(--Input_background-color);
+      }
+
+      &:active:not(:disabled) {
+        background: var(--Input_text_color);
+        color: var(--Input_background-color);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: var(--Input_disabled_opacity);
+      }
+    }
+
+    .inputElement {
+      cursor: text;
+      width: 100%;
+      margin: var(--Input_padding);
+      border: none;
+      background-color: transparent;
+      color: var(--Input_text_color);
+
+      font-size: var(--Input_font-size);
+      font-weight: var(--Input_font-weight);
+
+      &::placeholder {
+        color: var(--Input_text_color);
+        opacity: 0.5;
+      }
+
+      &:hover,
+      &:focus {
+        outline: none;
+      }
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type="number"] {
+        appearance: textfield;
+      }
+    }
+
+    &:disabled {
+      opacity: var(--Input_disabled_opacity);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    &:hover:not(.is-loading) {
+      box-shadow: inset var(--Input_size_box-shadow) var(--Input_color_box-shadow);
+    }
+
+    &:focus-within:not(.is-loading) {
+      box-shadow: var(--Input_size_box-shadow) var(--Input_color_box-shadow);
+    }
+
+    .leftComponent {
+      padding-left: var(--Input_horizontal_padding);
+    }
+
+    .rightComponent {
+      padding-right: var(--Input_horizontal_padding);
+    }
+
+    &.is-rounded {
+      border-radius: var(--Input_rounded_border-radius);
+    }
+
+    &.is-full-width {
+      width: 100%;
+    }
+
+    &.is-outlined {
+      i {
+        color: var(--Input_background-color);
+        stroke: var(--Input_color);
+      }
+    }
+
+    .loading {
+      cursor: wait;
+      position: absolute;
+      display: flex;
+      top: 0;
+      left: 0;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--Input_border-radius);
+      background-color: var(--Input_background-color);
+      box-shadow: none;
+      margin: 0;
+    }
+  }
+
+  .label {
+    color: var(--Input_label_text_color);
+    font-size: var(--Input_font-size);
+    font-weight: var(--Input_label_font-weight);
+
+    &.top,
+    &.top-start,
+    &.top-end {
+      margin-bottom: var(--pw_vertical_margin);
+    }
+
+    &.bottom,
+    &.bottom-start,
+    &.bottom-end {
+      margin-top: var(--pw_vertical_margin);
+    }
+
+    &.left,
+    &.left-start,
+    &.left-end {
+      margin-right: var(--pw_horizontal_margin);
+    }
+
+    &.right,
+    &.right-start,
+    &.right-end {
+      margin-left: var(--pw_horizontal_margin);
+    }
+  }
+}

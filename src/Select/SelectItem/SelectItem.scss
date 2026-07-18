@@ -1,0 +1,19 @@
+.SelectItem {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: var(--Select_text_color);
+  padding: var(--Select_padding);
+  cursor: pointer;
+  transition: all var(--Select_transition-duration);
+
+  &:hover,
+  &.selected {
+    color: var(--Select_background-color);
+    background-color: var(--Select_text_color);
+  }
+
+  &.highlight {
+    box-shadow: inset var(--Select_size_box-shadow) var(--Select_color_box-shadow);
+  }
+}

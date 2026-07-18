@@ -1,0 +1,167 @@
+.SheetController {
+  --SheetController_backdrop_background-color: var(--pw_backdrop_background-color);
+  --SheetController_size_box-shabow: 2px 2px 8px 1px;
+  --SheetController_color_box-shabow: rgba(0, 0, 0, .2);
+  --SheetController_animation-duration: .4s;
+  --SheetController_animation-timing-function: ease;
+  --SheetController_animation-fill-mode: forwards;
+
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--SheetController_backdrop_background-color);
+  cursor: pointer;
+  z-index: 1;
+}
+
+.sheet {
+  --SheetController_backdrop_background-color: var(--pw_backdrop_background-color);
+  --SheetController_size_box-shabow: 2px 2px 8px 1px;
+  --SheetController_color_box-shabow: rgba(0, 0, 0, .2);
+  --SheetController_animation-duration: .4s;
+  --SheetController_animation-timing-function: ease;
+  --SheetController_animation-fill-mode: forwards;
+
+  position: absolute;
+  top: 0;
+  outline: none;
+  width: 100%;
+  height: 100%;
+  box-shadow: var(--SheetController_size_box-shabow) var(--SheetController_color_box-shadow);
+  z-index: 1;
+}
+
+.sheet-open-left,
+.sheet-close-left,
+.sheet-open-right,
+.sheet-close-right,
+.sheet-open-up,
+.sheet-close-up,
+.sheet-open-down,
+.sheet-close-down {
+  animation-duration: var(--SheetController_animation-duration);
+  animation-iteration-count: 1;
+  animation-timing-function: var(--SheetController_animation-iteration-count);
+  animation-fill-mode: var(--SheetController_animation-fill-mode);
+}
+
+.sheet-open-left {
+  animation-name: sheetOpenLeft;
+}
+
+.sheet-close-left {
+  animation-name: sheetCloseLeft;
+}
+
+.sheet-open-right {
+  animation-name: sheetOpenRight;
+}
+
+.sheet-close-right {
+  animation-name: sheetCloseRight;
+}
+
+.sheet-open-up {
+  animation-name: sheetOpenUp;
+}
+
+.sheet-close-up {
+  animation-name: sheetCloseUp;
+}
+
+.sheet-open-down {
+  animation-name: sheetOpenDown;
+}
+
+.sheet-close-down {
+  animation-name: sheetCloseDown;
+}
+
+@keyframes sheetOpenLeft {
+  from {
+    right: -100%;
+  }
+
+  to {
+    right: 0;
+  }
+}
+
+@keyframes sheetCloseLeft {
+  from {
+    right: 0;
+  }
+
+  to {
+    right: -100%;
+  }
+}
+
+@keyframes sheetOpenRight {
+  from {
+    left: -100%;
+  }
+
+  to {
+    left: 0;
+  }
+}
+
+@keyframes sheetCloseRight {
+  from {
+    left: 0;
+  }
+
+  to {
+    left: -100%;
+  }
+}
+
+@keyframes sheetOpenUp {
+  from {
+    margin-top: 100%;
+  }
+
+  to {
+    margin-top: 0%;
+  }
+}
+
+@keyframes sheetCloseUp {
+  from {
+    margin-top: 0%;
+  }
+
+  to {
+    margin-top: 100%;
+  }
+}
+
+@keyframes sheetOpenDown {
+  from {
+    margin-top: -100%;
+  }
+
+  to {
+    margin-top: 0%;
+  }
+}
+
+@keyframes sheetCloseDown {
+  from {
+    margin-top: 0%;
+  }
+
+  to {
+    margin-top: -100%;
+  }
+}

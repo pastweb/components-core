@@ -21,24 +21,71 @@
   margin: var(--Select_margin);
   font-size: var(--TextArea_font-size);
 
-  &.label-top { flex-direction: column-reverse; }
-  &.label-bottom { flex-direction: column; }
-  &.label-left, &.label-right { align-items: center; }
-  &.label-left { flex-direction: row-reverse; }
-  &.label-right { flex-direction: row; }
+  &.label-top,
+  &.label-top-start,
+  &.label-top-end {
+    flex-direction: column-reverse;
+  }
+
+  &.label-bottom,
+  &.label-bottom-start,
+  &.label-bottom-end {
+    flex-direction: column;
+  }
+
+  &.label-left,
+  &.label-left-start,
+  &.label-left-end {
+    flex-direction: row-reverse;
+  }
+
+  &.label-right,
+  &.label-right-start,
+  &.label-right-end {
+    flex-direction: row;
+  }
+
+  &.label-top,
+  &.label-bottom,
+  &.label-left,
+  &.label-right {
+    align-items: center;
+  }
+
+  &.label-top-start,
+  &.label-bottom-start,
+  &.label-left-start,
+  &.label-right-start {
+    align-items: flex-start;
+  }
+
+  &.label-top-end,
+  &.label-bottom-end,
+  &.label-left-end,
+  &.label-right-end {
+    align-items: flex-end;
+  }
 
   &.is-disabled {
     opacity: var(--TextArea_disabled_opacity);
     cursor: not-allowed;
   }
-  
+
   &.is-rounded {
     border-radius: var(--TaxtArea_rounded_border-radius);
-    .textarea { border-radius: var(--TaxtArea_rounded_border-radius); }
-    .loading { border-radius: var(--TaxtArea_rounded_border-radius); }
+
+    .textarea {
+      border-radius: var(--TaxtArea_rounded_border-radius);
+    }
+
+    .loading {
+      border-radius: var(--TaxtArea_rounded_border-radius);
+    }
   }
-  
-  &.is-full-width { width: 100%; }
+
+  &.is-full-width {
+    width: 100%;
+  }
 
   .textarea {
     position: relative;
@@ -49,7 +96,7 @@
 
     color: var(--TextArea_text_color);
     background-color: var(--TextArea_background-color);
-    
+
     border: var(--TextArea_border-width) var(--TextArea_border-style) var(--TextArea_border-color);
     border-radius: var(--TextArea_border-radius);
 
@@ -67,13 +114,15 @@
       }
 
       &:hover,
-      &:focus { outline: none; }
+      &:focus {
+        outline: none;
+      }
     }
 
     &:hover:not(.is-loading) {
       box-shadow: inset var(--TextArea_size_box-shadow) var(--TextArea_color_box-shadow);
     }
-    
+
     &:focus-within:not(:active):not(.is-loading) {
       box-shadow: var(--TextArea_size_box-shadow) var(--TextArea_color_box-shadow);
     }
@@ -99,9 +148,28 @@
     // font-size: var(--TextArea_font-size);
     font-weight: var(--TextArea_label_font-weight);
 
-    &.top { margin-bottom: var(--pw_vertical_margin); }
-    &.bottom { margin-top: var(--pw_vertical_margin); }
-    &.left { margin-right: var(--pw_horizontal_margin); }
-    &.right { margin-left: var(--pw_horizontal_margin); }
+    &.top,
+    &.top-start,
+    &.top-end {
+      margin-bottom: var(--pw_vertical_margin);
+    }
+
+    &.bottom,
+    &.bottom-start,
+    &.bottom-end {
+      margin-top: var(--pw_vertical_margin);
+    }
+
+    &.left,
+    &.left-start,
+    &.left-end {
+      margin-right: var(--pw_horizontal_margin);
+    }
+
+    &.right,
+    &.right-start,
+    &.right-end {
+      margin-left: var(--pw_horizontal_margin);
+    }
   }
 }

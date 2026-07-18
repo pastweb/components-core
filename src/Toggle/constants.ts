@@ -5,5 +5,5 @@ export const DEFAULT_PROPS = {
   tabIndex: 0,
   onChange: noop,
   value: false,
-  labelPosition: 'top',
+  labelPlacement: 'top-start',
 };

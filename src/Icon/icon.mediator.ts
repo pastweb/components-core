@@ -1,13 +1,16 @@
-import { createState, effect } from '@pastweb/tools';
+import { reactive, effect } from '@pastweb/tools';
 import { initIconState, checkIconSate, replaceIconState } from './util';
-import type { IconDefaultProps, IconMediator, IconState } from './types';
+import { IconDefaultProps, IconMediator, IconState } from './types';
 
-export function icon(props: IconDefaultProps): IconMediator {
-  const { state, setState } = createState<IconState>(initIconState(props));
+export function iconMediator(props: IconDefaultProps): IconMediator {
+  const state = reactive<IconState>(initIconState(props));
 
-  checkIconSate(props, state, setState);
+  checkIconSate(props, state);
 
-  effect(props, () => replaceIconState(props, setState), 'name');
+  effect(
+    () => replaceIconState(props, state),
+    () => props.name,
+  );
 
   return { state };
 }

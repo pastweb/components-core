@@ -2,9 +2,9 @@ import { getFullElementSize } from '@pastweb/tools';
 import type { ToastControllerDefaultProps } from '../../types';
 
 export function getToastY(props: ToastControllerDefaultProps): number {
-  const { portalElement, entryId, position, padding, } = props;
+  const { portalElement, entryId, placement, padding, } = props;
 
-  const toasts = Array.from(portalElement.children || []);
+  const toasts = [...portalElement.children || []];
 
   if (!toasts.length) return 0;
 
@@ -14,7 +14,7 @@ export function getToastY(props: ToastControllerDefaultProps): number {
     if (t.id === entryId) break;
 
     const container = t.firstChild as HTMLElement;
-    const samePosition = container.className.split(' ').includes(position);
+    const samePosition = container.className.split(' ').includes(placement);
 
     if (!samePosition) continue;
 

@@ -1,22 +1,12 @@
-export { DEFAULT_PROPS, MODE } from './constants';
+export { DEFAULT_PROPS, MODE, WINDOW_CONTEXT_KEY, ANIMATIONS } from './constants';
 
-export {
-  bringToFront,
-  closeWindow,
-  getParentWindow,
-  onBackdropClick,
-  onClosePortal,
-  onKeyDown,
-  onMounted,
-} from './util';
-
-export { windowController } from './windowController.mediator';
+export { windowControllerMediator } from './windowController.mediator';
 
 export type {
   CloseOptions,
-  WindowControllerProps,
+  WindowContext,
   WindowControllerDefaultProps,
-  WindowControllerState,
-  ParentWindow,
   WindowControllerMediator,
+  WindowControllerProps,
+  WindowControllerState,
 } from './types';

@@ -2,16 +2,20 @@
 | PropName       | type                               | required | default | Description                                                   |
 |----------------|------------------------------------|----------|---------|---------------------------------------------------------------|
 | cls            | (...args: ClassValue[]) => string; |    yes   |    -    | function to handle CssModules classes and classes switching   |
-| class          | string                             |    no    |    ""   | classes to be applied                                         |
+| className      | string                             |    no    |    ""   | additional classes to be applied to the button                |
 | onClick        | (event: MouseEvent) => void        |    no    |   noop  | onclick function handler                                      |
 | disabled       | boolean                            |    no    |  false  | disable the button                                            |
-| loading?: any; | any                                |    no    |    -    | the component to be rendered if the class `is-loading` is set |
+| tabIndex       | number                             |    no    |    0    | tab index for keyboard navigation                             |
 
-## Notes
-- the `ref` attribute is intended to be the HTMLElement reference to be forwarded using the props Object.
+## Slots
+| SlotName | Description | Default Content |
+|----------|-------------|-----------------|
+| loading  | Custom loading indicator (shown if `className` includes `'is-loading'`) | "loading..." |
 
 ```tsx
+import { isObject } from '@pastweb/tools';
 import { withDefaultProps } from '@pastweb/x';
+import { button } from '@pastweb/components/Button';
 import { DEFAULT_PROPS } from './constants';
 import { ButtonDefaultProps, ButtonProps } from './types';
 
@@ -27,15 +31,14 @@ export function Button(props: ButtonProps) {
       tabIndex={p.tabIndex}
     >
       <children #each={child}>
-        <span>
+        <span #if={child && (!isObject(child) || (typeof child === 'function' && (child as Function).name !== 'Template'))}>
           <render content={child} />
         </span>
       </children>
-      <div
-        #if={p.loadingComponent && p.className.includes('is-loading')}
-        class={p.cls('loading')}
-      >
-        { p.loadingComponent }
+      <div #if={p.className.includes('is-loading')} class={p.cls('loading')}>
+        <slot name='loading'>
+          Loading...
+        </slot>
       </div>
     </button>
   );

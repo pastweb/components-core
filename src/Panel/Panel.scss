@@ -19,8 +19,8 @@
   --Panel_transition-duration: 0.5s;
   // closeButton
   --Panel_closeButton_background-color: var(--Panel_header_background-color);
-  --Panel_closeButton_hover_background-color: var(--Panel_text_color);
-  --Panel_closeBar_background-color: var(--Panel_text_color);
+  --Panel_closeButton_hover_background-color: var(--Panel_header_color);
+  --Panel_closeBar_background-color: var(--Panel_header_color);
   --Panel_closeBar_hover_background-color: var(--Panel_closeButton_background-color);
   // footer
   --Panel_footer_padding: var(--Panel_header_padding);
@@ -69,6 +69,7 @@
   .closeButton {
     position: relative;
     border-radius: var(--pw_rounded_border-radius);
+    border: none;
     transition: background-color ease var(--Panel_transition-duration);
     background-color: var(--Panel_closeButton_background-color);
     min-width: 25px;

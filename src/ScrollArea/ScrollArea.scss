@@ -1,8 +1,54 @@
 .ScrollArea {
+  --ScrollArea_scrollbar-color: #e3e3e3 transparent;
+  /* Thumb: gray, Track: dark gray */
+  --SrollAera_scrollbar-width: thin;
+  /* Optional: thin, auto, or none */
+  --ScrollArea_webkit_scrollbar_width: 12px;
+  /* Vertical scrollbar width */
+  --ScrollArea_webkit_scrollbar_height: var(--ScrollArea_webkit_scrollbar_width);
+  /* Horizontal scrollbar height */
+  --ScrollArea_webkit_scrollbar_track_background: #fcfcfc;
+  /* Track color */
+  --ScrollArea_webkit_scrollbar_thumb_background: #dfdfdf;
+  /* Thumb background */
+  --ScrollArea_webkit_scrollbar_thumb_radius: 6px;
+  /* Thumb radius */
+  --ScrollArea_webkit_scrollbar_thumb_hover_background: #7a7a7a;
+  /* Hover color */
+  --ScrollArea_webkit_scrollbar_corner_background: #fbfbfb;
+  /* Corner where horizontal/vertical meet */
+
   position: relative;
   display: flex;
   height: 100%;
   width: 100%;
+
+  scrollbar-color: var(--ScrollArea_scrollbar-color);
+  scrollbar-width: var(--SrollAera_scrollbar-width);
+
+  /* Global scrollbar for body */
+  ::-webkit-scrollbar {
+    width: var(--ScrollArea_webkit_scrollbar_width);
+    height: var(--ScrollArea_webkit_scrollbar_height);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--ScrollArea_webkit_scrollbar_track_background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--ScrollArea_webkit_scrollbar_thumb_background);
+    border-radius: var(--ScrollArea_webkit_scrollbar_thumb_radius);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--ScrollArea_webkit_scrollbar_thumb_hover_background);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: var(--ScrollArea_webkit_scrollbar_corner_background);
+    border-radius: var(--ScrollArea_webkit_scrollbar_thumb_radius);
+  }
 
   .content {
     position: absolute;
@@ -12,15 +58,20 @@
     width: 100%;
     height: 100%;
   }
-  
-  .hide-x { overflow-x: hidden; }
-  .hide-y { overflow-y: hidden; }
-  
+
+  .hide-x {
+    overflow-x: hidden;
+  }
+
+  .hide-y {
+    overflow-y: hidden;
+  }
+
   .scroll-right {
     display: flex;
     flex-direction: row-reverse;
   }
-  
+
   .scroll-bottom {
     display: flex;
     flex-direction: column-reverse;

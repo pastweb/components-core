@@ -1,23 +1,23 @@
 import { TOAST_REMOVED_EVENT } from '../../constants';
-import type { ToastControllerDefaultProps, CloseOptions } from '../../types';
+import type { CloseOptions, ToastControllerDefaultProps, ToastControllerState } from '../../types';
 
 export function closeToast(params: {
   props: ToastControllerDefaultProps;
   confirmClose?: (() => void) | null;
-  setState: (state: Record<string, any>) => void;
+  state: ToastControllerState;
   toastRef: HTMLElement;
   observer: IntersectionObserver;
   closeOptions?: CloseOptions;
   reCalculateY: (e: any) => void;
   onClosePortal: (e: any) => void;
 }) {
-  const { props, confirmClose, setState, closeOptions = {}, toastRef, observer, reCalculateY, onClosePortal } = params;
-  const { portalElement, portal, entryId, onDestroy, onClose, animationDuration } = props;
+  const { props, confirmClose, state, closeOptions = {}, toastRef, observer, reCalculateY, onClosePortal } = params;
+  const { portalElement, portal, entryId, onDestroy, onClose, animation } = props;
   const { id = entryId, isConfirmed } = closeOptions;
 
 
   if (!confirmClose || isConfirmed) {
-    setState({ isOpen: false });
+    state.isOpen = false;
     observer.unobserve(toastRef);
     setTimeout(() => {
       portal.remove(id);
@@ -29,7 +29,7 @@ export function closeToast(params: {
 
       portalElement.removeEventListener('close', onClosePortal);
       onDestroy();
-    }, animationDuration);
+    }, (animation.out?.animationDuration || 1) * 1000);
 
     onClose();
   } else {

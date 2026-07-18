@@ -1,23 +1,22 @@
-import { createState } from '@pastweb/tools';
-import { INITIAL_STATE } from './constants';
+import { reactive } from '@pastweb/tools';
 import {
   bringToFront as _bringToFront,
   closeWindow as _closeWindow,
+  getContext as _getContext,
   onClosePortal as _onClosePortal,
   onMounted as _onMounted,
-  onKeyDown,
-  getParentWindow as _getParentWindow,
   onBackdropClick,
+  onKeyDown,
 } from './util';
 import type {
+  CloseOptions,
   WindowControllerDefaultProps,
   WindowControllerMediator,
   WindowControllerState,
-  CloseOptions,
 } from './types';
 
-export function windowController(props: WindowControllerDefaultProps): WindowControllerMediator {
-  const { state, setState } = createState<WindowControllerState>(INITIAL_STATE);
+export function windowControllerMediator(props: WindowControllerDefaultProps): WindowControllerMediator {
+  const state = reactive<WindowControllerState>({ isOpen: true });
 
   let confirmClose: (() => void) | null = null;
   let mountElement: HTMLElement | null = null;
@@ -27,7 +26,7 @@ export function windowController(props: WindowControllerDefaultProps): WindowCon
       props,
       onClosePortal,
       confirmClose,
-      setState,
+      state,
       closeOptions,
     });
   }
@@ -40,25 +39,23 @@ export function windowController(props: WindowControllerDefaultProps): WindowCon
       props,
       windowElement,
       onClosePortal,
-      setState,
       bringToFront,
       setMountElement: element => mountElement = element,
     });
   }
 
-  function getParentWindow(inject: Record<string, any> = {}) {
-    return _getParentWindow({
+  function getContext() {
+    return _getContext({
       props,
       closeWindow,
       setConfirm: fn => confirmClose = fn,
       bringToFront,
-      inject,
     });
   }
 
   return {
     state,
-    getParentWindow,
+    getContext,
     onMounted,
     onBackdropClick: () => onBackdropClick(props, closeWindow),
     onKeyDown: (e) => onKeyDown(props, e, closeWindow),

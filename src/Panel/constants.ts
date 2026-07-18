@@ -3,11 +3,10 @@ import { noop } from '@pastweb/tools';
 export const DEFAULT_PROPS = {
   border: true,
   borderRadius: true,
-  class: '',
+  className: '',
   title: '',
   closeButton: true,
-  rtl: false,
+  rtl: true,
   onClose: noop,
   contentPadding: 0,
-  childProps: {},
 };

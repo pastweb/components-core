@@ -1,8 +1,9 @@
 export { DEFAULT_PROPS } from './contrants';
-export { checkbox } from './checkbox.mediator';
+export { checkboxMediator } from './checkbox.mediator';
+
 export type {
-  CheckboxProps,
   CheckboxDefaultProps,
-  CheckboxState,
   CheckboxMediator,
+  CheckboxProps,
+  CheckboxState,
 } from './types';

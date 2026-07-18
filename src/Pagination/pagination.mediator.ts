@@ -1,18 +1,21 @@
-import { createState, effect } from '@pastweb/tools';
+import { reactive, effect } from '@pastweb/tools';
 import { DOTS_INITIAL, DOTS_LEFT, DOTS_RIGHT } from './constants';
 import type { PaginationDefaultProps, PaginationMediator, PaginationState } from './types';
 
 const getPageNumbers = (total: number): number[] => Array.from({ length: total }, (_, i) => i + 1);
 
-export function pagination(props: PaginationDefaultProps): PaginationMediator {
-  const { state, setState } = createState<PaginationState>({
+export function paginationMediator(props: PaginationDefaultProps): PaginationMediator {
+  const state = reactive<PaginationState>({
     current: props.current,
     pages: [],
   });
 
   let numberOfPages = getPageNumbers(props.total);
 
-  effect(props, () => { setState({ current: props.current }); }, 'current');
+  effect(
+    current => { state.current = current; },
+    () => props.current,
+  );
 
   function calcDots() {
     const { current, pages } = state;
@@ -55,25 +58,28 @@ export function pagination(props: PaginationDefaultProps): PaginationMediator {
       }
     }
 
-    setState({ pages: tempNumberOfPages });
+    state.pages = tempNumberOfPages;
   }
 
   calcDots();
 
-  effect(state, calcDots, 'current');
-  effect(props, () => {
-    numberOfPages = getPageNumbers(props.total);
-    calcDots();
-  }, 'total');
+  effect(calcDots, () => state.current);
+  effect(
+    total => {
+      numberOfPages = getPageNumbers(total);
+      calcDots();
+    },
+    () => props.total,
+  );
 
   function onNext() {
     const newPage = state.current + 1;
-    setState({ current: newPage });
+    state.current = newPage;
     props.onChange(newPage);
   }
   function onPrev() {
     const newPage = state.current - 1;
-    setState({ current: newPage });
+    state.current = newPage;
     props.onChange(newPage);
   }
 
@@ -92,7 +98,7 @@ export function pagination(props: PaginationDefaultProps): PaginationMediator {
       newPage = (pages[3] as number) - 2;
     }
 
-    setState({ current: newPage as number });
+    state.current = newPage as number;
     props.onChange(newPage as number);
   }
 

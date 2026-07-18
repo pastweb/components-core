@@ -1,4 +1,6 @@
 import type { ClassValue, Portal } from '@pastweb/tools';
+import type { PLACEMENT } from './constants';
+import { Animation } from '../types';
 
 export type CloseOptions = { id?: string, isConfirmed?: boolean };
 
@@ -7,14 +9,11 @@ export interface ToastControllerProps {
   portal?: Portal;
   portalElement?: HTMLElement;
   entryId?: string;
-
-  position?: string;
+  placement?: PLACEMENT;
   padding?: number;
   delay?: number;
   timeUpdate?: number;
-  animation?: string;
-  animationDuration?: number;
-
+  animation?: Animation;
   closeOnEscKey?: boolean;
   pauseTimerOnOver?: boolean;
   resetTimerOnPause?: boolean;
@@ -28,14 +27,11 @@ export interface ToastControllerDefaultProps {
   portal: Portal;
   portalElement: HTMLElement;
   entryId: string;
-
-  position: string;
+  placement: PLACEMENT;
   padding: number;
   delay: number;
   timeUpdate: number;
-  animation: string;
-  animationDuration: number;
-
+  animation: Animation;
   closeOnEscKey: boolean;
   pauseTimerOnOver: boolean;
   resetTimerOnPause: boolean;
@@ -44,14 +40,13 @@ export interface ToastControllerDefaultProps {
   onKeyDown: (e: any) => void;
 };
 
-export type ParentToast = {
+export type ToastContext = {
   toastId: string;
-  props: Record<string, any>;
+  props: ToastControllerDefaultProps;
   close: () => void;
   update: (newProps: { [propName: string]: any }) => boolean;
   setConfirm: (fn: () => void) => void;
   setTime: (fn: (percent: number) => void) => void;
-  inject: Record<string, any>;
 };
 
 export interface ToastControllerState {
@@ -60,7 +55,7 @@ export interface ToastControllerState {
   y: string;
   top: number;
   bottom: number;
-}
+};
 
 export type ToastData = {
   portalElement: HTMLElement;
@@ -74,9 +69,9 @@ export type ToastData = {
 export interface ToastControllerMediator {
   state: ToastControllerState;
   data: ToastData;
-  getParentToast: (inject?: Record<string, any>) => ParentToast;
+  getContext: () => ToastContext;
   onMouseOver: () => void;
   onMouseLeave: () => void;
   onMounted: (toastElement: HTMLElement) => void;
   onKeyDown: (e: any) => void;
-}
+};

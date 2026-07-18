@@ -1,12 +1,16 @@
-export { ACCORDION_DEFAULT_PROPS, ACCORDION_PANEL_DEFAULT_PROPS } from './constants';
-
-export { accordionPanel } from './accordionPanel.mediator';
+export { accordionMediator } from './accordion.mediator';
+export { ACCORDION_CONTEXT_KEY, DEFAULT_PROPS } from './constants';
+export { accordionPanelMediator, DEFAULT_ACCORDION_PANEL_PROPS } from './AccordionPanel';
 
 export type {
+  AccordionContext,
   AccordionProps,
   AccordionDefaultProps,
+  AccordionMediator,
+} from './types';
+
+export type {
   AccordionPanelProps,
   AccordionPanelDefaultProps,
-  AccordionItem,
-  AccordionPanelMediatior,
-} from './types';
+  AccordionPanelMediator,
+} from './AccordionPanel';

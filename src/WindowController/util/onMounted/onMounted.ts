@@ -4,14 +4,13 @@ import type { WindowControllerDefaultProps } from '../../types';
 
 export function onMounted(params: {
   props: WindowControllerDefaultProps;
-  setState: (state: Record<string, any>) => void;
   windowElement: HTMLElement;
   onClosePortal: (e: any) => void;
   bringToFront: () => void;
   setMountElement: (element: HTMLElement) => void;
 }): void {
-  const { props, windowElement, setState, onClosePortal, bringToFront, setMountElement } = params;
-  const { portalElement, width, height, mode, resizable, moveCursor, resizeCursor } = props;
+  const { props, windowElement, onClosePortal, bringToFront, setMountElement } = params;
+  const { animation, portalElement, width, height, mode, resizable, moveCursor, resizeCursor } = props;
 
   portalElement.addEventListener('close', onClosePortal);
 
@@ -20,8 +19,7 @@ export function onMounted(params: {
 
   setTimeout(() => {
     windowElement.focus();
-    setState({ animationClass: '' });
-  }, 250);
+  }, ((animation.in?.animationDuration || 1) * 1000) / 2);
 
   if (mode === MODE.floating || resizable) {
     const parent = windowElement.parentElement as HTMLElement;

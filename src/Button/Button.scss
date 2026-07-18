@@ -47,8 +47,10 @@
     margin-left: var(--Button_item_gap);
     display: inline-block;
     width: max-content;
-    
-    &:first-child { margin-left: 0; }
+
+    &:first-child {
+      margin-left: 0;
+    }
   }
 
   i {
@@ -65,26 +67,41 @@
   &:hover:not(:disabled):not(.is-loading) {
     box-shadow: inset var(--Button_size_box-shadow) var(--Button_inset_color_box-shadow);
   }
-  
+
   &:focus:not(:active):not(.is-loading) {
     box-shadow: var(--Button_size_box-shadow) var(--Button_color_box-shadow);
   }
 
-  &:focus-visible:not(.is-loading):not(:disabled) { outline: var(--pw_outline); }
+  &:focus-visible:not(.is-loading):not(:disabled) {
+    outline: var(--pw_outline);
+  }
 
   &:active:not(.is-loading),
-  &.is-active:not(.is-loading) { border-color: var(--Button_actiove_border-color); }
+  &.is-active:not(.is-loading) {
+    border-color: var(--Button_actiove_border-color);
+  }
 
   &:hover,
   &:focus,
-  &.is-active { transition: all var(--Button_transition-duration); }
-  &.is-rounded { border-radius: var(--Button_rounded_border-radius); }
-  &.is-full-width { width: 100%; }
+  &.is-active {
+    transition: all var(--Button_transition-duration);
+  }
+
+  &.is-rounded {
+    border-radius: var(--Button_rounded_border-radius);
+  }
+
+  &.is-full-width {
+    width: 100%;
+  }
 
   &.is-loading {
     cursor: wait;
     pointer-events: none;
-    .loading { display: flex; }
+
+    .loading {
+      display: flex;
+    }
   }
 
   .loading {

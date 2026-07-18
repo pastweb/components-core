@@ -1,3 +1,9 @@
+## Props
+| PropName       | type                               | required | default | Description                                                   |
+|----------------|------------------------------------|----------|---------|---------------------------------------------------------------|
+| cls            | (...args: ClassValue[]) => string; |    yes   |    -    | function to handle CssModules classes and classes switching   |
+| className      | string                             |    no    |    ""   | classes to be applied                                         |
+
 ```tsx
 import { withDefaults } from '@pastweb/x';
 import { defaultProps } from './constants';

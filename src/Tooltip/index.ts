@@ -1,10 +1,10 @@
 export { DEFAULT_PROPS } from './constants';
-export { tooltip } from './tooltip.mediator';
+export { tooltipMediator } from './tooltip.mediator';
 
 export type {
   Placement,
-  TooltipProps,
   TooltipDefaultProps,
-  TooltipState,
   TooltipMediator,
+  TooltipProps,
+  TooltipState,
 } from './types';

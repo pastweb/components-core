@@ -1,4 +1,5 @@
 import type { ClassValue, Portal } from '@pastweb/tools';
+import type { Animation } from '../types';
 
 export type CloseOptions = { id?: string, isConfirmed?: boolean };
 
@@ -13,10 +14,9 @@ export interface WindowControllerProps {
   resizeCursor?: boolean;
   width?: number;
   height?: number;
+  animation?: Animation;
   /** If is true on backdrop click will close the modal. */
   closeOnBackdropClick?: boolean;
-  /** Time in cent/seconds of leave animation to wait before to destroy the window. */
-  animLeaveTime?: number;
   /** function calld on modal close */
   onClose?: () => void;
   /** function calld on key down */
@@ -34,33 +34,31 @@ export interface WindowControllerDefaultProps {
   resizeCursor: boolean;
   width?: number;
   height?: number;
+  animation: Animation;
   /** If is true on backdrop click will close the modal. */
   closeOnBackdropClick: boolean;
-  /** Time in cent/seconds of leave animation to wait before to destroy the window. */
-  animLeaveTime: number;
   /** function calld on modal close */
   onClose: () => void;
   /** function calld on key down */
   onKeyDown: (e: any) => void;
 }
 
-export type ParentWindow = {
+export type WindowContext = {
   id: string;
-  props: Record<string, any>;
+  props: WindowControllerDefaultProps;
   close: (closeOptions?: CloseOptions) => void;
   setConfirm: (fn: (() => void)) => void;
   update: (props: Record<string, any>) => boolean;
   bringToFront: () => void;
-  inject: Record<string, any>;
 };
 
 export type WindowControllerState = {
-  animationClass: string;
+  isOpen: boolean;
 };
 
 export interface WindowControllerMediator {
   state: WindowControllerState;
-  getParentWindow: (inject?: Record<string, any>) => ParentWindow;
+  getContext: () => WindowContext;
   onMounted: (windowElement: HTMLElement) => void;
   onBackdropClick: () => void;
   onKeyDown: (e: any) => void;

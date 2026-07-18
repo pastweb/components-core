@@ -5,6 +5,6 @@ export const DEFAULT_PROPS = {
   className: '',
   onChange: noop,
   value: false,
-  labelPosition: 'top',
+  labelPlacement: 'top-start',
   tabIndex: 0,
-} ;
+};

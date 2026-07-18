@@ -1,4 +1,5 @@
 .RangeSlider {
+  --RangeSlider_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
   --RangeSlider_background-color: var(--pw_control_background-color);
   --RangeSlider_border-color: var(--pw_border-color);
   --RangeSlider_border-width: var(--pw_border-width);
@@ -13,11 +14,72 @@
   --RangeSlider_track_height: 0.8em;
   --RangeSlider_track_border-radius: var(--pw_border-radius);
 
+  --RangeSlider_label_text_color: var(--pw_label_text_color);
+  --RangeSlider_font-size: var(--pw_font-size);
+  --RangeSlider_font-weight: var(--pw_semibold_font-weight);
+  --RangeSlider_line-height: var(--pw_line-height);
 
   display: flex;
   min-width: 300px;
+  margin: var(--RangeSlider_margin);
 
-  &.is-full-width { width: 100%; }
+  &.is-full-width {
+    width: 100%;
+  }
+
+  &.label-top,
+  &.label-top-start,
+  &.label-top-end {
+    flex-direction: column-reverse;
+  }
+
+  &.label-bottom,
+  &.label-bottom-start,
+  &.label-bottom-end {
+    flex-direction: column;
+  }
+
+  &.label-top,
+  &.label-bottom {
+    align-items: center;
+  }
+
+  &.label-top-start,
+  &.label-bottom-start {
+    align-items: flex-start;
+  }
+
+  &.label-top-end,
+  &.label-bottom-end {
+    align-items: flex-end;
+  }
+
+  &.label-left,
+  &.label-left-start,
+  &.label-left-end {
+    flex-direction: row-reverse;
+  }
+
+  &.label-right,
+  &.label-right-top,
+  &.label-right-end {
+    flex-direction: row;
+  }
+
+  &.label-left,
+  &.label-right {
+    align-items: center;
+  }
+
+  &.label-left-start,
+  &.label-right-start {
+    align-items: flex-end;
+  }
+
+  &.label-left-end,
+  &.label-right-end {
+    align-items: flex-start;
+  }
 
   /* The slider itself */
   &.is-disabled {
@@ -28,10 +90,14 @@
   .slider {
     appearance: none;
     font-size: inherit;
-    width: 100%; /* Full-width */
-    height: var(--RangeSlider_track_height); /* Specified height */
-    background-color: var(--RangeSlider_background-color); /* Grey background */
-    outline: none; /* Remove outline */
+    width: 100%;
+    /* Full-width */
+    height: var(--RangeSlider_track_height);
+    /* Specified height */
+    background-color: var(--RangeSlider_background-color);
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
     border: var(--RangeSlider_border-width) var(--RangeSlider_border-style) var(--RangeSlider_border-color);
     border-radius: var(--RangeSlider_track_border-radius);
 
@@ -40,23 +106,66 @@
       border: var(--RangeSlider_border-width) var(--RangeSlider_border-style) var(--RangeSlider_border-color);
       border-radius: var(--RangeSlider_thumb_border-radius);
       appearance: none;
-      width: var(--RangeSlider_thumb_width); /* Set a specific slider handle width */
-      height: var(--RangeSlider_thumb_height); /* Slider handle height */
-      background-color: var(--RangeSlider_background-color); /* Grey background */
+      width: var(--RangeSlider_thumb_width);
+      /* Set a specific slider handle width */
+      height: var(--RangeSlider_thumb_height);
+      /* Slider handle height */
+      background-color: var(--RangeSlider_background-color);
+      /* Grey background */
       transition: all var(--RangeSlider_transition-duration) ease;
-      cursor: pointer; /* Cursor on hover */
+      cursor: pointer;
+      /* Cursor on hover */
 
-      &:hover { background-color: var(--pw_background-color); }
+      &:hover {
+        background-color: var(--pw_background-color);
+      }
     }
 
     &::-moz-range-thumb {
-      width: var(--RangeSlider_thumb_width); /* Set a specific slider handle width */
-      height: var(--RangeSlider_thumb_height); /* Slider handle height */
-      background-color: var(--RangeSlider_background-color); /* Grey background */
+      width: var(--RangeSlider_thumb_width);
+      /* Set a specific slider handle width */
+      height: var(--RangeSlider_thumb_height);
+      /* Slider handle height */
+      background-color: var(--RangeSlider_background-color);
+      /* Grey background */
       transition: all var(--RangeSlider_transition-duration) ease;
-      cursor: pointer; /* Cursor on hover */
+      cursor: pointer;
+      /* Cursor on hover */
 
-      &:hover { background-color: var(--pw_background-color); }
+      &:hover {
+        background-color: var(--pw_background-color);
+      }
+    }
+  }
+
+  .label {
+    color: var(--RangeSlider_label_text_color);
+    font-size: var(--RangeSlider_font-size);
+    font-weight: var(--RangeSlider_font-weight);
+    line-height: var(--RangeSlider_line-height);
+
+    &.top,
+    &.top-start,
+    &.top-end {
+      margin-bottom: calc(var(--pw_vertical_margin) * 2);
+    }
+
+    &.bottom,
+    &.bottom-start,
+    &.bottom-end {
+      margin-top: calc(var(--pw_vertical_margin) * 2);
+    }
+
+    &.left,
+    &.left-start,
+    &.left-end {
+      margin-right: var(--pw_horizontal_margin);
+    }
+
+    &.right,
+    &.right-start,
+    &.right-end {
+      margin-left: var(--pw_horizontal_margin);
     }
   }
 }

@@ -1,7 +1,23 @@
 .Pagination {
-  --Pagination_pageButton_margin: var(--pw_vertical_margin) 0.125em;
-  --Pagination_pageButton_background-color: var(--pw_background-color);
+  --Pagination_button_margin: var(--pw_margin);
+  --Pagination_button_padding: var(--pw_padding);
+  --Pagination_button_background-color: var(--pw_background-color);
+  --Pagination_button_border-color: var(--pw_border-color);
+  --Pagination_button_border-width: var(--pw_border-width);
+  --Pagination_button_border-style: var(--pw_border-style);
+  --Pagination_button_border-radius: var(--pw_border-radius);
+  --Pagination_button_rounded_border-radius: var(--pw_rounded_border-radius);
+  --Pagination_button_text_color: var(--pw_text_strong_color);
+  --Pagination_button_transition-duration: var(--pw_transition-duration);
+  --Pagination_button_disabled_opacity: var(--pw_disabled_opacity);
+  --Pagination_button_font-size: var(--pw_font-size);
+  --Pagination_button_font-weight: var(--pw_semibold_font-weight);
+  --Pagination_button_line-height: var(--pw_line-height);
+  --Pagination_button_color_box-shadow: var(--pw_color_box-shadow);
+  --Pagination_button_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
+  --Pagination_button_size_box-shadow: var(--pw_size_box-shadow);
 
+  --Pagination_pageButton_margin: var(--pw_vertical_margin) 0.125em;
   --Pagination_pageButton_active_color: var(--pw_text_strong_color);
   --Pagination_pageButton_active_font-weight: var(--pw_bold_font-weight);
   --Pagination_pageButton_active_background-color: var(--pw_control_background-color);
@@ -11,7 +27,63 @@
   justify-content: space-between;
   align-items: center;
 
-  &.is-full-width { width: 100%; }
+  &.is-full-width {
+    width: 100%;
+  }
+
+  .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: var(--Pagination_button_padding);
+    margin: var(--Pagination_button_margin);
+
+    background-color: var(--Pagination_button_background-color);
+    border: var(--Pagination_button_border-width) var(--Pagination_button_border-style) var(--Pagination_button_border-color);
+    border-radius: var(--Pagination_button_border-radius);
+    color: var(--Pagination_button_text_color);
+    white-space: nowrap;
+
+    font-size: var(--Pagination_button_font-size);
+    font-weight: var(--Pagination_button_font-weight);
+    line-height: var(--Pagination_button_line-height);
+
+    cursor: pointer;
+    transition: all var(--Pagination_button_transition-duration);
+
+    i {
+      color: var(--Pagination_button_icon_color);
+    }
+
+    &:disabled {
+      opacity: var(--Pagination_button_disabled_opacity);
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    &:hover:not(:disabled) {
+      box-shadow: inset var(--Pagination_button_size_box-shadow) var(--Pagination_button_inset_color_box-shadow);
+    }
+
+    &:focus:not(:active) {
+      box-shadow: var(--Pagination_button_size_box-shadow) var(--Pagination_button_color_box-shadow);
+    }
+
+    &:focus-visible:not(:disabled) {
+      outline: var(--pw_outline);
+    }
+
+    &:hover,
+    &:focus,
+    &.is-active {
+      transition: all var(--Pagination_button_transition-duration);
+    }
+
+    &.is-rounded {
+      border-radius: var(--Pagination_button_rounded_border-radius);
+    }
+  }
 
   .pages {
     display: flex;
@@ -21,7 +93,20 @@
 
     .page {
       margin: var(--Pagination_pageButton_margin);
-      background-color: var(--Pagination_pageButton_background-color);
+      padding: var(--Pagination_button_padding);
+
+      background-color: var(--Pagination_button_background-color);
+      border: var(--Pagination_button_border-width) var(--Pagination_button_border-style) var(--Pagination_button_border-color);
+      border-radius: var(--Pagination_button_border-radius);
+      color: var(--Pagination_button_text_color);
+      white-space: nowrap;
+
+      font-size: var(--Pagination_button_font-size);
+      font-weight: var(--Pagination_button_font-weight);
+      line-height: var(--Pagination_button_line-height);
+
+      cursor: pointer;
+      transition: all var(--Pagination_button_transition-duration);
 
       &.is-active {
         color: var(--Pagination_pageButton_active_color);

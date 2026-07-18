@@ -1,3 +1,4 @@
+export { textAreaMediator } from './textArea.mediator';
 export { DEFAULT_PROPS } from './constants';
 
-export type { TextAreaProps, TextAreaDefaultProps } from './types';
+export type { TextAreaDefaultProps, TextAreaProps, TextAreaMediator } from './types';

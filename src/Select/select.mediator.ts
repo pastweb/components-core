@@ -1,37 +1,93 @@
-import { createState, effect } from '@pastweb/tools';
+import { effect, reactive, kebabize } from '@pastweb/tools';
+import { computePosition, flip, offset, shift } from '@floating-ui/dom';
 import type { SelectDefaultProps, SelectMediator, SelectState } from './types';
 
-export function select(props: SelectDefaultProps): SelectMediator {
-  let label: HTMLElement;
-  let list: HTMLElement;
+export function selectMediator(props: SelectDefaultProps): SelectMediator {
+  let targetEl: HTMLElement;
+  let listEl: HTMLElement;
   let current: HTMLElement | null = null;
+  let itemsCounter = 0;
 
-  const { state, setState } = createState<SelectState>({
+  const state = reactive<SelectState>({
+    inputId: getInputId(),
     isOpen: false,
     value: props.value,
-    highlightIndex: props.options.findIndex((option) => option.value === props.value) || null,
+    highlightIndex: null,
   });
 
-  effect<SelectDefaultProps>(props, ({ value }) => {
-    if (value === state.value) return;
+  effect(
+    value => { if (value !== state.value) state.value = value; },
+    () => props.value,
+  );
 
-    setState({ value });
-  }, 'value');
+  effect(
+    () => { state.inputId = getInputId(); },
+    [() => props.id, () => props.name, () => props.label],
+  );
+
+  const registerItem = () => itemsCounter++;
+
+  function getInputId(): string {
+    const { id, name, label } = props;
+
+    return id ? id : name ? `select-${name}` : label ? `select-${kebabize(label)}` : 'select';
+  }
 
   function open(): void {
-    if (props.disabled || props.isLoading) return;
-    current = list.children[0] as HTMLElement;
-    setState({ isOpen: true });
+    if (props.disabled || props.className.includes('is-loading')) return;
+
+    current = listEl.children[0] as HTMLElement;
+    updatePosition();
+    state.isOpen = true;
   }
 
   function close(value: any = state.value): void {
-    if (props.disabled || props.isLoading) return;
-    label.focus();
-    setState({ value, isOpen: false, highlightIndex: null });
+    if (props.disabled || props.className.includes('is-loading')) return;
+
+    state.value = value;
+    state.isOpen = false;
+    state.highlightIndex = null;
+    targetEl.focus();
+  }
+
+  function updatePosition() {
+    // Get trigger's bounding box relative to the viewport
+    const rect = targetEl.getBoundingClientRect();
+
+    // Create a virtual reference element for viewport-based positioning
+    const virtualReference = {
+      getBoundingClientRect() {
+        return {
+          width: rect.width,
+          height: rect.height,
+          top: rect.top + window.scrollY,
+          right: rect.right + window.scrollX,
+          bottom: rect.bottom + window.scrollY,
+          left: rect.left + window.scrollX,
+          x: rect.left + window.scrollX,
+          y: rect.top + window.scrollY,
+        };
+      },
+    };
+
+    computePosition(virtualReference, listEl, {
+      placement: 'bottom',
+      middleware: [
+        offset(props.offset),
+        shift({ padding: 3 }),
+        flip(),
+      ],
+    }).then(({ x, y, }) => {
+      // Ensure position is relative to viewport
+      Object.assign(listEl.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+      });
+    });
   }
 
   function onChange(value: any): void {
-    if (props.disabled || props.isLoading) return;
+    if (props.disabled || props.className.includes('is-loading')) return;
 
     close(value);
     props.onChange(value);
@@ -39,7 +95,7 @@ export function select(props: SelectDefaultProps): SelectMediator {
 
   function onClick(e: any): void {
     e.stopPropagation();
-    if (props.disabled || props.isLoading) return;
+    if (props.disabled || props.className.includes('is-loading')) return;
 
     if (state.isOpen) close();
     else open();
@@ -50,10 +106,13 @@ export function select(props: SelectDefaultProps): SelectMediator {
     close();
   }
 
+  function onBlur() {
+    close();
+  }
+
   function selectPrevious(e: any): void {
     if (props.disabled || !state.isOpen) return;
 
-    const { options } = props;
     let highlightIndex = state.highlightIndex;
 
     switch (state.highlightIndex) {
@@ -63,26 +122,25 @@ export function select(props: SelectDefaultProps): SelectMediator {
           close();
           return;
         }
-        highlightIndex = options.length - 1;
+        highlightIndex = itemsCounter;
         break;
       default:
         highlightIndex = state.highlightIndex - 1;
         break;
     }
 
-    current = list.children[highlightIndex] as HTMLElement;
+    current = listEl.children[highlightIndex] as HTMLElement;
     current.focus();
-    setState({ highlightIndex });
+    state.highlightIndex = highlightIndex;
   }
 
   function selectNext(e: any): void {
     if (props.disabled || !state.isOpen) return;
 
-    const { options } = props;
     let highlightIndex = state.highlightIndex;
 
     switch (state.highlightIndex) {
-      case options.length - 1:
+      case itemsCounter:
       case null:
         if (e.key === 'Tab') {
           close();
@@ -95,9 +153,9 @@ export function select(props: SelectDefaultProps): SelectMediator {
         break;
     }
 
-    current = list.children[highlightIndex] as HTMLElement;
+    current = listEl.children[highlightIndex] as HTMLElement;
     current.focus();
-    setState({ highlightIndex });
+    state.highlightIndex = highlightIndex;
   }
 
   function onKeyDown(e: any) {
@@ -124,27 +182,31 @@ export function select(props: SelectDefaultProps): SelectMediator {
   }
 
   function onOptionKeyDown(e: any, value: any) {
-    switch (e.key) {
-      case 'Enter':
-      case ' ':
-        onChange(value);
-        break;
-        defalut: onKeyDown(e);
-    }
+    if (e.key === 'Enter' || e.key === ' ') onChange(value);
+    else onKeyDown(e);
   }
 
-  function onMounted(labelElement: HTMLElement, listElement: HTMLElement): void {
-    label = labelElement;
-    list = listElement;
+  function onMounted(targetElement: HTMLElement, listElement: HTMLElement): void {
+    targetEl = targetElement;
+    listEl = listElement;
 
-    list.addEventListener('blur', close);
     window.addEventListener('click', onClickOut);
+    updatePosition();
   }
 
   function onUnmounted() {
-    list.removeEventListener('blur', close);
     window.removeEventListener('click', onClickOut);
   }
 
-  return { state, onChange, onClick, onKeyDown, onOptionKeyDown, onMounted, onUnmounted };
+  return {
+    state,
+    onBlur,
+    onChange,
+    onClick,
+    onKeyDown,
+    onOptionKeyDown,
+    onMounted,
+    onUnmounted,
+    registerItem,
+  };
 }

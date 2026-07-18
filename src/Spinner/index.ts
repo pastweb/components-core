@@ -1,3 +1,3 @@
 export { DEFAULT_PROPS } from './constants';
 
-export type { SpinnerProps, SpinnerDefaultProps } from './types';
+export type { SpinnerDefaultProps, SpinnerProps } from './types';

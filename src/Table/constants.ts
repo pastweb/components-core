@@ -1,0 +1,28 @@
+import { noop } from '@pastweb/tools';
+
+export const DEFAULT_PROPS = {
+  className: '',
+  enableRowSelection: false,
+  enableExpanding: false,
+  enableColumnResizing: false,
+  enableColumnOrdering: false,
+  enableColumnPinning: false,
+  enableColumnSorting: false,
+  enableGrouping: false,
+  manualSorting: false,
+  manualFiltering: false,
+  manualGrouping: false,
+  onSortingChange: noop,
+  onGlobalFilterChange: noop,
+  onColumnFiltersChange: noop,
+  onRowSelectionChange: noop,
+  onColumnVisibilityChange: noop,
+  onColumnOrderChange: noop,
+  onColumnPinningChange: noop,
+  onColumnSizingChange: noop,
+  onColumnFilterVisiblityChange: noop,
+  onGroupingChange: noop,
+  onExpandedChange: noop,
+  getRowId: (row: any, index: number) => index.toString(),
+  getSubRows: () => undefined,
+};

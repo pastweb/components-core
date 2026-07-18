@@ -1,3 +1,22 @@
+## Tab
+| PropName   | type                               | required | default | Description                                                   |
+|------------|------------------------------------|----------|---------|---------------------------------------------------------------|
+| label      | string \| number \| any            |    yes   |    ""   | label text or content for the tab header                      |
+| className  | string                             |    no    |    ""   | additional classes to be applied to the tab                   |
+| onClick    | () => void                         |    no    |   noop  | callback fired when the tab is clicked                        |
+| content    | string \| number \| any            |    no    |    ""   | content to render in the active tab body                      |
+
+## Tabs
+
+### Props
+| PropName     | type                               | required | default | Description                                                   |
+|--------------|------------------------------------|----------|---------|---------------------------------------------------------------|
+| cls          | (...args: ClassValue[]) => string; |    yes   |    -    | function to handle CssModules classes and classes switching   |
+| className    | string                             |    no    |    ""   | additional classes to be applied to the tabs                  |
+| tabs         | Tab[]                              |    yes   |    -    | array of tabs to render                                       |
+| activeTab    | number                             |    no    |    0    | index of the initially active tab (0-based)                   |
+| content      | any                                |    no    |    -    | optional custom content for the active tab (overrides tab.content) |
+
 ```tsx
 import { withDefaultProps, useMediator } from '@pastweb/x';
 import { tabs } from '@pastweb/components/Tabs';
@@ -12,7 +31,7 @@ export function Tabs(props: TabsProps) {
   return (
     <div class={p.cls('Tabs', p.className)}>
       <header>
-        <ul>
+        <ul class={p.cls('TabList')}>
           {p.tabs.map((tab: Tab, i: number) => {
             const tb = withDefaultProps<TabDefaultProps>(tab, DEFAULT_TAB_PROPS);
             return (

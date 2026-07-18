@@ -1,12 +1,4 @@
-## Props
-
-| PropName     | type                                   | required | default                    | Description                                                                |
-|--------------|----------------------------------------|----------|----------------------------|----------------------------------------------------------------------------|
-| cls          | (...args: ClassValue[]) => string;     |    yes   |              -             | function to handle CssModules classes and classes switching                |
-| src          | string                                 |    no    |             ""             | It can contains the image url or the svg raw to be embedded in the <i/> tag|
-| name         | Record<string, string>                 |    no    |             {}             | icon name with the format `collection:name` to match the `collection` structure ot the [iconify](https://iconify.design/docs/api/) api |
-| collection   | Record<string, Record<string, string>> |    no    |             {}             | Object that contains the icons collection with key a collection name and an object as `{ iconName: '...source' }`.           |
-| apiUrl       | string                                 |    no    | https://api.iconify.design | the api url used to retrive the icon |
+## Icon
 
 The component is able to switch between img icons and svg sources provided via the `src` prop.
 If an asset URL or a data URL is assigned to the prop `src` the component will render an `<img />` tag inside the `<i/>` tag passing the src vaule to it.
@@ -17,6 +9,16 @@ is intended to be a `URL/dataURL`or an `svg` string.
 To retive the icon from a `collection` you can use the `name` porps with the syntax `collectionName:iconName`, if the icon is not found inside the collection or the collection it is not present,
 the component will to find the collection and the icon calling the [iconify](https://iconify.design/docs/api/) api.
 For more info about iconfy please visit the official [website](https://iconify.design/docs/).
+
+### Props
+| PropName   | type                               | required | default              | Description                                                   |
+|------------|------------------------------------|----------|----------------------|---------------------------------------------------------------|
+| cls        | (...args: ClassValue[]) => string; |    yes   |    -                 | function to handle CssModules classes and classes switching   |
+| className  | string                             |    no    |    ""                | additional classes to be applied to the icon                  |
+| src        | string                             |    no    |    ""                | direct URL to an image/icon file (renders as <img> if provided)|
+| name       | string                             |    no    |    ""                | name of the icon from Iconify with the format `collection:name` to match the `collection` structure ot the [iconify](https://iconify.design/docs/api/) api |
+| collection | Collection                         |    no    |    {}                | Object that contains the icons collection with key a collection name and an object as `{ iconName: '...source' }`.           |
+| apiUrl     | string                             |    no    | https://api.iconify.design | API endpoint for fetching Iconify icons                  |
 
 ## Template
 ```tsx

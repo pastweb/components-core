@@ -1,4 +1,9 @@
 export { DEFAULT_PROPS } from './constants';
-export { pagination } from './pagination.mediator';
+export { paginationMediator } from './pagination.mediator';
 
-export type { PaginationProps, PaginationDefaultProps, PaginationState, PaginationMediator } from './types';
+export type {
+  PaginationDefaultProps,
+  PaginationMediator,
+  PaginationProps,
+  PaginationState,
+} from './types';

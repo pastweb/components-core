@@ -4,6 +4,6 @@ export const DEFAULT_PROPS = {
   className: '',
   onChange: noop,
   resizeable: false,
-  labelPosition: 'top',
+  labelPlacement: 'top-start',
   tabIndex: 0,
 };

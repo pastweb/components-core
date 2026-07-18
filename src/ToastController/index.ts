@@ -1,30 +1,22 @@
 export {
+  ANIMATIONS,
   DEFAULT_PROPS,
-  ANIMATION,
-  JUSTIFY,
-  POSITION,
   INTERVAL_MS,
+  JUSTIFY,
+  PLACEMENT,
   TOAST_REMOVED_EVENT,
+  TOAST_CONTEXT_KEY,
 } from './constants';
 
-export {
-  getToastIndex,
-  getToastY,
-  initData,
-  closeToast,
-  onClosePortal,
-  getParentToast,
-  calculateTime,
-  calculateY,
-} from './util';
-
-export { toastController } from './toastController.mediator';
+export { toastControllerMediator } from './toastController.mediator';
 
 export type {
-  ToastControllerProps,
+  ToastContext,
   ToastControllerDefaultProps,
+  ToastControllerMediator,
+  ToastControllerProps,
   ToastControllerState,
   ToastData,
-  ParentToast,
-  ToastControllerMediator,
 } from './types';
+
+export type { AnimationInfo, Animation } from '../types';

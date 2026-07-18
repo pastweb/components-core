@@ -1,30 +1,59 @@
+import { reactive, effect } from '@pastweb/tools';
 import { arrow, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { createState, effect } from '@pastweb/tools';
-import { CLICK_OUT_TIME_GAP } from './constants';
-import type { DropDownDefaultProps, DropDownMediator, DropDownState } from './types';
+import { idCache } from '../utils';
+import type { DropDownDefaultProps, DropDownMediator, DropDownState, DropDownContext } from './types';
 
-export function dropdown(props: DropDownDefaultProps): DropDownMediator {
-  const { state, setState } = createState<DropDownState>({ isVisible: !!props.isVisible });
-  effect<DropDownDefaultProps>(props, ({ isVisible }) => setState({ isVisible }), 'isVisible');
+export function dropdownMediator(props: DropDownDefaultProps): DropDownMediator {
+  const uid = idCache.getId();
 
-  let reference: HTMLElement;
-  let referenceEl: HTMLElement;
+  const state = reactive<DropDownState>({
+    isVisible: !!props.isVisible,
+    uid,
+    triggerId: `dropdown-trigger${uid}`,
+    menuId: `dropdown-menu${uid}`,
+  });
+
+  effect(
+    isVisible => { state.isVisible = isVisible; },
+    () => props.isVisible,
+  );
+
+  effect(
+    () => {
+      removeEventListeners();
+      addEventListeners();
+
+      if (state.isVisible) updatePosition();
+    },
+    () => props.visibleOn,
+  );
+
+  effect(
+    ([isVisible]) => {
+      if (isVisible) updatePosition();
+      props.onChange(isVisible);
+    },
+    [() => state.isVisible, () => props.arrow, props.placement],
+  );
+
+  let rootEl: HTMLElement;
+  let targetEl: HTMLElement;
+  let containerEl: HTMLElement;
   let contentEl: HTMLElement;
-  let arrowEl: HTMLElement;
+  let arrowEl: HTMLElement | null | undefined;
 
   let elementClicked = false; // this is used as help to determinate is the user click out
 
-  effect<DropDownState>(state, ({ isVisible }) => {
-    if (!isVisible) return;
-
-    updatePosition();
-  }, 'isVisible');
+  // porps and state are passed here to be reactive
+  function getContext(props: DropDownDefaultProps, state: DropDownState): DropDownContext {
+    return { props, onClick, onKeyDown, registerContent, registerTarget, setArrowRef, state };
+  }
 
   function updatePosition() {
     const { placement } = props;
 
     // Get trigger's bounding box relative to the viewport
-    const rect = referenceEl.getBoundingClientRect();
+    const rect = targetEl.getBoundingClientRect();
 
     // Create a virtual reference element for viewport-based positioning
     const virtualReference = {
@@ -42,21 +71,30 @@ export function dropdown(props: DropDownDefaultProps): DropDownMediator {
       },
     };
 
-    const arrowWidth = parseFloat(getComputedStyle(arrowEl).width);
-    computePosition(virtualReference, contentEl, {
+    const offsetValue = props.arrow && arrowEl ? parseFloat(getComputedStyle(arrowEl as HTMLElement).width) / 2 : props.offset;
+    const cs = props.arrow ? getComputedStyle(contentEl as HTMLElement) : null;
+    const borderWidth = props.arrow ? parseFloat((cs as CSSStyleDeclaration).borderWidth) : 0;
+    const borderRadious = props.arrow ? parseFloat((cs as CSSStyleDeclaration).borderRadius) : 0;
+    const height = props.arrow ? parseFloat((cs as CSSStyleDeclaration).height) : 0;
+
+    computePosition(virtualReference, containerEl, {
       placement,
       middleware: [
-        offset(arrowWidth / 2),
-        shift({ padding: 2 }),
-        arrow({ element: arrowEl }),
+        offset(offsetValue),
+        shift({ padding: 3 }),
+        ...props.arrow ? [arrow({ element: arrowEl as HTMLElement })] : [],
         flip(),
       ],
     }).then(({ x, y, placement, middlewareData }) => {
       // Ensure position is relative to viewport
-      Object.assign(contentEl.style, {
-        left: `${x}px`,
-        top: `${y}px`,
-      });
+      if (!props.arrow) {
+        Object.assign(containerEl.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+        });
+
+        return;
+      }
 
       const { x: arrowX, y: arrowY } = middlewareData.arrow as any;
       const staticSide = {
@@ -64,13 +102,13 @@ export function dropdown(props: DropDownDefaultProps): DropDownMediator {
         right: 'left',
         bottom: 'bottom',
         left: 'right',
-      }[placement.split('-')[0]];
+      }[placement.split('-')[0]] as string;
 
       const sideValue: Record<string, string> = {
-        left: `-${arrowWidth + 1}px`,
-        right: `-${arrowWidth + 1}px`,
-        top: `${arrowWidth + 1}px`,
-        bottom: `-${arrowWidth + 1}px`,
+        left: `-${(offsetValue * 2) + (borderWidth - (borderRadious / 2))}px`,
+        right: `-${(offsetValue * 2) + (borderWidth - (borderRadious / 2))}px`,
+        top: `${height}px`,
+        bottom: `-${offsetValue * 2}px`,
       };
 
       const arrowDeg: Record<string, number> = {
@@ -80,88 +118,160 @@ export function dropdown(props: DropDownDefaultProps): DropDownMediator {
         left: 90,
       };
 
-      const finalPlacement = middlewareData.offset?.placement || placement;
+      const currPlacement = middlewareData.offset?.placement || placement;
+      const [finalPlacement, position] = currPlacement.split('-');
+      // const left = arrowX != null ? `${!position ? arrowX : position === 'start' ? arrowY + borderRadious : arrowY - borderRadious}px` : ''
+      const top = arrowY != null ? `${!position ? arrowY : position === 'start' ? arrowY - (borderRadious / 2) : arrowY + (borderRadious / 2)}px` : ''
 
-      Object.assign(arrowEl.style, {
-        left: arrowX != null ? `${arrowX}px` : '',
-        top: arrowY != null ? `${arrowY}px` : '',
-        [(staticSide as string) === 'bottom' ? 'top' : (staticSide as string)]: sideValue[staticSide as string],
+      Object.assign(containerEl.style, {
+        left: `${finalPlacement === 'left' ? x + (offsetValue - 5) : finalPlacement === 'right' ? x - (offsetValue - 5) : x}px`,
+        top: `${!position ? y : position === 'start' ? y + (borderRadious / 2) : y - (borderRadious / 2)}px`,
+      });
+
+      if (!arrowEl) return;
+
+      Object.assign((arrowEl as HTMLElement).style, {
+        top,
+        // top: arrowY != null ? `${arrowY}px` : '',
+        // left,
+        left: arrowX != null ? `${finalPlacement === 'left' || finalPlacement === 'right' ? arrowX - 10 : arrowX}px` : '',
+        [staticSide === 'bottom' ? 'top' : staticSide]: sideValue[staticSide],
         transform: `rotate(${arrowDeg[finalPlacement]}deg)`,
       });
     });
   }
 
+  function registerTarget(target: HTMLElement): void {
+    targetEl = target;
+  }
+
+  function registerContent(
+    container: HTMLElement,
+    content: HTMLElement,
+    arrow?: HTMLElement | null,
+  ): void {
+    containerEl = container;
+    contentEl = content;
+    arrowEl = arrow;
+  }
+
   function onClick() {
-    if (props.disabled) return;
+    const { disabled, visibleOn, onClick, clickTimeGap } = props;
+    if (disabled || visibleOn !== 'click') return;
 
     elementClicked = true;
-    setState({ isVisible: !state.isVisible });
-    props.onClick();
 
     setTimeout(() => {
       elementClicked = false;
-    }, CLICK_OUT_TIME_GAP);
+      state.isVisible = !state.isVisible;
+      onClick();
+    }, clickTimeGap);
+  }
+
+  function onContext(e: any) {
+    if (props.disabled || props.visibleOn !== 'context') return;
+
+    e.preventDefault();
+    elementClicked = true;
+
+    setTimeout(() => {
+      elementClicked = false;
+      state.isVisible = !state.isVisible;
+      props.onContext();
+    }, props.clickTimeGap);
   }
 
   function onClickOut() {
     if (
-      props.visibleOn !== 'click' ||
       props.disabled ||
       !state.isVisible ||
-      elementClicked
+      elementClicked ||
+      !props.hideOnClickOut
     ) return;
 
-    setState({ isVisible: false });
+    state.isVisible = false;
     props.onClickOut();
   }
 
-  function onMouseEnter(): void {
-    if (props.disabled) return;
+  function onBlur() {
+    if (
+      props.disabled ||
+      !state.isVisible ||
+      !props.hideOnBlur
+    ) return;
 
-    setState({ isVisible: true });
+    state.isVisible = false;
+  }
+
+  function onMouseEnter(): void {
+    if (props.disabled || props.visibleOn !== 'over') return;
+
+    state.isVisible = true;
     props.onMouseEnter();
   }
 
 
   function onMouseLeave(): void {
-    if (props.disabled) return;
+    if (props.disabled || props.visibleOn !== 'over') return;
 
-    setState({ isVisible: false });
+    state.isVisible = false;
     props.onMouseLeave();
   }
 
-  function onMounted(root: HTMLElement, target: HTMLElement, content: HTMLElement, arrow: HTMLElement): void {
-    reference = root;
-    referenceEl = target;
-    contentEl = content;
-    arrowEl = arrow;
+  function onKeyDown(e: any): void {
+    if (e.key === 'Enter' || e.key === 'Space') onClick();
+  }
+
+  function addEventListeners(): void {
+    if (!rootEl) return;
 
     switch (props.visibleOn) {
-      case 'over':
-        reference.addEventListener('mouseenter', onMouseEnter);
-        reference.addEventListener('mouseleave', onMouseLeave);
-        break;
       case 'click':
-        reference.addEventListener('click', onClick);
-        if (props.hideOnClickOut) window.addEventListener('click', onClickOut);
+      case 'context':
+        window.addEventListener('click', onClickOut);
         break;
     }
+  }
 
+  function removeEventListeners(): void {
+    if (!rootEl) return;
+
+    switch (props.visibleOn) {
+      case 'click':
+      case 'context':
+        window.removeEventListener('click', onClickOut);
+        break;
+    }
+  }
+
+  function setArrowRef(arrow?: HTMLElement | null) {
+    arrowEl = arrow;
+  }
+
+  function onMounted(root: HTMLElement): void {
+    rootEl = root;
+    addEventListeners();
     updatePosition();
   }
 
-  function onUnmount() {
-    switch (props.visibleOn) {
-      case 'over':
-        reference.removeEventListener('mouseenter', onMouseEnter);
-        reference.removeEventListener('mouseleave', onMouseLeave);
-        break;
-      case 'click':
-        reference.removeEventListener('click', onClick);
-        if (props.hideOnClickOut) window.removeEventListener('click', onClickOut);
-        break;
-    }
+  const onUnmount = () => {
+    removeEventListeners();
+    idCache.removeId(uid);
   }
 
-  return { state, onMounted, onUnmount };
+  return {
+    onBlur,
+    onClick,
+    onContext,
+    onMounted,
+    onMouseEnter,
+    onMouseLeave,
+    onUnmount,
+    onKeyDown,
+    getContext,
+    registerContent,
+    registerTarget,
+    setArrowRef,
+    state,
+  };
 }

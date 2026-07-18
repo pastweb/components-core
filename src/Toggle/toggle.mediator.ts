@@ -1,21 +1,36 @@
-import { createState, effect } from '@pastweb/tools';
+import { effect, reactive } from '@pastweb/tools';
+import { idCache } from '../utils';
 import type { ToggleDefaultProps, ToggleMediator, ToggleState } from './types';
 
-export function toggle(props: ToggleDefaultProps): ToggleMediator {
-  const { state, setState } = createState<ToggleState>({ value: !!props.value });
+export function toggleMediator(props: ToggleDefaultProps): ToggleMediator {
+  const uid = idCache.getId();
+  const state = reactive<ToggleState>({
+    inputId: `${props.id}` || `toggle-${uid}`,
+    value: !!props.value,
+  });
 
-  function onChange(value: boolean): void {
+  effect(
+    value => { if (value !== state.value) state.value = value; },
+    () => props.value,
+  );
+
+  effect(
+    () => { state.inputId = `${props.id}` || `toggle-${uid}`; },
+    () => props.id,
+  );
+
+  function onChange(value: boolean, e: any): void {
     if (props.disabled) return;
-
-    setState({ value });
-    props.onChange(value);
+    state.value = value;
+    props.onChange(value, e);
   }
 
-  effect(props, ({ value }) => {
-    if (value === state.value) return;
+  const onUnmount = () => idCache.removeId(uid);
 
-    setState({ value });
-  }, 'value');
-
-  return { state, onChange };
+  return {
+    onChange,
+    onUnmount,
+    state,
+    uid,
+  };
 }

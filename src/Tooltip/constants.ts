@@ -3,4 +3,5 @@ export const DEFAULT_PROPS = {
   placement: 'top',
   className: '',
   disabled: false,
+  offset: 0,
 };

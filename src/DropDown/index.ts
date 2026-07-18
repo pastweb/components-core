@@ -1,10 +1,13 @@
-export { dropdown } from './dropdown.mediator';
-export { DEFAULT_PROPS } from './constants';
+export { dropdownMediator } from './dropdown.mediator';
+export { DROPDOWN_CONTEXT_KEY, DEFAULT_PROPS } from './constants';
 
 export type {
-  Placement,
-  DropDownProps,
+  AlignedPlacement,
+  DropDownContext,
   DropDownDefaultProps,
   DropDownMediator,
+  DropDownProps,
   DropDownState,
+  Placement,
+  Side,
 } from './types';

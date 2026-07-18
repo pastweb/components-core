@@ -13,10 +13,8 @@ export interface TextAreaProps {
   className?: string;
   maxLength?: number;
   onChange?: (value: string) => void;
-  loadingComponent?: any;
   label?: string;
-  labelPosition?: 'left' | 'right' | 'top' | 'bottom';
-  isLoading?: boolean;
+  labelPlacement?: 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end';
 }
 
 export interface TextAreaDefaultProps {
@@ -29,12 +27,20 @@ export interface TextAreaDefaultProps {
   name?: string;
   placeholder: string;
   disabled?: boolean;
-  className?: string;
+  className: string;
   maxLength?: number;
   resizeable?: boolean;
   onChange: (value: string) => void;
-  loadingComponent?: any;
   label?: string;
-  labelPosition: 'left' | 'right' | 'top' | 'bottom';
-  isLoading?: boolean;
+  labelPlacement: 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end';
+}
+
+export interface TextAreaState {
+  inputId: string;
+  isLoading: boolean;
+};
+
+export interface TextAreaMediator {
+  state: TextAreaState;
+  onUnmount: () => void;
 }

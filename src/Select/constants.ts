@@ -1,11 +1,12 @@
 import { noop } from '@pastweb/tools';
 
+export const SELECT_CONTEXT_KEY = '$$SelectContext';
+
 export const DEFAULT_PROPS = {
   className: '',
   onChange: noop,
-  isLoading: false,
   tabIndex: 0,
-  labelPosition: 'top',
-  placeholder: 'Select',
+  labelPlacement: 'top-start',
   closeOnSelect: true,
+  offset: 3,
 };

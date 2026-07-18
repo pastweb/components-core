@@ -11,13 +11,13 @@
   --Tabs_active_border-color: var(--pw_border-color);
   --Tabs_font-size: var(--pw_font-size);
   --Tabs_font-weight: var(--pw_semibold_font-weight);
-  --Tabs_padding: var(--pw_padding);
+  --Tabs_horizontal_padding: var(--pw_padding);
+  --Tabs_vertical_padding: var(--pw_horizontal_padding) 0;
   --Tabs_transition-duration: var(--pw_transition-duration);
   --Tabs_disabled_opacity: var(--pw_disabled_opacity);
   --Tabs_size_box-shadow: var(--pw_size_box-shadow);
   --Tabs_color_box-shadow: var(--pw_color_box-shadow);
   --Tabs_focus_border-color: var(--pw_focus_border-color);
-  --Tabs_content_padding: 0.5em 1em;
 
 
   display: flex;
@@ -30,141 +30,24 @@
     opacity: var(--Tabs_disabled_opacity);
   }
 
-  &.is-full-width { li { width: 100%; } }
-
-  &.is-top-right {
-    ul {
-      height: 100%;
-      justify-content: flex-end;
-    }
-  }
-
-  &.is-bottom, &.is-bottom-left, &.is-bottom-right {
-    flex-direction: column-reverse;
-
-    li {
-      &:first-child { border-radius: 0 0 0 var(--Tabs_border-radius); }
-      &:last-child { border-radius: 0 0 var(--Tabs_border-radius) 0; }
-      
-      &.is-active {
-        border-bottom-color: var(--Tabs_border-color);
-        border-top-color: var(--Tabs_background-color);
-      }
-    }
-
-    .content {
-      margin-left: 0;
-      margin-bottom: -1px;
-    }
-  }
-
+  &.is-bottom,
+  &.is-bottom-left,
   &.is-bottom-right {
-    ul {
-      height: 100%;
-      justify-content: flex-end;
-    }
+    flex-direction: column-reverse;
   }
 
-  &.is-left, &.is-left-top, &.is-left-bottom, &.is-right, &.is-right-top, &.is-right-bottom {
+  &.is-left,
+  &.is-left-top,
+  &.is-left-bottom,
+  &.is-right,
+  &.is-right-top,
+  &.is-right-bottom {
     flex-direction: row;
-
-    ul { flex-direction: column; }
-
-    .content { margin-top: 0; }
   }
 
-  &.is-left, &.is-left-top, &.is-left-bottom {
-    li {
-      &:last-child {
-        border-bottom-color: var(--Tabs_border-color);
-        border-radius: 0 0 0 var(--Tabs_border-radius);
-      }
-
-      &:not(:last-child) {
-        border-right-color: var(--Tabs_border-color);
-        border-bottom-color: transparent;
-      }
-
-      &.is-active { border-right-color: var(--Tabs_background-color); }
-    }
-  
-    .content { margin-left: -1px; }
-  }
-
-  &.is-left-bottom, &.is-right-bottom {
-    ul {
-      height: 100%;
-      justify-content: flex-end;
-    }
-  }
-
-  &.is-right, &.is-right-top, &.is-right-bottom {
+  &.is-right,
+  &.is-right-top,
+  &.is-right-bottom {
     flex-direction: row-reverse;
-
-    li {
-      &:first-child { border-radius: 0 var(--Tabs_border-radius) 0 0; }
-      &:last-child { border-radius: 0 0 var(--Tabs_border-radius) 0; }
-      &:not(:last-child) {
-        border-right-color: var(--Tabs_border-color);
-        border-bottom-color: transparent;
-      }
-
-      &.is-active { border-left-color: var(--Tabs_background-color); }
-    }
-
-    .content { margin-right: -1px; }
-  }
-
-  ul {
-    display: flex;
-    align-items: center;
-    width: 100%;
-
-    li {
-      display: flex;
-      justify-content: start;
-      cursor: pointer;
-
-      transition: all ease var(--Tabs_transition-duration);
-      background-color: var(--Tabs_active_background-color);
-      border: var(--Tabs_border-width) var(--Tabs_border-style) var(--Tabs_border-color);
-
-      padding: var(--Tabs_padding);
-      font-size: var(--Tabs_font-size);
-      
-      &:not(:last-child) { border-right-color: transparent; }
-      &:first-child { border-radius: var(--Tabs_border-radius) 0 0 0  ; }
-      &:last-child { border-radius: 0 var(--Tabs_border-radius) 0 0  ; }
-
-      &:hover:not(.is-active) {
-        box-shadow: inset var(--Tabs_size_box-shadow) var(--Tabs_color_box-shadow);
-      }
-
-      &.is-disabled {
-        pointer-events: none;
-        opacity: var(--Tabs_disabled_opacity);
-      }
-
-      &.is-full-width { width: 100%; }
-
-      &.is-active {
-        background-color: var(--Tabs_background-color);
-        color: var(--Tabs_active_color);
-        font-weight: var(--Tabs_font-weight);
-        border-bottom-color: var(--Tabs_background-color);
-        z-index: 1;
-        cursor: auto;
-      }
-    }
-  }
-
-  .content {
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: var(--pw_border-width) var(--pw_border-style) var(--pw_border-color);
-    margin-top: -1px;
-    padding: var(--Tabs_content_padding);
   }
 }

@@ -8,8 +8,8 @@ export interface ToggleProps {
   tabIndex?: number;
   name?: string;
   label?: string;
-  labelPosition?: 'left' | 'right' | 'top' | 'bottom';
-  onChange?: (checked: boolean) => void;
+  labelPlacement?: 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end';
+  onChange?: (checked: boolean, e: any) => void;
   value?: boolean;
 };
 
@@ -21,16 +21,19 @@ export interface ToggleDefaultProps {
   tabIndex: number;
   name?: string;
   label?: string;
-  labelPosition: 'left' | 'right' | 'top' | 'bottom';
-  onChange: (value: boolean) => void;
+  labelPlacement: 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end';
+  onChange: (value: boolean, e: any) => void;
   value: boolean;
 };
 
 export interface ToggleState {
+  inputId: string;
   value: boolean;
 };
 
 export interface ToggleMediator {
+  onChange: (value: boolean, e: any) => void;
+  onUnmount: () => void;
   state: ToggleState;
-  onChange: (value: boolean) => void;
+  uid: string;
 };

@@ -6,7 +6,6 @@ export interface ButtonProps {
   onClick?: (event: MouseEvent) => void;
   disabled?: boolean;
   tabIndex?: number;
-  loadingComponent?: any;
 }
 
 export interface ButtonDefaultProps {
@@ -15,5 +14,4 @@ export interface ButtonDefaultProps {
   onClick: (event: MouseEvent) => void;
   disabled: boolean;
   tabIndex: number;
-  loadingComponent: any;
 }

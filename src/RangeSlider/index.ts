@@ -1,4 +1,4 @@
-export { rangeSlider } from './rangeSlider.mediator';
+export { rangeSliderMediator } from './rangeSlider.mediator';
 export { DEFAULT_PROPS } from './constants';
 
 export type {

@@ -4,7 +4,7 @@ export { initState } from './initState';
 export { initData } from './initData';
 export { closeToast } from './closeToast';
 export { onClosePortal } from './onClosePortal';
-export { getParentToast } from './getParentToast';
+export { getContext } from './getContext';
 export { stopTimer } from './stopTimer';
 export { calculateTime } from './calculateTime';
 export { calculateY } from './calculateY';

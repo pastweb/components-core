@@ -1,21 +1,27 @@
-import { createState, effect } from '@pastweb/tools';
+import { reactive, effect } from '@pastweb/tools';
+import { idCache } from '../utils';
 import type { CheckboxDefaultProps, CheckboxMediator, CheckboxState } from './types';
 
-export function checkbox(props: CheckboxDefaultProps): CheckboxMediator {
-  const { state, setState } = createState<CheckboxState>({ value: !!props.value });
+export function checkboxMediator(props: CheckboxDefaultProps): CheckboxMediator {
+  const state = reactive<CheckboxState>({ value: !!props.value });
+  const uid = idCache.getId();
+
+  effect(
+    value => {
+      if (value === state.value) return;
+      state.value = !!value;
+    },
+    () => props.value,
+  );
 
   function onChange(value: boolean): void {
     if (props.disabled) return;
 
-    setState({ value });
+    state.value = value;
     props.onChange(value);
   }
 
-  effect(props, ({ value }) => {
-    if (value === state.value) return;
+  const onUnmount = () => idCache.removeId(uid);
 
-    setState({ value: !!value });
-  }, 'value');
-
-  return { state, onChange };
+  return { state, onChange, uid, onUnmount };
 }

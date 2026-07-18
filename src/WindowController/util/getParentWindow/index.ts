@@ -1,1 +1,0 @@
-export { getParentWindow } from './getParentWindow';

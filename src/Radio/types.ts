@@ -1,7 +1,9 @@
 import type { ClassValue } from '@pastweb/tools';
+import { Placement } from '@floating-ui/dom';
 
 export interface RadioOption {
   label: string;
+  labelPosition?: 'left' | 'right' | 'top' | 'bottom';
   value: any;
   name?: string;
   id?: string;
@@ -11,9 +13,10 @@ export interface RadioOption {
 
 export interface RadioDefaultOption {
   label: string;
+  labelPosition: 'left' | 'right' | 'top' | 'bottom';
   value: any;
   name?: string;
-  id?: string;
+  id: string;
   tabIndex: number;
   disabled?: boolean;
 }
@@ -24,11 +27,11 @@ export interface RadioProps {
   orientation?: 'horizontal' | 'vertical' | string;
   disabled?: boolean;
   value?: string;
+  name?: string;
   options: RadioOption[];
-  onChange?: (value: string) => void;
+  onChange?: (value: string, e: any) => void;
   label?: string;
-  labelId?: string;
-  labelPosition?: 'left' | 'right' | 'top' | 'bottom';
+  labelPlacement?: Placement;
 };
 
 export interface RadioDefaultProps {
@@ -37,18 +40,22 @@ export interface RadioDefaultProps {
   orientation?: 'horizontal' | 'vertical' | string;
   disabled?: boolean;
   value: string;
+  name?: string;
   options: RadioOption[];
-  onChange: (value: string) => void;
+  onChange: (value: string, e: any) => void;
   label: string;
-  labelId?: string;
-  labelPosition: 'left' | 'right' | 'top' | 'bottom';
+  labelPlacement: Placement;
 };
 
 export interface RadioState {
   value: string;
+  uid: string;
+  groupId: string;
+  groupLabelId: string;
 };
 
 export interface RadioMediator {
+  onChange: (value: string, e: any) => void;
+  onUnmount: () => void;
   state: RadioState;
-  onChange: (value: string) => void;
 };

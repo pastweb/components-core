@@ -1,32 +1,39 @@
-import { createState, effect } from '@pastweb/tools';
+import { reactive, effect } from '@pastweb/tools';
 import type { CarouselDefaultProps, CarouselMediator, CarouselState } from './types';
 
-export function carousel(props: CarouselDefaultProps): CarouselMediator {
-  const { state, setState } = createState<CarouselState>({ current: props.current });
+export function carouselMediator(props: CarouselDefaultProps): CarouselMediator {
+  const state = reactive<CarouselState>({ current: props.current });
   let interval: any = null;
+  let itemsCounter = 0;
 
-  effect(props, (next, prev) => {
-    if (next.current !== state.current) {
-      setState({ current: props.current });
+  effect(([current, autoPlay, autoPlayInterval], [, , prevAutoPlayInterval]) => {
+    if (current !== state.current) {
+      state.current = props.current;
     }
 
-    if (next.autoPlay) startAutoplay();
+    if (autoPlay) startAutoplay();
     else stopAutoplay();
 
-    if (props.autoPlay && next.autoPlayInterval !== prev.autoPlayInterval) {
+    if (autoPlay && autoPlayInterval !== prevAutoPlayInterval) {
       stopAutoplay();
       startAutoplay();
     }
-  });
+  }, [
+    () => props.current,
+    () => props.autoPlay,
+    () => props.autoPlayInterval,
+  ]);
+
+  const registerItem = () => itemsCounter++;
 
   function next(): void {
-    const { items } = props;
-    setState({ current: (state.current + 1) % items.length });
+    const step = state.current + 1;
+    state.current = step < itemsCounter ? step : 0;
   };
 
   function prev(): void {
-    const { items } = props;
-    setState({ current: (state.current - 1 + items.length) % items.length });
+    const step = state.current - 1;
+    state.current = step >= 0 ? step : itemsCounter - 1;
   };
 
   function startAutoplay(): void {
@@ -41,5 +48,5 @@ export function carousel(props: CarouselDefaultProps): CarouselMediator {
     clearInterval(interval);
   };
 
-  return { state, next, prev };
+  return { state, next, prev, registerItem };
 }

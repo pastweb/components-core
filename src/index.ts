@@ -15,7 +15,7 @@ export * as ScrollArea from './ScrollArea';
 export * as Select from './Select';
 export * as SlideController from './SlideController';
 export * as Spinner from './Spinner';
-export * as SplitLayout from './SplitLayout';
+export * as SlitLayout from './SplitLayout';
 export * as Stepper from './Stepper';
 export * as Tabs from './Tabs';
 export * as Tag from './Tag';
@@ -25,3 +25,5 @@ export * as ToastController from './ToastController';
 export * as Toggle from './Toggle';
 export * as Tooltip from './Tooltip';
 export * as WindowController from './WindowController';
+
+export { idCache } from './utils';

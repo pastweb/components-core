@@ -1,23 +1,24 @@
+import { reactive } from '@pastweb/tools';
 import { arrow, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import { createState } from '@pastweb/tools';
-import type { TooltipMediator, TooltipProps, TooltipState } from './types';
+import type { TooltipMediator, TooltipDefaultProps, TooltipState } from './types';
 
-export function tooltip(props: TooltipProps): TooltipMediator {
-  const { state, setState } = createState<TooltipState>({ isVisible: false });
-  let reference: HTMLElement;
+export function tooltipMediator(props: TooltipDefaultProps): TooltipMediator {
+  const state = reactive<TooltipState>({ isVisible: false });
   let referenceEl: HTMLElement;
   let tooltipEl: HTMLElement;
   let arrowEl: HTMLElement;
 
   function setVisible(): void {
     if (props.disabled) return;
+
     updatePosition();
-    setState({ isVisible: true });
+    state.isVisible = true;
   }
 
   function setInVisible(): void {
     if (props.disabled) return;
-    setState({ isVisible: false });
+
+    state.isVisible = false;
   }
 
   function updatePosition() {
@@ -46,7 +47,7 @@ export function tooltip(props: TooltipProps): TooltipMediator {
     computePosition(virtualReference, tooltipEl, {
       placement,
       middleware: [
-        offset(arrowWidth / 2),
+        offset((arrowWidth / 2) + props.offset),
         shift({ padding: arrowWidth / 2 }),
         arrow({ element: arrowEl }),
         flip(),
@@ -91,20 +92,19 @@ export function tooltip(props: TooltipProps): TooltipMediator {
     });
   }
 
-  function onMounted(root: HTMLElement, target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) {
-    reference = root;
+  function onMouseEnter() {
+    setVisible();
+  }
+
+  function onMouseLeave() {
+    setInVisible();
+  }
+
+  function onMounted(target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) {
     referenceEl = target;
     tooltipEl = tooltip;
     arrowEl = arrow;
-
-    reference.addEventListener('mouseenter', setVisible, false);
-    reference.addEventListener('mouseleave', setInVisible, false);
   }
 
-  function onUnmount() {
-    reference.removeEventListener('mouseenter', setVisible);
-    reference.removeEventListener('mouseleave', setInVisible);
-  }
-
-  return { state, onMounted, onUnmount };
+  return { state, onMounted, onMouseEnter, onMouseLeave };
 }

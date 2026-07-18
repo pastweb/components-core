@@ -2,7 +2,6 @@ import type { ClassValue } from '@pastweb/tools';
 
 export interface PaginationProps {
   cls: (...args: ClassValue[]) => string;
-  button: any;
   total: number;
   current: number;
   onChange?: (page: number) => void;
@@ -13,7 +12,6 @@ export interface PaginationProps {
 
 export interface PaginationDefaultProps {
   cls: (...args: ClassValue[]) => string;
-  button: any;
   total: number;
   current: number;
   onChange: (page: number) => void;

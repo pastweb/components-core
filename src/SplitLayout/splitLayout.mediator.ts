@@ -1,34 +1,40 @@
 import { effect } from '@pastweb/tools';
 import type { SplitLayoutDefaultProps, SplitLayoutMediator } from './types';
 
-export function splitLayout(props: SplitLayoutDefaultProps): SplitLayoutMediator {
+export function splitLayoutMediator(props: SplitLayoutDefaultProps): SplitLayoutMediator {
   let container: HTMLElement;
   let prevPane: HTMLElement;
   let paneIndex: number;
-  let size = props.direction === 'horizontal' ? 'width' : 'height';
-  let axis = props.direction === 'horizontal' ? 'X' : 'Y';
-  let pos = props.direction === 'horizontal' ? 'left' : 'top';
+  let size = props.orientation === 'horizontal' ? 'width' : 'height';
+  let axis = props.orientation === 'horizontal' ? 'X' : 'Y';
+  let pos = props.orientation === 'horizontal' ? 'left' : 'top';
   let sizes: number[] = [];
   let isDragging = false;
+  let panesConter = 0;
 
-  effect<SplitLayoutDefaultProps>(props, (next, prev) => {
-    if (next.direction === prev.direction) return;
+  effect(
+    (next, prev) => {
+      if (next === prev) return;
 
-    size = next.direction === 'horizontal' ? 'width' : 'height';
-    axis = next.direction === 'horizontal' ? 'X' : 'Y';
-    pos = next.direction === 'horizontal' ? 'left' : 'top';
-    sizes = [];
-  }, 'direction');
+      size = next === 'horizontal' ? 'width' : 'height';
+      axis = next === 'horizontal' ? 'X' : 'Y';
+      pos = next === 'horizontal' ? 'left' : 'top';
+      sizes = [];
+    },
+    () => props.orientation,
+  );
+
+  const registerItem = () => panesConter++;
 
   function setSizes() {
     const rect = container.getBoundingClientRect() as unknown as Record<string, number>;
-    const children: HTMLElement[] = Array.from(container.children) as HTMLElement[];
+    const children: HTMLElement[] = [...container.children] as HTMLElement[];
     const nChildren = children.length / 2;
     const childSize = rect[size] / nChildren;
 
     let sizeIndex = 0;
     children.forEach((child: HTMLElement, i: number) => {
-      if (/splitter-/g.test(child.className)) return;
+      if (/splitter-/.test(child.className)) return;
 
       if (i > children.length - 3) {
         child.style.display = 'flex';
@@ -81,5 +87,6 @@ export function splitLayout(props: SplitLayoutDefaultProps): SplitLayoutMediator
     onMounted,
     onUnmounted,
     onMouseDown,
+    registerItem,
   };
 }

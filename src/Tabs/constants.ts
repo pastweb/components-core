@@ -1,12 +1,7 @@
-import { noop } from '@pastweb/tools';
+export const TABS_CONTEXT_KEY = '$$TabsContext';
 
 export const DEFAULT_PROPS = {
+  activeTab: 0,
   className: '',
-};
-
-export const DEFAULT_TAB_PROPS = {
-  label: '',
-  className: '',
-  onClick: noop,
-  content: '',
+  disabled: false,
 };

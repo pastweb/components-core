@@ -1,1 +1,0 @@
-export { getParentSlide } from './getParentSlide';
