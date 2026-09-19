@@ -77,6 +77,7 @@ export const ANIMATIONS: Record<string, Animation> = {
 };
 
 export const DEFAULT_PROPS = {
+  ariaLabel: '',
   placement: PLACEMENT.topRight,
   padding: 15,
   delay: 5,

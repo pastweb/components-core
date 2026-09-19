@@ -1,0 +1,75 @@
+.TaskBar {
+  --pw_TaskBar_root_default_gap: 0.04em;
+  --pw_TaskBar_root_default_min-height: 3.5em;
+  --pw_TaskBar_root_default_padding: 0.125em;
+  --pw_TaskBar_root_default_border-color: var(--pw_border-color);
+  --pw_TaskBar_root_default_border-style: var(--pw_border-style);
+  --pw_TaskBar_root_default_border-width: var(--pw_border-width);
+  --pw_TaskBar_root_default_border-radius: var(--pw_border-radius);
+  --pw_TaskBar_root_default_background-color: var(--pw_control_background-color);
+  --pw_TaskBar_taskButton_default_min-width: 2.75em;
+  --pw_TaskBar_taskButton_default_min-height: 2.75em;
+  --pw_TaskBar_taskButton_default_max-width: 16em;
+  --pw_TaskBar_taskButton_default_padding: var(--pw_padding);
+  --pw_TaskBar_taskButton_default_margin: 0.25em;
+  --pw_TaskBar_taskButton_default_border-color: var(--pw_border-color);
+  --pw_TaskBar_taskButton_default_border-style: var(--pw_border-style);
+  --pw_TaskBar_taskButton_default_border-width: var(--pw_border-width);
+  --pw_TaskBar_taskButton_default_border-radius: var(--pw_border-radius);
+  --pw_TaskBar_taskButton_default_background-color: var(--pw_control_background-color);
+  --pw_TaskBar_taskButton_default_color: inherit;
+  --pw_TaskBar_taskButton_default_font-size: inherit;
+  --pw_TaskBar_taskButton_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_TaskBar_taskButton_default_line-height: var(--pw_line-height);
+  --pw_TaskBar_taskButton_default_transition-duration: var(--pw_transition-duration);
+  --pw_TaskBar_taskButton_minimised_box-shadow: inset var(--pw_size_box-shadow) var(--pw_inset_color_box-shadow);
+
+  display: flex;
+  align-items: center;
+  gap: var(--pw_TaskBar_root_default_gap);
+  min-height: var(--pw_TaskBar_root_default_min-height);
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: var(--pw_TaskBar_root_default_padding);
+  border: var(--pw_TaskBar_root_default_border-width) var(--pw_TaskBar_root_default_border-style) var(--pw_TaskBar_root_default_border-color);
+  border-radius: var(--pw_TaskBar_root_default_border-radius);
+  background-color: var(--pw_TaskBar_root_default_background-color);
+
+  .taskButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-width: var(--pw_TaskBar_taskButton_default_min-width);
+    min-height: var(--pw_TaskBar_taskButton_default_min-height);
+    max-width: var(--pw_TaskBar_taskButton_default_max-width);
+    overflow: hidden;
+    padding: var(--pw_TaskBar_taskButton_default_padding);
+    margin: var(--pw_TaskBar_taskButton_default_margin);
+    border: var(--pw_TaskBar_taskButton_default_border-width) var(--pw_TaskBar_taskButton_default_border-style) var(--pw_TaskBar_taskButton_default_border-color);
+    border-radius: var(--pw_TaskBar_taskButton_default_border-radius);
+    color: var(--pw_TaskBar_taskButton_default_color);
+    background-color: var(--pw_TaskBar_taskButton_default_background-color);
+    cursor: pointer;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--pw_TaskBar_taskButton_default_font-size);
+    font-weight: var(--pw_TaskBar_taskButton_default_font-weight);
+    line-height: var(--pw_TaskBar_taskButton_default_line-height);
+    transition: all var(--pw_TaskBar_taskButton_default_transition-duration);
+
+    &.is-active {
+      border-color: var(--pw_text_strong_color);
+      color: var(--pw_text_strong_color);
+    }
+
+    &.is-minimised {
+      box-shadow: var(--pw_TaskBar_taskButton_minimised_box-shadow);
+    }
+
+    &:not(:first-child) {
+      margin-left: 0;
+    }
+  }
+}

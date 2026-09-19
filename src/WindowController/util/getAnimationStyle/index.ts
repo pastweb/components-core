@@ -1,0 +1,1 @@
+export { getAnimationStyle } from './getAnimationStyle';

@@ -1,7 +1,7 @@
 import { TableDefaultProps, TableState, ColumnDef } from '../types';
 
 export function canSort(props: TableDefaultProps, colDef: ColumnDef): boolean {
-  return !!props.enableColumnSorting || !!colDef.sorting;
+  return !!props.columnSorting || !!colDef.sorting;
 }
 
 export function isSorted(state: TableState, colDef: ColumnDef): 'asc' | 'desc' | false {
@@ -13,24 +13,39 @@ export function isVisible(state: TableState, colDef: ColumnDef): boolean {
   return state.columnVisibility[colDef.id] !== false;
 }
 
-export function toggleSorting(props: TableDefaultProps, state: TableState, colDef: ColumnDef): void {
+export function toggleSorting(
+  props: TableDefaultProps,
+  state: TableState,
+  colDef: ColumnDef,
+  direction?: 'asc' | 'desc' | false,
+): void {
   const { sorting } = state;
   if (!colDef.sorting) return;
-  let newSorting = sorting.filter((s) => s.id !== colDef.id);
-  const existing = sorting.find((s) => s.id === colDef.id);
-  if (isSorted(state, colDef) === 'asc') newSorting = [];
-  else if (existing?.desc) newSorting.push({ id: colDef.id, desc: false });
-  else newSorting.unshift({ id: colDef.id, desc: true });
+  const others = sorting.filter(item => item.id !== colDef.id);
+  let newSorting = others;
+  if (direction === false) {
+    newSorting = others;
+  } else if (direction === 'asc') {
+    newSorting = [{ id: colDef.id, desc: false }, ...others];
+  } else if (direction === 'desc') {
+    newSorting = [{ id: colDef.id, desc: true }, ...others];
+  } else if (isSorted(state, colDef) === 'asc') {
+    newSorting = others;
+  } else if (sorting.find(item => item.id === colDef.id)?.desc) {
+    newSorting = [{ id: colDef.id, desc: false }, ...others];
+  } else {
+    newSorting = [{ id: colDef.id, desc: true }, ...others];
+  }
   state.sorting = newSorting;
   props.onSortingChange!(newSorting);
 }
 
 export function canResize(props: TableDefaultProps, colDef: ColumnDef): boolean {
-  return !!props.enableColumnResizing || !!colDef.resizing;
+  return !!props.columnResizing || !!colDef.resizing;
 }
 
 export function canPin(props: TableDefaultProps, colDef: ColumnDef): boolean {
-  return !!props.enableColumnPinning || !!colDef.pinning;
+  return !!props.columnPinning || !!colDef.pinning;
 }
 
 export function isPinned(state: TableState, colDef: ColumnDef): 'left' | 'right' | false {
@@ -42,12 +57,21 @@ export function isPinned(state: TableState, colDef: ColumnDef): 'left' | 'right'
 }
 
 export function togglePinning(e: MouseEvent, props: TableDefaultProps, state: TableState, colDef: ColumnDef): void {
-  const target = (e.target || e.currentTarget) as HTMLElement;
-  const headerCell = (target.parentElement as HTMLElement).parentElement as HTMLElement;
-  const currentSize = parseFloat(getComputedStyle(headerCell).width);
+  const target = (e?.target || e?.currentTarget) as HTMLElement | undefined;
+  const fromEvent = typeof target?.closest === 'function' ? target.closest('th') : null;
+  const fromDom = typeof document !== 'undefined'
+    ? document.querySelector(`[data-header-id="${colDef.id}"]`)
+    : null;
+  const headerCell = (fromEvent || fromDom) as HTMLElement | null;
+  const currentSize = headerCell
+    ? parseFloat(getComputedStyle(headerCell).width)
+    : getSize(state, colDef);
   const current = isPinned(state, colDef);
 
-  let pinning = { ...state.columnPinning };
+  const pinning = {
+    left: { ...state.columnPinning.left },
+    right: { ...state.columnPinning.right },
+  };
 
   if (current === 'left') {
     delete pinning.left[colDef.id];
@@ -59,10 +83,7 @@ export function togglePinning(e: MouseEvent, props: TableDefaultProps, state: Ta
   }
 
   state.columnPinning = pinning;
-  state.tableStyle = {
-    ...Object.keys(pinning.right).length ? { paddingRight: `${Object.values(pinning.right).reduce((acc, size) => acc + size, 0)}px` } : {},
-    ...Object.keys(pinning.left).length ? { paddingLeft: `${Object.values(pinning.left).reduce((acc, size) => acc + size, 0)}px` } : {},
-  };
+  state.columnSizing = { ...state.columnSizing, [colDef.id]: currentSize };
 
   props.onColumnPinningChange!(pinning);
 }
@@ -74,6 +95,10 @@ export function toggleVisibility(props: TableDefaultProps, state: TableState, co
 }
 
 export function canFilter(colDef: ColumnDef): boolean { return !!colDef.columnFilter; }
+
+export function canGroup(props: TableDefaultProps, colDef: ColumnDef): boolean {
+  return !!props.grouping && !!colDef.grouping;
+}
 
 export function getFilterValue(state: TableState, colDef: ColumnDef): string {
   return state.columnFilters[colDef.id] || '';

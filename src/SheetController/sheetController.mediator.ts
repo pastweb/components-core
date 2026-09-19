@@ -1,56 +1,78 @@
-import { reactive } from '@pastweb/tools';
+import { effect, reactive } from '@pastweb/tools';
+import { idCache } from '../utils';
 import {
   closeSheet as _closeSheet,
   getContext as _getContext,
-  onClosePortal as _onClosePortal,
-  onMounted as _onMounted,
   onBackdropClick,
-  onKeyDown,
-} from './util';
+  onClosePortal as _onClosePortal,
+  onKeyDown as _onKeyDown,
+  onMounted as _onMounted,
+  onTransitionEnd as _onTransitionEnd,
+  restoreFocus,
+  useBeforeUnmount as _useBeforeUnmount,
+} from './utils';
 import type {
   CloseOptions,
   SheetControllerDefaultProps,
   SheetControllerMediator,
   SheetControllerState,
+  SheetControllerVars,
+  SheetEvent,
 } from './types';
 
 export function sheetControllerMediator(props: SheetControllerDefaultProps): SheetControllerMediator {
-  const state = reactive<SheetControllerState>({ isOpen: true });
+  const uid = idCache.getId('sheetController');
+  const getId = () => props.id ? `_${props.id}` : uid;
+  const vars: SheetControllerVars = {
+    confirmClose: null,
+    finalized: false,
+  };
 
-  let confirmClose: (() => void) | null = null;
-  const onClosePortal = _onClosePortal(props, closeSheet);
+  const state = reactive<SheetControllerState>({
+    ariaLabel: props.ariaLabel || undefined,
+    id: getId(),
+    isClosed: false,
+    isClosing: false,
+    isOpen: true,
+  });
 
-  function closeSheet(closeOptions?: CloseOptions) {
-    _closeSheet({
-      props,
-      onClosePortal,
-      confirmClose,
-      state,
-      closeOptions,
-    });
+  function onClose(closeOptions?: CloseOptions) {
+    _closeSheet({ props, state, vars, closeOptions });
   }
 
-  function onMounted(SheetElement: HTMLElement) {
-    _onMounted({
-      props,
-      SheetElement,
-      onClosePortal,
-    });
+  function onPortalClose(event: SheetEvent) {
+    _onClosePortal(props, onClose)(event);
   }
 
-  function getContext() {
-    return _getContext({
-      props,
-      setConfirm: fn => confirmClose = fn,
-      closeSheet,
-    });
-  }
+  effect(
+    () => {
+      state.ariaLabel = props.ariaLabel || undefined;
+      state.id = getId();
+    },
+    () => [props.ariaLabel, props.id],
+  );
+
+  effect(
+    () => {
+      if (state.isClosing) restoreFocus(vars);
+    },
+    () => state.isClosing,
+  );
 
   return {
+    get id() { return state.id; },
     state,
-    onMounted,
-    getContext,
-    onBackdropClick: () => onBackdropClick(props, closeSheet),
-    onKeyDown: e => onKeyDown(props, e, closeSheet),
+    getContext: () => _getContext({
+      props,
+      id: state.id,
+      closeSheet: onClose,
+      setConfirm: fn => { vars.confirmClose = fn; },
+    }),
+    onBackdrop: () => onBackdropClick(props, onClose),
+    onClose,
+    onKeyDown: event => _onKeyDown(props, event, onClose, vars),
+    onTransitionEnd: () => _onTransitionEnd({ props, state, vars }),
+    useBeforeUnmount: () => _useBeforeUnmount({ vars, onPortalClose, uid }),
+    useMounted: (sheet, host) => _onMounted({ props, sheet, host, vars, onPortalClose }),
   };
 }

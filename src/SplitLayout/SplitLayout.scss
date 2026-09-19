@@ -1,47 +1,103 @@
 .SplitLayout {
-  --SplitLayout_splitter_width: 0.2rem;
-  --SplitLayout_splitter_background-color: var(--pw_border-color);
-  --SplitLayout_splitter_border-width: var(--pw_border-width);
-  --SplitLayout_splitter_border-style: var(--pw_border-style);
-  --SplitLayout_splitter_border-color: var(--pw_border-color);
-  --SplitLayout_splitter_hover_background-color: var(--pw_border-color);
-  --SplitLayout_splitter_hover_border-color: hsl(0, 0%, 75%);
-
+  --pw_SplitLayout_root_default_width: 100%;
+  --pw_SplitLayout_root_default_height: 100%;
+  --pw_SplitLayout_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_SplitLayout_pane_default_background-color: transparent;
+  --pw_SplitLayout_splitter_default_width: 0.2em;
+  --pw_SplitLayout_splitter_default_height: 0.2em;
+  --pw_SplitLayout_splitter_default_background-color: var(--pw_border-color);
+  --pw_SplitLayout_splitter_hover_background-color: var(--pw_text_strong_color);
+  --pw_SplitLayout_splitter_default_border-color: var(--pw_border-color);
+  --pw_SplitLayout_splitter_default_border-style: var(--pw_border-style);
+  --pw_SplitLayout_splitter_default_border-width: var(--pw_border-width);
+  --pw_SplitLayout_splitter_default_outline: var(--pw_outline);
+  --pw_SplitLayout_splitter-target_default_width: 2.75em;
+  --pw_SplitLayout_splitter-target_default_height: 2.75em;
 
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: var(--pw_SplitLayout_root_default_width);
+  height: var(--pw_SplitLayout_root_default_height);
 
-  &.horizontal { flex-direction: row; }
-  &.vertical { flex-direction: column; }
-
-  & > div {
-    width: auto;
-    height: 100%;
-
-    &:last-child { display: none; }
+  &.horizontal {
+    flex-direction: row;
   }
 
-  [class*='splitter-'] {
-    background-color: var(--SplitLayout_splitter_background-color);
+  &.vertical {
+    flex-direction: column;
+  }
 
-    &:hover {
-      background-color: var(--SplitLayout_splitter_hover_background-color);
-      border-color: var(--SplitLayout_splitter_hover_border-color);
+  &.is-disabled {
+    opacity: var(--pw_SplitLayout_root_disabled_opacity);
+  }
+
+  &.is-resizing {
+    user-select: none;
+  }
+
+  .pane {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    background-color: var(--pw_SplitLayout_pane_default_background-color);
+  }
+
+  .splitter {
+    position: relative;
+    flex: 0 0 auto;
+    background-color: var(--pw_SplitLayout_splitter_default_background-color);
+    border-color: var(--pw_SplitLayout_splitter_default_border-color);
+    border-style: var(--pw_SplitLayout_splitter_default_border-style);
+    border-width: var(--pw_SplitLayout_splitter_default_border-width);
+
+    &:hover:not(.is-disabled) {
+      background-color: var(--pw_SplitLayout_splitter_hover_background-color);
+    }
+
+    &:focus-visible {
+      outline: var(--pw_SplitLayout_splitter_default_outline);
+      outline-offset: 0.125em;
+    }
+
+    &.is-disabled {
+      pointer-events: none;
     }
   }
 
   .splitter-horizontal {
     cursor: col-resize;
-    width: var(--SplitLayout_splitter_width);
-    border-left: var(--SplitLayout_splitter_border-width) var(--SplitLayout_splitter_border-style) var(--SplitLayout_splitter_border-color);
-    border-right: var(--SplitLayout_splitter_border-width) var(--SplitLayout_splitter_border-style) var(--SplitLayout_splitter_border-color);
+    width: var(--pw_SplitLayout_splitter_default_width);
+    align-self: stretch;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 50%;
+      width: var(--pw_SplitLayout_splitter-target_default_width);
+      transform: translateX(-50%);
+    }
   }
 
   .splitter-vertical {
     cursor: row-resize;
-    height: var(--SplitLayout_splitter_width);
-    border-top: var(--SplitLayout_splitter_border-width) var(--SplitLayout_splitter_border-style) var(--SplitLayout_splitter_border-color);
-    border-bottom: var(--SplitLayout_splitter_border-width) var(--SplitLayout_splitter_border-style) var(--SplitLayout_splitter_border-color);
+    height: var(--pw_SplitLayout_splitter_default_height);
+    align-self: stretch;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      inset-block-start: 50%;
+      height: var(--pw_SplitLayout_splitter-target_default_height);
+      transform: translateY(-50%);
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .SplitLayout .splitter {
+    border-color: ButtonText;
+    background-color: ButtonFace;
   }
 }

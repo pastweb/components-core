@@ -1,39 +1,43 @@
 import type { ClassValue } from '@pastweb/tools';
+import type { Placement } from '@floating-ui/dom';
 
 export interface ToggleProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel?: string;
   className?: string;
   disabled?: boolean;
   id?: string | number;
-  tabIndex?: number;
-  name?: string;
   label?: string;
-  labelPlacement?: 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end';
-  onChange?: (checked: boolean, e: any) => void;
+  labelPlacement?: Placement;
+  name?: string;
+  onChange?: (checked: boolean, event?: unknown) => void;
+  tabIndex?: number;
   value?: boolean;
-};
+}
 
 export interface ToggleDefaultProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel: string;
   className: string;
   disabled: boolean;
   id?: string | number;
-  tabIndex: number;
+  label: string;
+  labelPlacement: Placement;
   name?: string;
-  label?: string;
-  labelPlacement: 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end';
-  onChange: (value: boolean, e: any) => void;
+  onChange: (checked: boolean, event?: unknown) => void;
+  tabIndex: number;
   value: boolean;
-};
+}
 
 export interface ToggleState {
+  ariaLabel: string | undefined;
   inputId: string;
+  isDisabled: true | undefined;
   value: boolean;
-};
+}
 
 export interface ToggleMediator {
-  onChange: (value: boolean, e: any) => void;
-  onUnmount: () => void;
+  onChange: (value: boolean, event?: unknown) => void;
   state: ToggleState;
-  uid: string;
-};
+  useBeforeUnmount: () => void;
+}

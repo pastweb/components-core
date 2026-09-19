@@ -1,36 +1,44 @@
-import { computed, reactive, effect } from '@pastweb/tools';
+import { effect, reactive } from '@pastweb/tools';
 import { idCache } from '../utils';
+import {
+  getAriaLabel,
+  getGroupId,
+  getGroupLabelId,
+  getIsDisabled,
+  getOptionId,
+  onChange,
+  updateState,
+  updateValue,
+  useBeforeUnmount,
+} from './utils';
 import type { RadioDefaultProps, RadioMediator, RadioState } from './types';
 
 export function radioMediator(props: RadioDefaultProps): RadioMediator {
-  const uid = idCache.getId();
-
+  const uid = idCache.getId('radio');
+  const groupId = getGroupId(props, uid);
+  const groupLabelId = getGroupLabelId(props, groupId);
   const state = reactive<RadioState>({
+    ariaLabel: getAriaLabel(props, groupLabelId),
+    groupId,
+    groupLabelId,
+    isDisabled: getIsDisabled(props),
     value: props.value,
-    uid,
-    groupId: props.name ?? `radio-group-${uid}`,
-    groupLabelId: `radio-group-label-${uid}`,
   });
 
-  const groupId = computed(() => props.name ?? `radio-group-${uid}`);
-
-  effect(() => { state.groupId = groupId.value; }, groupId);
+  effect(
+    () => updateState(props, state, uid),
+    () => [props.ariaLabel, props.disabled, props.id, props.label],
+  );
 
   effect(
-    (value = '') => {
-      if (value !== state.value) state.value = value;
-    },
+    () => updateValue(props, state),
     () => props.value,
   );
 
-  function onChange(value: string = '', e: any): void {
-    if (props.disabled) return;
-
-    state.value = value;
-    props.onChange(value, e);
-  }
-
-  const onUnmount = () => idCache.removeId(uid);
-
-  return { state, onChange, onUnmount };
+  return {
+    getOptionId: (index, id) => getOptionId(state.groupId, index, id),
+    onChange: (value, e) => onChange(props, state, value, e),
+    state,
+    useBeforeUnmount: () => useBeforeUnmount(uid),
+  };
 }

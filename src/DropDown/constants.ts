@@ -1,14 +1,20 @@
 import { noop } from '@pastweb/tools';
+import type { DropDownDefaultProps } from './types';
 
 export const DROPDOWN_CONTEXT_KEY = 'DropDownContext';
 
-export const DEFAULT_PROPS = {
+export const DEFAULT_PROPS: Partial<DropDownDefaultProps> = {
+  ariaLabel: 'DropDown',
   arrow: true,
   className: '',
   contentClassName: '',
   offset: 2,
+  disabled: false,
+  isVisible: false,
   placement: 'bottom',
   visibleOn: 'click',
+  visibleTarget: 'element',
+  hideOnClick: true,
   hideOnClickOut: true,
   hideOnBlur: true,
   position: 'absolute',

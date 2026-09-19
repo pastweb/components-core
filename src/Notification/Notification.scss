@@ -1,67 +1,75 @@
 .Notification {
-  --Notification_background-color: var(--pw_control_background-color);
-  --Notification_color: var(--pw_text_color);
-  --Notification_padding: var(--pw_padding);
-  
-  --Notification_border-color: var(--pw_border-color);
-  --Notification_border-width: var(--pw_border-width);
-  --Notification_border-style: var(--pw_border-style);
-  --Notification_border-radius: var(--pw_border-radius);
+  --pw_Notification_root_default_background-color: var(--pw_control_background-color);
+  --pw_Notification_root_default_color: var(--pw_text_color);
+  --pw_Notification_root_default_padding: var(--pw_padding);
+  --pw_Notification_root_default_border-color: var(--pw_border-color);
+  --pw_Notification_root_default_border-width: var(--pw_border-width);
+  --pw_Notification_root_default_border-style: var(--pw_border-style);
+  --pw_Notification_root_default_border-radius: var(--pw_border-radius);
+  --pw_Notification_root_default_box-shadow: var(--pw_size_box-shadow) var(--pw_color_box-shadow);
+  --pw_Notification_header_default_color: var(--pw_text_strong_color);
+  --pw_Notification_header_default_font-size: 1em;
+  --pw_Notification_header_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_Notification_header_default_line-height: var(--pw_line-height);
+  --pw_Notification_header_default_margin-bottom: 0.5em;
+  --pw_Notification_close-button_default_background-color: transparent;
+  --pw_Notification_close-button_hover_background-color: var(--pw_Notification_header_default_color);
+  --pw_Notification_close-bar_default_background-color: var(--pw_Notification_header_default_color);
+  --pw_Notification_close-bar_hover_background-color: var(--pw_Notification_root_default_background-color);
+  --pw_Notification_close-button_default_min-width: 1.563em;
+  --pw_Notification_close-button_default_height: 1.563em;
+  --pw_Notification_close-button_default_transition-duration: 0.5s;
+  --pw_Notification_footer_default_margin-top: var(--pw_Notification_header_default_margin-bottom);
 
-  --Notification_size_box-shadow: var(--pw_size_box-shadow);
-  --Notification_color_box-shadow: var(--pw_color_box-shadow);
-  // Header
-  --Notification_header_text_color: var(--pw_text_strong_color);
-  --Notification_header_font-size: 1em;
-  --Notification_header_font-weight: var(--pw_semibold_font-weight);
-  --Notification_header_line-height: var(--pw_line-height);
-  --Notification_header_margin-bottom: 0.5em;
-  // closeButton
-  --Notification_closeButton_background-color: transparent;
-  --Notification_closeButton_hover_background-color: var(--Notification_header_text_color);
-  --Notification_closeBar_background-color: var(--Notification_header_text_color);
-  --Notification_closeBar_hover_background-color: var(--Notification_background-color);
-  --Notification_transition-duration: 0.5s;
-  // footer
-  --Notification_footer_margin-top: var(--Notification_header_margin-bottom);
+  border: var(--pw_Notification_root_default_border-width) var(--pw_Notification_root_default_border-style) var(--pw_Notification_root_default_border-color);
+  border-radius: var(--pw_Notification_root_default_border-radius);
+  box-shadow: var(--pw_Notification_root_default_box-shadow);
+  padding: var(--pw_Notification_root_default_padding);
+  background-color: var(--pw_Notification_root_default_background-color);
+  color: var(--pw_Notification_root_default_color);
 
+  &.is-full-width {
+    width: 100%;
+  }
 
-  border: var(--Notification_border-width) var(--Notification_border-style) var(--Notification_border-color);
-  border-radius: var(--Notification_border-radius);
-  box-shadow: var(--Notification_size_box-shadow) var(--Notification_color_box-shadow);
-  padding: var(--Notification_padding);
-  background-color: var(--Notification_background-color);
-  color: var(--Notification_color);
-
-  &.is-full-width { width: 100%; }
-
-  header {
+  .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: var(--Notification_header_margin-bottom);
-    
-    .rtl { flex-direction: row-reverse;}
+    margin-bottom: var(--pw_Notification_header_default_margin-bottom);
+
+    &.rtl {
+      flex-direction: row-reverse;
+    }
   }
 
   .title {
     display: flex;
-    color: var(--Notification_header_text_color);
-    font-size: var(--Notification_header_font-size);
-    font-weight: var(--Notification_header_font-weight);
-    line-height: var(--Notification_header_line-height);
+    color: var(--pw_Notification_header_default_color);
+    font-size: var(--pw_Notification_header_default_font-size);
+    font-weight: var(--pw_Notification_header_default_font-weight);
+    line-height: var(--pw_Notification_header_default_line-height);
   }
 
   .closeButton {
     position: relative;
-    margin-left: 0.5em;
+    flex-shrink: 0;
+    margin-inline-start: 0.5em;
+    min-width: var(--pw_Notification_close-button_default_min-width);
+    height: var(--pw_Notification_close-button_default_height);
+    padding: 0;
+    border: none;
+    appearance: none;
     border-radius: var(--pw_rounded_border-radius);
-    transition: background-color ease var(--Notification_transition-duration);
-    background-color: var(--Notification_closeButton_background-color);
-    min-width: 1.563em;
-    height: 1.563em;
+    transition: background-color ease var(--pw_Notification_close-button_default_transition-duration);
+    background-color: var(--pw_Notification_close-button_default_background-color);
     cursor: pointer;
-  
+
+    &:focus-visible {
+      outline: var(--pw_outline);
+      outline-offset: 0.125em;
+    }
+
     .closeBar {
       position: absolute;
       top: 0.688em;
@@ -69,20 +77,52 @@
       width: 0.938em;
       height: 0.188em;
       border-radius: 0.313em;
-      background-color: var(--Notification_closeBar_background-color);
+      background-color: var(--pw_Notification_close-bar_default_background-color);
       transform: rotate(45deg);
-      transition: background-color ease var(--Notification_transition-duration);
-  
-      &:last-child { transform: rotate(-45deg); }
+      transition: background-color ease var(--pw_Notification_close-button_default_transition-duration);
+
+      &:last-child {
+        transform: rotate(-45deg);
+      }
     }
-    
+
     &:hover {
       opacity: 1;
-      background-color: var(--Notification_closeButton_hover_background-color);
-  
-      .closeBar { background-color: var(--Notification_closeBar_hover_background-color); }
+      background-color: var(--pw_Notification_close-button_hover_background-color);
+
+      .closeBar {
+        background-color: var(--pw_Notification_close-bar_hover_background-color);
+      }
     }
   }
 
-  .footer { margin-top: var(--Notification_footer_margin-top); }
+  .footer {
+    margin-top: var(--pw_Notification_footer_default_margin-top);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Notification .closeButton,
+  .Notification .closeBar {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Notification {
+    border-color: CanvasText;
+    background-color: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+
+  .Notification .closeButton {
+    border: var(--pw_Notification_root_default_border-width) solid ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+
+  .Notification .closeBar {
+    background-color: ButtonText;
+  }
 }

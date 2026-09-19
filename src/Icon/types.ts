@@ -7,7 +7,7 @@ export type IconData = {
 };
 
 export type CollectionData = {
-  aliases: { [key: string]: { parent: string } };
+  aliases?: { [key: string]: { parent: string } };
   prefix: string;
   lastModified: number;
   icons: Record<string, IconData>;
@@ -18,15 +18,22 @@ export type CollectionData = {
 
 export type Collection = Record<string, Record<string, string>>;
 
-export type IconState = {
+export interface IconResolvedSource {
   iconName: string;
   collectionName: string;
   iconData: IconData | string;
   src: string;
-};
+}
+
+export interface IconState extends IconResolvedSource {
+  ariaHidden: true | undefined;
+  ariaLabel: string | undefined;
+  role: 'img' | undefined;
+}
 
 export interface IconProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel?: string;
   className?: string;
   src?: string;
   name?: string;
@@ -36,6 +43,7 @@ export interface IconProps {
 
 export interface IconDefaultProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel: string;
   className: string;
   src: string;
   name: string;
@@ -43,6 +51,6 @@ export interface IconDefaultProps {
   apiUrl: string;
 }
 
-export type IconMediator = {
+export interface IconMediator {
   state: IconState;
 }

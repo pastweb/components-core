@@ -1,5 +1,5 @@
+export { DEFAULT_PROPS, DEFAULT_RADIO_OPTIONS } from './constants';
 export { radioMediator } from './radio.mediator';
-export { DEFAULT_RADIO_OPTIONS, DEFAULT_PROPS } from './constants';
 
 export type {
   RadioDefaultOption,
@@ -7,4 +7,5 @@ export type {
   RadioMediator,
   RadioOption,
   RadioProps,
+  RadioState,
 } from './types';

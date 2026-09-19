@@ -1,15 +1,37 @@
-import { reactive, effect } from '@pastweb/tools';
-import { initIconState, checkIconSate, replaceIconState } from './util';
-import { IconDefaultProps, IconMediator, IconState } from './types';
+import { effect, reactive } from '@pastweb/tools';
+import {
+  checkIconState,
+  getAriaHidden,
+  getAriaLabel,
+  getRole,
+  initIconState,
+  replaceIconState,
+} from './utils';
+import type { IconDefaultProps, IconMediator, IconState } from './types';
 
 export function iconMediator(props: IconDefaultProps): IconMediator {
-  const state = reactive<IconState>(initIconState(props));
+  const resolved = initIconState(props);
+  const state = reactive<IconState>({
+    ...resolved,
+    ariaHidden: getAriaHidden(props),
+    ariaLabel: getAriaLabel(props),
+    role: getRole(props),
+  });
 
-  checkIconSate(props, state);
+  void checkIconState(props, state);
 
   effect(
-    () => replaceIconState(props, state),
-    () => props.name,
+    () => { void replaceIconState(props, state); },
+    () => [props.name, props.src, props.collection, props.apiUrl],
+  );
+
+  effect(
+    () => {
+      state.ariaHidden = getAriaHidden(props);
+      state.ariaLabel = getAriaLabel(props);
+      state.role = getRole(props);
+    },
+    () => props.ariaLabel,
   );
 
   return { state };

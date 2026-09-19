@@ -1,7 +1,10 @@
 export { bringToFront } from './bringToFront';
 export { closeWindow } from './closeWindow';
 export { getContext } from './getContext';
+export { getAnimationStyle } from './getAnimationStyle';
 export { onBackdropClick } from './onBackdropClick';
 export { onClosePortal } from './onClosePortal';
 export { onMounted } from './onMounted';
+export { restoreFocus } from './restoreFocus';
+export { trapFocus } from './trapFocus';
 export { onKeyDown } from './onKeyDown';

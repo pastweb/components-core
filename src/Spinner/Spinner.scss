@@ -1,14 +1,36 @@
 .Spinner {
+  --pw_Spinner_root_default_width: 1.5em;
+  --pw_Spinner_root_default_height: 1.5em;
+  --pw_Spinner_root_default_color: currentcolor;
+  --pw_Spinner_content_default_animation-duration: 2s;
+  --pw_Spinner_content_default_animation-timing-function: linear;
+
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: rotate 2s linear infinite;
-  width: inherit;
-  height: inherit;
-  color: inherit;
+  width: var(--pw_Spinner_root_default_width);
+  height: var(--pw_Spinner_root_default_height);
+  color: var(--pw_Spinner_root_default_color);
+
+  &.is-decorative {
+    pointer-events: none;
+  }
+
+  .content {
+    display: flex;
+    animation: rotate var(--pw_Spinner_content_default_animation-duration) var(--pw_Spinner_content_default_animation-timing-function) infinite;
+  }
 }
 
 @keyframes rotate {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Spinner .content {
+    animation: none;
+  }
 }

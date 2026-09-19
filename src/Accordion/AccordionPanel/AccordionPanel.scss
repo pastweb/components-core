@@ -1,24 +1,49 @@
 .AccordionPanel {
   display: flex;
   flex-direction: column;
+  transition-duration: var(--pw_Accordion_root_default_transition-duration, 0.5s);
 
-  background-color: var(--Accordion_background-color);
+  background-color: var(--pw_Accordion_root_default_background-color);
   font-size: 1em;
-  line-height: var(--Accordion_line-height);
+  line-height: var(--pw_Accordion_root_default_line-height);
+
+  &.is-disabled {
+    opacity: var(--pw_Accordion_header_disabled_opacity);
+    cursor: not-allowed;
+
+    .header,
+    .closeButton {
+      cursor: not-allowed;
+    }
+  }
+
+  .heading {
+    margin: 0;
+  }
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--Accordion_header_padding);
-    background-color: var(--Accordion_header_background-color);
+    width: 100%;
+    min-height: 2.75em;
+    appearance: none;
+    border: 0;
+    cursor: pointer;
 
-    color: var(--Accordion_header_text_color);
-    font-size: var(--Accordion_header_font-size);
-    font-weight: var(--Accordion_header_font-weight);
-    line-height: var(--Accordion_header_line-height);
+    padding: var(--pw_Accordion_header_default_padding);
+    background-color: var(--pw_Accordion_header_default_background-color);
+    color: var(--pw_Accordion_header_default_color);
+    font-size: var(--pw_Accordion_header_default_font-size);
+    font-weight: var(--pw_Accordion_header_default_font-weight);
+    line-height: var(--pw_Accordion_header_default_line-height);
 
-    border-bottom: var(--Accordion_border);
+    border-bottom: var(--pw_Accordion_root_default_border);
+
+    &:focus-visible {
+      outline: 0.125em solid var(--pw_Accordion_header_default_color);
+      outline-offset: 0.125em;
+    }
 
     &.rtl {
       flex-direction: row-reverse;
@@ -30,7 +55,7 @@
   }
 
   &:not(:first-child) {
-    border-top: var(--Accordion_border);
+    border-top: var(--pw_Accordion_root_default_border);
   }
 
   .title {
@@ -40,30 +65,39 @@
   }
 
   .container {
-    display: flex;
+    display: grid;
     overflow: hidden;
-    max-height: 0;
-    transition: max-height var(--Accordion_transition-duration) ease;
+    grid-template-rows: 0fr;
+    transition-property: grid-template-rows;
+    transition-duration: var(--pw_Accordion_root_default_transition-duration, 0.5s);
+    transition-timing-function: ease;
 
     &.is-open {
-      max-height: 100vh;
+      grid-template-rows: 1fr;
     }
 
-    .content {
-      display: flex;
-      height: 100%;
-      padding: var(--Accordion_content_padding);
+    .contentWrapper {
+      min-height: 0;
+      overflow: hidden;
+
+      .content {
+        display: flex;
+        height: 100%;
+        padding: var(--pw_Accordion_content_default_padding);
+      }
     }
   }
 
   .closeButton {
     position: relative;
+    flex-shrink: 0;
     border-radius: var(--pw_rounded_border-radius);
-    transition: all var(--Accordion_transition-duration) ease;
-    background-color: var(--Accordion_closeButton_color_background-color);
+    transition-property: transform, background-color;
+    transition-duration: var(--pw_Accordion_root_default_transition-duration, 0.5s);
+    transition-timing-function: ease;
+    background-color: var(--pw_Accordion_close-button_default_background-color);
     min-width: 1.563em;
     height: 1.563em;
-    margin-left: 1em;
     transform: rotate(45deg);
     cursor: pointer;
 
@@ -78,9 +112,11 @@
       width: 0.938em;
       height: 0.188em;
       border-radius: 0.313em;
-      background-color: var(--Accordion_closeBar_background-color);
+      background-color: var(--pw_Accordion_close-bar_default_background-color);
       transform: rotate(45deg);
-      transition: background-color ease var(--Accordion_transition-duration);
+      transition-property: background-color;
+      transition-duration: var(--pw_Accordion_root_default_transition-duration, 0.5s);
+      transition-timing-function: ease;
 
       &:last-child {
         transform: rotate(-45deg);
@@ -89,11 +125,34 @@
 
     &:hover {
       opacity: 1;
-      background-color: var(--Accordion_closeButton_hover_background-color);
+      background-color: var(--pw_Accordion_close-button_hover_background-color);
 
       .closeBar {
-        background-color: var(--Accordion_closeBar_hover_background-color);
+        background-color: var(--pw_Accordion_close-bar_hover_background-color);
       }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .AccordionPanel {
+    .container,
+    .closeButton,
+    .closeBar {
+      transition-duration: 0.01ms;
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .AccordionPanel {
+    .header {
+      border: 0.0625em solid CanvasText;
+      forced-color-adjust: none;
+    }
+
+    .closeBar {
+      background-color: CanvasText;
     }
   }
 }

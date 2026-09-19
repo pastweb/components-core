@@ -7,8 +7,8 @@ export interface LinkProps {
   href?: string;
   target?: '_self' | '_blank';
   id?: string;
-  onClick?: (e: any) => void;
-};
+  onClick?: (event: unknown) => void;
+}
 
 export interface LinkDefaultProps {
   cls: (...args: ClassValue[]) => string;
@@ -17,5 +17,18 @@ export interface LinkDefaultProps {
   href: string;
   target: '_self' | '_blank';
   id?: string;
-  onClick: (e: any) => void;
-};
+  onClick: (event: unknown) => void;
+}
+
+export interface LinkClickEvent {
+  preventDefault?: () => void;
+}
+
+export interface LinkState {
+  isDisabled: true | undefined;
+}
+
+export interface LinkMediator {
+  onClick: (event: LinkClickEvent) => void;
+  state: LinkState;
+}

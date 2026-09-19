@@ -1,3 +1,4 @@
+import { getSubRows } from './getSubRows';
 import {
   canSort,
   isSorted,
@@ -9,6 +10,7 @@ import {
   togglePinning,
   toggleVisibility,
   canFilter,
+  canGroup,
   getFilterValue,
   isOptionsVisible,
   toggleOptionsVisible,
@@ -16,7 +18,8 @@ import {
   getSize,
   isGrouped,
 } from './utils';
-import type { Cell, Column, ColumnDef, TableDefaultProps, Row, TableState } from '../types';
+import { toRowIdArray } from './toRowIdArray';
+import type { Cell, Column, ColumnDef, GetRowId, TableDefaultProps, Row, TableState } from '../types';
 
 function getRowValue<TData>(row: TData, column: ColumnDef<TData>): any {
   if (column.accessorFn) return column.accessorFn(row);
@@ -34,7 +37,46 @@ function simpleAggregate(aggregationFn: ColumnDef<any>['aggregationFn'], leafVal
   return leafValues[0];
 }
 
-export function setRows<TData>(props: TableDefaultProps, state: TableState): void {
+function toggleRowExpanded(props: TableDefaultProps, state: TableState, rowId: string): void {
+  const nextExpanded = { ...state.expanded, [rowId]: !state.expanded[rowId] };
+  state.expanded = nextExpanded;
+  props.onExpandedRowsChange(toRowIdArray(nextExpanded));
+}
+
+function getVisibleCellsForRow<TData>(row: Row<TData>, props: TableDefaultProps, state: TableState): Cell<TData>[] {
+  return state.visibleColumns.map((colDef) => {
+    const col: Column<TData> = {
+      id: colDef.id,
+      columnDef: colDef,
+      canSort: () => canSort(props, colDef),
+      isSorted: () => isSorted(state, colDef),
+      toggleSorting: direction => toggleSorting(props, state, colDef, direction),
+      canResize: () => canResize(props, colDef),
+      canPin: () => canPin(props, colDef),
+      isPinned: () => isPinned(state, colDef),
+      togglePinning: (e: MouseEvent) => togglePinning(e, props, state, colDef),
+      isVisible: () => isVisible(state, colDef),
+      toggleVisibility: () => toggleVisibility(props, state, colDef),
+      canFilter: () => canFilter(colDef),
+      canGroup: () => canGroup(props, colDef),
+      getFilterValue: () => getFilterValue(state, colDef),
+      isOptionsVisible: () => isOptionsVisible(state, colDef),
+      toggleOptionsVisible: () => toggleOptionsVisible(props, state, colDef),
+      setFilterValue: (value: any) => setFilterValue(value, props, state, colDef),
+      getSize: () => getSize(state, colDef),
+      isGrouped: () => isGrouped(state, colDef),
+    };
+
+    return {
+      id: `${row.id}_${colDef.id}`,
+      column: col,
+      row,
+      getValue: () => getRowValue(row.original, colDef),
+    } as Cell<TData>;
+  });
+}
+
+export function setRows<TData>(props: TableDefaultProps, state: TableState, getRowId: GetRowId<TData>): void {
   const { data, columns, manualSorting, manualFiltering, manualGrouping } = props;
 
   const {
@@ -71,7 +113,7 @@ export function setRows<TData>(props: TableDefaultProps, state: TableState): voi
   }
 
   // Grouping
-  if (grouping.length > 0 && !manualGrouping) {
+  if (props.grouping && grouping.length > 0 && !manualGrouping) {
     const groupBy = grouping[0];
     const groupMap = new Map<any, TData[]>();
     processedData.forEach((row) => {
@@ -95,68 +137,53 @@ export function setRows<TData>(props: TableDefaultProps, state: TableState): voi
         id: rowId,
         original: groupRow,
         depth: 0,
-        subRows: leafRows.map((original, i) => ({
-          id: props.getRowId(original, i),
-          original,
-          depth: 1,
-          subRows: [],
-          getValue: (cid: string) => getRowValue(original, visibleColumns.find((c) => c.id === cid)!),
-          getVisibleCells: () => [],
-          isSelected: () => !!rowSelection[props.getRowId(original, i)],
-          isExpanded: () => false,
-          canExpand: () => false,
-          toggleExpanded: () => { },
-          isGrouped: () => false,
-        })),
+        subRows: leafRows.map((original, i) => {
+          const leafId = getRowId(original, i);
+          return {
+            id: leafId,
+            original,
+            depth: 1,
+            subRows: [],
+            getValue: (cid: string) => getRowValue(original, visibleColumns.find((c) => c.id === cid)!),
+            getVisibleCells: () => [],
+            isSelected: () => !!rowSelection[leafId],
+            isExpanded: () => false,
+            canExpand: () => false,
+            toggleExpanded: () => { },
+            isGrouped: () => false,
+          };
+        }),
         getValue: (cid: string) => (cid === groupBy ? groupValue : aggregatedValues[cid]),
         getVisibleCells: () => [],
         isSelected: () => false,
-        isExpanded: () => !!expanded[rowId],
+        isExpanded: () => !!state.expanded[rowId],
         canExpand: () => true,
-        toggleExpanded: () => {
-          const newExpanded = { ...expanded };
-          newExpanded[rowId] = !newExpanded[rowId];
-          props.onExpandedChange!(newExpanded);
-        },
+        toggleExpanded: () => toggleRowExpanded(props, state, rowId),
         isGrouped: () => true,
       } as Row<TData>;
     });
 
     processedData = groupedRows.flatMap((g) => (expanded[g.id] ? [g, ...g.subRows] : [g])) as TData[];
   } else {
-    processedData = processedData.map((original, i) => {
-      const rowId = props.getRowId(original, i);
-      const subRowsData = props.getSubRows?.(original) || [];
+    function createExpandableRow(original: TData, index: number, depth: number): Row<TData> {
+      const rowId = getRowId(original, index);
+      const subRowsData = props.expanding ? getSubRows(original) : [];
       return {
         id: rowId,
         original,
-        depth: 0,
-        subRows: subRowsData.map((sub, j) => ({
-          id: props.getRowId(sub, j),
-          original: sub,
-          depth: 1,
-          subRows: [],
-          getValue: (cid: string) => getRowValue(sub, columns.find((c) => c.id === cid)!),
-          getVisibleCells: () => [],
-          isSelected: () => !!rowSelection[props.getRowId(sub, j)],
-          isExpanded: () => false,
-          canExpand: () => false,
-          toggleExpanded: () => { },
-          isGrouped: () => false,
-        })),
+        depth,
+        subRows: subRowsData.map((sub, j) => createExpandableRow(sub, j, depth + 1)),
         getValue: (cid: string) => getRowValue(original, columns.find((c) => c.id === cid)!),
         getVisibleCells: () => [],
         isSelected: () => !!rowSelection[rowId],
-        isExpanded: () => !!expanded[rowId],
-        canExpand: () => !!props.enableExpanding && subRowsData.length > 0,
-        toggleExpanded: () => {
-          const newExpanded = { ...expanded };
-          newExpanded[rowId] = !newExpanded[rowId];
-          props.onExpandedChange!(newExpanded);
-        },
+        isExpanded: () => !!state.expanded[rowId],
+        canExpand: () => !!props.expanding && subRowsData.length > 0,
+        toggleExpanded: () => toggleRowExpanded(props, state, rowId),
         isGrouped: () => false,
       } as Row<TData>;
-    }) as TData[];
+    }
+
+    processedData = processedData.map((original, i) => createExpandableRow(original, i, 0)) as TData[];
   }
 
   // Sorting
@@ -178,42 +205,14 @@ export function setRows<TData>(props: TableDefaultProps, state: TableState): voi
   }
 
   // Build final rows
+  function attachVisibleCells(row: Row<TData>): void {
+    row.getVisibleCells = () => getVisibleCellsForRow(row, props, state);
+    row.subRows.forEach(attachVisibleCells);
+  }
+
   state.rows = processedData.map((rowData) => {
     const row = rowData as Row<TData>;
-
-    row.getVisibleCells = () =>
-      visibleColumns.map((colDef) => {
-        const col: Column<TData> = {
-          id: colDef.id,
-          columnDef: colDef,
-          canSort: () => canSort(props, colDef),
-          isSorted: () => isSorted(state, colDef),
-          toggleSorting: () => toggleSorting(props, state, colDef),
-          canResize: () => canResize(props, colDef),
-          canPin: () => canPin(props, colDef),
-          isPinned: () => isPinned(state, colDef),
-          togglePinning: (e: MouseEvent) => togglePinning(e, props, state, colDef),
-          isVisible: () => isVisible(state, colDef),
-          toggleVisibility: () => toggleVisibility(props, state, colDef),
-          canFilter: () => canFilter(colDef),
-          getFilterValue: () => getFilterValue(state, colDef),
-          isOptionsVisible: () => isOptionsVisible(state, colDef),
-          toggleOptionsVisible: () => toggleOptionsVisible(props, state, colDef),
-          setFilterValue: (value: any) => setFilterValue(value, props, state, colDef),
-          getSize: () => getSize(state, colDef),
-          isGrouped: () => isGrouped(state, colDef),
-        };
-
-        const getValue = () => getRowValue(row.original, colDef);
-
-        return {
-          id: `${row.id}_${colDef.id}`,
-          column: col,
-          row,
-          getValue,
-        } as Cell<TData>;
-      });
-
+    attachVisibleCells(row);
     return row;
   }) as Row<TData>[];
 }

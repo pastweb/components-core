@@ -3,9 +3,11 @@ import type { Placement } from '@floating-ui/dom';
 
 export interface CheckboxProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel?: string;
   checkChar?: string;
   className?: string;
   disabled?: boolean;
+  id?: string;
   label?: string;
   labelPlacement?: Placement;
   name?: string;
@@ -16,11 +18,13 @@ export interface CheckboxProps {
 
 export interface CheckboxDefaultProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel: string;
   checkChar: string;
   className: string;
-  disabled?: boolean;
-  label?: string;
-  labelPlacement?: Placement;
+  disabled: boolean;
+  id?: string;
+  label: string;
+  labelPlacement: Placement;
   name?: string;
   value: boolean;
   tabIndex: number;
@@ -28,12 +32,14 @@ export interface CheckboxDefaultProps {
 };
 
 export interface CheckboxState {
+  ariaLabel: string | undefined;
+  isDisabled: true | undefined;
   value: boolean;
 };
 
 export interface CheckboxMediator {
-  state: CheckboxState;
+  id: string;
   onChange: (value: boolean) => void;
-  uid: string;
-  onUnmount: () => void;
+  state: CheckboxState;
+  useBeforeUnmount: () => void;
 };

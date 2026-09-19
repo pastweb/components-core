@@ -1,29 +1,34 @@
 .Select {
-  --Select_width: 12rem;
-  --Select_border-radius: var(--pw_border-radius);
-  --Select_rounded_border-radius: var(--pw_rounded_border-radius);
-  --Select_background-color: var(--pw_control_background-color);
-  --Select_text_color: var(--pw_text_strong_color);
-  --Select_label_text_color: var(--pw_label_text_color);
-  --Select_border-color: var(--pw_border-color);
-  --Select_border-width: var(--pw_border-width);
-  --Select_border-style: var(--pw_border-style);
-  --Select_padding: var(--pw_padding);
-  --Select_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
-  --Select_color_box-shadow: var(--pw_color_box-shadow);
-  --Select_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
-  --Select_size_box-shadow: var(--pw_size_box-shadow);
-  --Select_font-size: var(--pw_font-size);
-  --Select_font-weight: var(--pw_semibold_font-weight);
-  --Select_transition-duration: var(--pw_transition-duration);
-  --Select_disabled_opacity: var(--pw_disabled_opacity);
-
+  --pw_Select_options_default_z-index: var(--pw_z-index_flyout);
+  --pw_Select_root_default_min-width: 12em;
+  --pw_Select_root_default_border-radius: var(--pw_border-radius);
+  --pw_Select_root_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_Select_root_default_background-color: var(--pw_control_background-color);
+  --pw_Select_root_default_color: var(--pw_text_strong_color);
+  --pw_Select_label_default_color: var(--pw_label_text_color);
+  --pw_Select_root_default_border-color: var(--pw_border-color);
+  --pw_Select_root_default_border-width: var(--pw_border-width);
+  --pw_Select_root_default_border-style: var(--pw_border-style);
+  --pw_Select_root_default_padding: var(--pw_padding);
+  --pw_Select_root_default_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
+  --pw_Select_color_default_box-shadow: var(--pw_color_box-shadow);
+  --pw_Select_inset-color_default_box-shadow: var(--pw_inset_color_box-shadow);
+  --pw_Select_size_default_box-shadow: var(--pw_size_box-shadow);
+  --pw_Select_root_default_font-size: var(--pw_font-size);
+  --pw_Select_root_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_Select_root_default_transition-duration: var(--pw_transition-duration);
+  --pw_Select_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Select_root_default_line-height: var(--pw_line-height);
+  --pw_Select_options_default_width: max-content;
+  --pw_Select_options_default_max-height: 16em;
 
   position: relative;
   display: flex;
   cursor: pointer;
-  margin: var(--Select_margin);
-  font-size: var(--Select_font-size);
+  width: fit-content;
+  min-width: var(--pw_Select_root_default_min-width);
+  margin: var(--pw_Select_root_default_margin);
+  font-size: var(--pw_Select_root_default_font-size);
 
   &.label-top,
   &.label-top-start,
@@ -70,82 +75,101 @@
     align-items: flex-end;
   }
 
-  &:focus-visible {
-    outline: var(--pw_outline);
+  &.is-full-width {
+    width: 100%;
   }
 
-  .select {
-    &.is-full-width {
-      width: 100%;
+  &.is-rounded .selectButton,
+  &.is-rounded .options {
+    border-radius: var(--pw_Select_root_rounded_border-radius);
+  }
+
+  &.is-disabled,
+  &.is-loading {
+    cursor: not-allowed;
+
+  }
+
+  &.is-disabled {
+    opacity: var(--pw_Select_root_disabled_opacity);
+  }
+
+  .selectControl {
+    position: relative;
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .selectTarget {
+    display: contents;
+  }
+
+  .selectButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 2.75em;
+    width: 100%;
+    padding: var(--pw_Select_root_default_padding);
+    color: var(--pw_Select_root_default_color);
+    background-color: var(--pw_Select_root_default_background-color);
+    border: var(--pw_Select_root_default_border-width) var(--pw_Select_root_default_border-style) var(--pw_Select_root_default_border-color);
+    border-radius: var(--pw_Select_root_default_border-radius);
+    cursor: pointer;
+    font: inherit;
+    white-space: nowrap;
+
+    &:focus-visible {
+      outline: var(--pw_outline);
+      outline-offset: 0.125em;
     }
 
-    &:has(select:disabled),
-    .disabled {
+    &:disabled {
       cursor: not-allowed;
-      opacity: var(--Select_disabled_opacity);
     }
   }
 
-  .options {
-    color: var(--Select_text_color);
-    font-size: var(--Select_font-size);
-    font-weight: var(--Select_font-weight);
+  .arrow {
+    padding-left: var(--pw_horizontal_padding);
   }
 
   .options {
     position: absolute;
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     top: 100%;
     left: 0;
-    width: auto;
-    margin-top: 0.25rem;
-    border-radius: var(--Select_border-radius);
-    background-color: var(--Select_background-color);
-    box-shadow: var(--Select_size_box-shadow) var(--Select_inset_color_box-shadow);
+    width: var(--pw_Select_options_default_width);
+    min-width: 100%;
+    margin: 0.25em 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--pw_Select_root_default_color);
+    font-size: var(--pw_Select_root_default_font-size);
+    font-weight: var(--pw_Select_root_default_font-weight);
+    border: var(--pw_Select_root_default_border-width) var(--pw_Select_root_default_border-style) var(--pw_Select_root_default_border-color);
+    border-radius: var(--pw_Select_root_default_border-radius);
+    background-color: var(--pw_Select_root_default_background-color);
+    box-shadow: var(--pw_Select_size_default_box-shadow) var(--pw_Select_color_default_box-shadow);
     white-space: nowrap;
-    z-index: 1;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .show {
-    opacity: 1;
-    pointer-events: all;
+    z-index: var(--pw_Select_options_default_z-index);
+    overflow-x: hidden;
     overflow-y: auto;
+    max-height: var(--pw_Select_options_default_max-height);
   }
 
-  // .leftComponent,
-  // .rightComponent {
-  //   display: flex;
-  //   align-items: center;
-  //   color: var(--Select_text_color);
-  //   padding-right: 10px;
-  // }
-
-  // .loader {
-  //   cursor: wait;
-
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   display: flex;
-  //   ;
-  //   align-items: center;
-  //   justify-content: center;
-  //   width: 100%;
-  //   height: 100%;
-  //   background-color: var(--Select_background-color);
-  //   border-radius: var(--Select_border-radius);
-  //   margin: 0;
-  // }
+  .options[hidden] {
+    display: none;
+  }
 
   .label {
-    color: var(--Select_label_text_color);
-    font-size: var(--Select_font-size);
-    font-weight: var(--Select_font-weight);
-    line-height: var(--Select_line-height);
+    color: var(--pw_Select_label_default_color);
+    font-size: var(--pw_Select_root_default_font-size);
+    font-weight: var(--pw_Select_root_default_font-weight);
+    line-height: var(--pw_Select_root_default_line-height);
 
     &.top,
     &.top-start,
@@ -170,5 +194,15 @@
     &.right-end {
       margin-left: var(--pw_horizontal_margin);
     }
+  }
+}
+
+@media (forced-colors: active) {
+
+  .Select .selectButton,
+  .Select .options {
+    border-color: ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
   }
 }

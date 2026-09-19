@@ -1,46 +1,61 @@
 import type { ClassValue } from '@pastweb/tools';
+import type { Placement } from '@floating-ui/dom';
 
 export interface TextAreaProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel?: string;
+  className?: string;
+  cols?: number;
+  disabled?: boolean;
   id?: string;
+  label?: string;
+  labelPlacement?: Placement;
+  loading?: boolean;
+  maxLength?: number;
+  name?: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  readOnly?: boolean;
+  required?: boolean;
+  resizeable?: boolean;
+  rows?: number;
   tabIndex?: number;
   value?: string;
-  cols?: number;
-  rows?: number;
-  name?: string;
-  placeholder?: string;
-  disabled?: boolean;
-  className?: string;
-  maxLength?: number;
-  onChange?: (value: string) => void;
-  label?: string;
-  labelPlacement?: 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end';
 }
 
 export interface TextAreaDefaultProps {
   cls: (...args: ClassValue[]) => string;
-  id?: string;
-  tabIndex?: number;
-  value: string;
-  cols?: number;
-  rows?: number;
-  name?: string;
-  placeholder: string;
-  disabled?: boolean;
+  ariaLabel: string;
   className: string;
+  cols?: number;
+  disabled: boolean;
+  id?: string;
+  label: string;
+  labelPlacement: Placement;
+  loading: boolean;
   maxLength?: number;
-  resizeable?: boolean;
+  name?: string;
   onChange: (value: string) => void;
-  label?: string;
-  labelPlacement: 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end' | 'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end';
+  placeholder: string;
+  readOnly: boolean;
+  required: boolean;
+  resizeable: boolean;
+  rows?: number;
+  tabIndex: number;
+  value: string;
 }
 
 export interface TextAreaState {
+  ariaLabel: string | undefined;
   inputId: string;
-  isLoading: boolean;
-};
+  isDisabled: true | undefined;
+  isLoading: true | undefined;
+  isReadOnly: true | undefined;
+  isResizeable: true | undefined;
+}
 
 export interface TextAreaMediator {
+  onChange: (value: string) => void;
   state: TextAreaState;
-  onUnmount: () => void;
+  useBeforeUnmount: () => void;
 }

@@ -1,5 +1,9 @@
 .WindowController {
-  --WindowController_backdrop_backgroud-color: var(--pw_backdrop_background-color);
+  --pw_WindowController_backdrop_default_background-color: var(--pw_backdrop_background-color);
+  --pw_WindowController_root_default_z-index: var(--pw_z-index_window-base);
+  --pw_WindowController_backdrop_default_z-index: var(--pw_z-index_local);
+  --pw_WindowController_window_default_z-index: var(--pw_z-index_window-base);
+  --pw_WindowController_modal_default_z-index: var(--pw_z-index_local);
 
 
   position: absolute;
@@ -11,26 +15,83 @@
   width: 100%;
   height: 100%;
   overflow-y: auto;
+  z-index: var(--pw_WindowController_root_default_z-index);
+
+  &.is-hide {
+    display: none;
+  }
 }
 
 .backdrop {
+  appearance: none;
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--WindowController_backdrop_backgroud-color);
-  z-index: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: var(--pw_WindowController_backdrop_default_background-color);
+  z-index: var(--pw_WindowController_backdrop_default_z-index);
 }
 
-.window,
-.modal {
-  outline: none;
-
+.window {
   backface-visibility: hidden; // helps render animation
   transform: translate3d(0, 0, 0); // helps render animation
   transform-style: preserve-3d; // helps render animation
-  z-index: 1;
+  z-index: var(--pw_WindowController_window_default_z-index);
+
+  &.is-hide {
+    display: none;
+  }
+
+  &.is-managed:not(.is-dragging) {
+    transition: all 180ms ease;
+  }
+
+  &.is-minimised {
+    animation: none !important;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(.85);
+    pointer-events: none;
+    transition-delay: 0s, 0s, 0s, 0s, 0s, 0s, 180ms;
+  }
+
+  &.is-dragging {
+    transition: none !important;
+  }
+
+  &:focus-visible {
+    outline: var(--pw_outline);
+    outline-offset: 0.125em;
+  }
+}
+
+.modal {
+  backface-visibility: hidden; // helps render animation
+  transform: translate3d(0, 0, 0); // helps render animation
+  transform-style: preserve-3d; // helps render animation
+  z-index: var(--pw_WindowController_modal_default_z-index);
+
+  &.is-managed {
+    transition: opacity 180ms ease, transform 180ms ease, visibility 0s linear 0s;
+  }
+
+  &.is-minimised {
+    animation: none !important;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(.85);
+    pointer-events: none;
+    transition-delay: 0s, 0s, 180ms;
+  }
+
+  &:focus-visible {
+    outline: var(--pw_outline);
+    outline-offset: 0.125em;
+  }
 }
 
 .modal {
@@ -174,5 +235,15 @@
 
   to {
     opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window,
+  .modal,
+  [class*='zoom-'],
+  [class*='flip-'],
+  [class*='fade-'] {
+    animation: none;
   }
 }

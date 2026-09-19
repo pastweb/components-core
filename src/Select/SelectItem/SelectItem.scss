@@ -1,19 +1,37 @@
 .SelectItem {
   display: flex;
   justify-content: center;
-  width: 100%;
-  color: var(--Select_text_color);
-  padding: var(--Select_padding);
+  box-sizing: border-box;
+  width: auto;
+  list-style: none;
+  color: var(--pw_Select_root_default_color);
+  padding: var(--pw_Select_root_default_padding);
   cursor: pointer;
-  transition: all var(--Select_transition-duration);
+  transition: all var(--pw_Select_root_default_transition-duration);
 
   &:hover,
-  &.selected {
-    color: var(--Select_background-color);
-    background-color: var(--Select_text_color);
+  &.is-selected {
+    color: var(--pw_Select_root_default_background-color);
+    background-color: var(--pw_Select_root_default_color);
   }
 
-  &.highlight {
-    box-shadow: inset var(--Select_size_box-shadow) var(--Select_color_box-shadow);
+  &.is-highlighted {
+    box-shadow: inset var(--pw_Select_size_default_box-shadow) var(--pw_Select_color_default_box-shadow);
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: var(--pw_Select_root_disabled_opacity);
+  }
+
+  &.is-disabled:hover {
+    color: var(--pw_Select_root_default_color);
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .SelectItem {
+    transition: none;
   }
 }

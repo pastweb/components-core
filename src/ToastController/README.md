@@ -1,87 +1,65 @@
-## ToastController
+# ToastController
 
-### Enums
+ToastController presents a temporary, politely announced status message. Its
+rendering contract targets WCAG 2.2 Level AA.
 
-#### PLACEMENT
-| Value        | Description                  |
-|--------------|------------------------------|
-| topRight     | Top-right positioned toast   |
-| topCenter    | Top-center positioned toast  |
-| topLeft      | Top-left positioned toast    |
-| bottomRight  | Bottom-right positioned toast|
-| bottomCenter | Bottom-center positioned toast|
-| bottomLeft   | Bottom-left positioned toast |
+## When to use
 
-#### ANIMATION
-| Value  | Description                  |
-|--------|------------------------------|
-| bounce | Bounce animation             |
-| fade   | Fade animation               |
-| flip   | Flip animation               |
-| slide  | Slide animation              |
-| zoom   | Zoom animation               |
+Use ToastController for non-urgent confirmation or status that can disappear.
+Use Notification for a persistent in-page message, an alert pattern for urgent
+information, and a dialog when the user must decide before continuing.
 
-### Props
-| PropName            | type                               | required | default      | Description                                                   |
-|---------------------|------------------------------------|----------|--------------|---------------------------------------------------------------|
-| cls                 | (...args: ClassValue[]) => string; |    yes   |    -         | function to handle CssModules classes and classes switching   |
-| portal              | Portal                             |    no    |    -         | portal configuration object                                   |
-| portalElement       | HTMLElement                        |    no    |    -         | DOM element to use as the portal container                    |
-| entryId             | string                             |    no    |    -         | unique ID for the portal entry point                          |
-| placement           | PLACEMENT                          |    no    | topRight     | position of the toast (e.g., 'top-right', 'bottom-center')    |
-| padding             | number                             |    no    |    15        | padding inside the toast (applied as inline style)            |
-| delay               | number                             |    no    |    5         | delay before showing the toast (in seconds)                   |
-| timeUpdate          | number                             |    no    |    10        | interval for updating the toast timer (in seconds)            |
-| animation           | string                             |    no    |  slide       | animation type (one of ANIMATION enum values)                 |
-| animationDuration   | number                             |    no    |   500        | duration of the animation in milliseconds                     |
-| closeOnEscKey       | boolean                            |    no    |   true       | close the toast on ESC key press                              |
-| pauseTimerOnOver    | boolean                            |    no    |   true       | pause the auto-close timer on mouse over                      |
-| resetTimerOnPause   | boolean                            |    no    |  false       | reset the timer when pausing                                  |
-| onClose             | () => void                         |    no    |   noop       | callback fired when the toast is closed                       |
-| onDestroy           | () => void                         |    no    |   noop       | callback fired when the toast is destroyed                    |
-| onKeyDown           | (e: any) => void                   |    no    |   noop       | callback fired on keydown events in the toast                 |
+## Props
 
-### Children
-The content to render inside the toast body.
+| PropName | Type | Required | Default | Description |
+|---|---|---:|---:|---|
+| `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
+| `ariaLabel` | `string` | no | `""` | Names the status region. Pass an empty string to omit it. |
+| `portal` | `Portal` | no | - | Portal configuration. |
+| `portalElement` | `HTMLElement` | no | - | Portal container. |
+| `entryId` | `string` | no | - | Portal entry ID. |
+| `placement` | `PLACEMENT` | no | `top-right` | Viewport placement. |
+| `padding` | `number` | no | `15` | Inner padding in pixels. |
+| `delay` | `number` | no | `5` | Auto-dismiss delay in seconds. |
+| `timeUpdate` | `number` | no | `10` | Timer tick interval. |
+| `animation` | `Animation` | no | `slide` | Entry and exit animation. |
+| `closeOnEscKey` | `boolean` | no | `true` | Dismisses on `Escape`. |
+| `pauseTimerOnOver` | `boolean` | no | `true` | Pauses the timer on pointer or keyboard focus. |
+| `resetTimerOnPause` | `boolean` | no | `false` | Resets the timer when pausing. |
+| `onClose` | `() => void` | no | noop | Reports close intent. |
+| `onDestroy` | `() => void` | no | noop | Reports portal removal. |
+| `onKeyDown` | `(event) => void` | no | noop | Observes keyboard input. |
 
-```tsx
-import { useRef, withDefaultProps, useMediator, provide, useMounted } from '@pastweb/x';
-import { DEFAULT_PROPS, JUSTIFY } from './constants';
-import { toastController } from '@pastweb/components/ToastController';
-import { ToastControllerProps, ToastControllerDefaultProps, ToastControllerMediator } from './types';
+## Keyboard interaction
 
-export function ToastController(props: ToastControllerProps) {
-  const p = withDefaultProps<ToastControllerDefaultProps>(props, DEFAULT_PROPS);
-  const m = useMediator<ToastControllerMediator>(toastController, p);
-  const s = m.state;
-  
-  const toastRef = useRef<HTMLElement | null>(null);
-  
-  const parentToast = m.getParentToast();
-  
-  provide('$$parentToast', parentToast);
+- `Escape` dismisses the toast when `closeOnEscKey` is enabled.
+- The toast does not enter sequential tab order. Interactive content inside it
+  remains operable.
 
-  useMounted(() => m.onMounted(toastRef.value as HTMLElement));
+## Accessibility notes
 
-  return (
-    <div
-      #ref={toastRef}>
-      class={p.cls('ToastController', p.placement)}
-      #style={{ [s.y]: s.top || s.bottom, justifyContent: JUSTIFY[s.x] }}
-      <div
-        class={p.cls('toast', {
-          [`${p.animation}-in-${s.x}-${s.y}`]: s.isOpen,
-          [`${p.animation}-out-${s.x}-${s.y}`]: !s.isOpen,
-        })}
-        #style={{ padding: p.padding, animationDuration: `${p.animationDuration}ms` }}
-        tabIndex="0"
-        @keydown={m.onKeyDown}
-        @mouseover={m.onMouseOver}
-        @mouseleave={m.onMouseLeave}
-      >
-        <cihldren />
-      </div>
-    </div>
-  );
-}
-```
+- The toast is a polite `status` live region. It does not move focus on open.
+- The auto-dismiss timer pauses while the pointer is over the toast, while it
+  has keyboard focus, and while it is not fully visible.
+- Time limits can be paused (`pauseTimerOnOver`) and dismissed early (`Escape`
+  or a consumer close control).
+- Shared web styles keep a visible `:focus-visible` indicator and disable
+  non-essential motion under `prefers-reduced-motion`.
+
+## Known limitations
+
+- A visible close control is not built in. Supply one in the toast content when
+  users must dismiss without waiting.
+- Automated accessibility checks do not by themselves establish WCAG
+  conformance.
+
+## Native renderer mapping
+
+Native renderers map the toast to a native polite announcement and timed overlay.
+Do not copy ARIA attributes into native markup.
+
+## Standards
+
+- WCAG 2.2: https://www.w3.org/TR/WCAG22/
+- WAI-ARIA Status and alert patterns: https://www.w3.org/WAI/ARIA/apg/patterns/
+- GOV.UK notification banner: https://design-system.service.gov.uk/components/notification-banner/

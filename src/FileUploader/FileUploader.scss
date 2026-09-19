@@ -1,0 +1,110 @@
+.FileUploader {
+  --pw_FileUploader_root_default_background-color: var(--pw_control_background-color);
+  --pw_FileUploader_root_default_color: var(--pw_text_color);
+  --pw_FileUploader_root_default_padding: var(--pw_padding);
+  --pw_FileUploader_root_default_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
+  --pw_FileUploader_root_default_border-color: var(--pw_border-color);
+  --pw_FileUploader_root_default_border-width: var(--pw_border-width);
+  --pw_FileUploader_root_default_border-style: var(--pw_border-style);
+  --pw_FileUploader_root_default_border-radius: var(--pw_border-radius);
+  --pw_FileUploader_root_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_FileUploader_root_default_min-height: 2.75em;
+  --pw_FileUploader_root_default_transition-duration: var(--pw_transition-duration);
+  --pw_FileUploader_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_FileUploader_root_highlighted_border-color: var(--pw_outline_color);
+  --pw_FileUploader_trigger_default_gap: var(--pw_horizontal_padding);
+  --pw_FileUploader_label_default_color: var(--pw_label_text_color);
+  --pw_FileUploader_label_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_FileUploader_color_default_box-shadow: var(--pw_color_box-shadow);
+  --pw_FileUploader_size_default_box-shadow: var(--pw_size_box-shadow);
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: var(--pw_FileUploader_root_default_margin);
+  color: var(--pw_FileUploader_root_default_color);
+
+  .label {
+    color: var(--pw_FileUploader_label_default_color);
+    font-weight: var(--pw_FileUploader_label_default_font-weight);
+    margin-bottom: var(--pw_vertical_margin);
+  }
+
+  .trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--pw_FileUploader_trigger_default_gap);
+    min-height: var(--pw_FileUploader_root_default_min-height);
+    min-width: var(--pw_FileUploader_root_default_min-height);
+    padding: var(--pw_FileUploader_root_default_padding);
+    background-color: var(--pw_FileUploader_root_default_background-color);
+    border: var(--pw_FileUploader_root_default_border-width) var(--pw_FileUploader_root_default_border-style) var(--pw_FileUploader_root_default_border-color);
+    border-radius: var(--pw_FileUploader_root_default_border-radius);
+    color: inherit;
+    cursor: pointer;
+    transition: box-shadow var(--pw_FileUploader_root_default_transition-duration),
+      border-color var(--pw_FileUploader_root_default_transition-duration);
+
+    &:hover:not(:disabled) {
+      box-shadow: inset var(--pw_FileUploader_size_default_box-shadow) var(--pw_FileUploader_color_default_box-shadow);
+    }
+
+    &:focus-visible:not(:disabled) {
+      outline: var(--pw_outline);
+    }
+  }
+
+  .inputElement {
+    display: none;
+  }
+
+  &.is-dropzone .trigger {
+    border-style: dashed;
+  }
+
+  &.is-dragging .trigger {
+    border-color: var(--pw_FileUploader_root_highlighted_border-color);
+    box-shadow: var(--pw_FileUploader_size_default_box-shadow) var(--pw_FileUploader_color_default_box-shadow);
+  }
+
+  &.is-disabled {
+    opacity: var(--pw_FileUploader_root_disabled_opacity);
+    cursor: not-allowed;
+
+    .trigger {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &.is-full .trigger {
+    cursor: default;
+  }
+
+  &.is-rounded .trigger {
+    border-radius: var(--pw_FileUploader_root_rounded_border-radius);
+  }
+
+  &.is-full-width {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .FileUploader .trigger {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .FileUploader .trigger {
+    border-color: ButtonBorder;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+
+  .FileUploader.is-dragging .trigger {
+    border-color: Highlight;
+  }
+}

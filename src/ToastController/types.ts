@@ -14,6 +14,7 @@ export interface ToastControllerProps {
   delay?: number;
   timeUpdate?: number;
   animation?: Animation;
+  ariaLabel?: string;
   closeOnEscKey?: boolean;
   pauseTimerOnOver?: boolean;
   resetTimerOnPause?: boolean;
@@ -32,6 +33,7 @@ export interface ToastControllerDefaultProps {
   delay: number;
   timeUpdate: number;
   animation: Animation;
+  ariaLabel: string;
   closeOnEscKey: boolean;
   pauseTimerOnOver: boolean;
   resetTimerOnPause: boolean;

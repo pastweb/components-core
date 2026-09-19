@@ -1,98 +1,72 @@
-import { reactive, effect } from '@pastweb/tools';
+import { effect, reactive } from '@pastweb/tools';
 import { idCache } from '../utils';
-import type { InputDefaultProps, InputState, InputMediator } from './types';
+import type {
+  InputDefaultProps,
+  InputMediator,
+  InputMediatorVars,
+  InputState,
+} from './types';
+import {
+  getAriaLabel,
+  getInputId,
+  getIsDisabled,
+  getIsLoading,
+  onChange,
+  onKeyDown,
+  stepDown,
+  stepUp,
+  updateButtonStates,
+  useBeforeUnmount,
+  useMounted,
+} from './utils';
 
 export function inputMediator(props: InputDefaultProps): InputMediator {
-  let input: HTMLInputElement;
-  const uid = idCache.getId();
+  const uid = idCache.getId('input');
+  const vars: InputMediatorVars = {
+    inputReference: undefined,
+  };
 
   const state = reactive<InputState>({
-    inputId: props.id ?? `text-input-${uid}`,
-    isLoading: props.className.includes('is-loading'),
-    disableUpBtn: false,
-    disableDownBtn: false,
+    ariaLabel: getAriaLabel(props),
+    disableDownBtn: undefined,
+    disableUpBtn: undefined,
+    inputId: getInputId(props, uid),
+    isDisabled: getIsDisabled(props),
+    isLoading: getIsLoading(props),
   });
 
   effect(
-    () => { state.inputId = props.id ?? `text-input-${uid}` },
+    () => { state.inputId = getInputId(props, uid); },
     () => props.id,
   );
 
   effect(
-    () => { state.isLoading = props.className.includes('is-loading') },
-    () => props.className,
+    () => { state.ariaLabel = getAriaLabel(props); },
+    () => [props.ariaLabel, props.label],
   );
 
   effect(
-    updateButtonStates,
-    () => props.value,
+    () => { state.isDisabled = getIsDisabled(props); },
+    () => props.disabled,
   );
 
-  function dispatchEvents() {
-    const bubbles = true;
-    input.dispatchEvent(new Event('input', { bubbles }));
-    input.dispatchEvent(new Event('change', { bubbles }));
-  }
+  effect(
+    () => { state.isLoading = getIsLoading(props); },
+    () => [props.loading, props.className],
+  );
 
-  function updateButtonStates() {
-    if (props.type !== 'number') return;
-    const value = parseFloat(props.value as string) || 0;
-    const { min, max } = props;
-
-    if (props.min !== undefined) {
-      state.disableDownBtn = value === min;
-    }
-
-    if (props.max !== undefined) {
-      state.disableUpBtn = value === max;
-    }
-  }
-
-  function onChange(value: string, e: any): void {
-    if (!props.disabled) {
-      props.onChange(value, e);
-    }
-  }
-
-  function stepUp(): void {
-    input.stepUp();
-    dispatchEvents();
-  }
-
-  function stepDown(): void {
-    input.stepDown();
-    dispatchEvents();
-  }
-
-  function onKeyDown(e: any): void {
-    if (!props.disabled) {
-      if (props.type === 'number') {
-        switch (e.key) {
-          case 'ArrowUp':
-            stepUp();
-            break;
-          case 'ArrowDown':
-            stepDown();
-            break;
-        }
-      }
-      props.onKeyDown(e);
-    }
-  }
-
-  function useMounted(inputElement: HTMLInputElement): void {
-    input = inputElement;
-  }
-
-  const useBeforeUnmount = (): void => idCache.removeId(uid);
+  effect(
+    () => updateButtonStates(props, state, vars),
+    () => [props.value, props.type, props.min, props.max],
+  );
 
   return {
+    onChange: (value, event) => onChange(props, state, vars, value, event),
+    onKeyDown: event => onKeyDown(props, state, event),
     state,
-    onChange,
-    onKeyDown,
-    stepDown,
-    stepUp,
-    useMounted,
-    useBeforeUnmount,
+    stepDown: () => stepDown(props, state, vars),
+    stepUp: () => stepUp(props, state, vars),
+    useBeforeUnmount: () => useBeforeUnmount(uid, vars),
+    useMounted: inputReference => useMounted(vars, inputReference),
   };
 }

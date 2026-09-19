@@ -1,27 +1,26 @@
 .RangeSlider {
-  --RangeSlider_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
-  --RangeSlider_background-color: var(--pw_control_background-color);
-  --RangeSlider_border-color: var(--pw_border-color);
-  --RangeSlider_border-width: var(--pw_border-width);
-  --RangeSlider_border-style: var(--pw_border-style);
-  --RangeSlider_color_box-shadow: var(--pw_color_box-shadow);
-  --RangeSlider_size_box-shadow: var(--pw_size_box-shadow);
-  --RangeSlider_transition-duration: var(--pw_transition-duration);
-  --RangeSlider_disabled_opacity: var(--pw_disabled_opacity);
-  --RangeSlider_thumb_width: 1.562em;
-  --RangeSlider_thumb_height: var(--RangeSlider_thumb_width);
-  --RangeSlider_thumb_border-radius: 50%;
-  --RangeSlider_track_height: 0.8em;
-  --RangeSlider_track_border-radius: var(--pw_border-radius);
+  --pw_RangeSlider_root_default_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
+  --pw_RangeSlider_track_default_background-color: var(--pw_control_background-color);
+  --pw_RangeSlider_track_default_border-color: var(--pw_border-color);
+  --pw_RangeSlider_track_default_border-width: var(--pw_border-width);
+  --pw_RangeSlider_track_default_border-style: var(--pw_border-style);
+  --pw_RangeSlider_thumb_default_transition-duration: var(--pw_transition-duration);
+  --pw_RangeSlider_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_RangeSlider_thumb_default_width: 1.562em;
+  --pw_RangeSlider_thumb_default_height: var(--pw_RangeSlider_thumb_default_width);
+  --pw_RangeSlider_thumb_default_border-radius: 50%;
+  --pw_RangeSlider_track_default_height: 0.8em;
+  --pw_RangeSlider_track_default_border-radius: var(--pw_border-radius);
+  --pw_RangeSlider_thumb_default_background-color: var(--pw_RangeSlider_track_default_background-color);
 
-  --RangeSlider_label_text_color: var(--pw_label_text_color);
-  --RangeSlider_font-size: var(--pw_font-size);
-  --RangeSlider_font-weight: var(--pw_semibold_font-weight);
-  --RangeSlider_line-height: var(--pw_line-height);
+  --pw_RangeSlider_label_default_color: var(--pw_label_text_color);
+  --pw_RangeSlider_label_default_font-size: var(--pw_font-size);
+  --pw_RangeSlider_label_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_RangeSlider_label_default_line-height: var(--pw_line-height);
 
   display: flex;
   min-width: 300px;
-  margin: var(--RangeSlider_margin);
+  margin: var(--pw_RangeSlider_root_default_margin);
 
   &.is-full-width {
     width: 100%;
@@ -81,40 +80,34 @@
     align-items: flex-start;
   }
 
-  /* The slider itself */
   &.is-disabled {
-    cursor: none;
-    opacity: var(--RangeSlider_disasbled_opacity);
+    cursor: not-allowed;
+    opacity: var(--pw_RangeSlider_root_disabled_opacity);
   }
 
   .slider {
     appearance: none;
     font-size: inherit;
     width: 100%;
-    /* Full-width */
-    height: var(--RangeSlider_track_height);
-    /* Specified height */
-    background-color: var(--RangeSlider_background-color);
-    /* Grey background */
-    outline: none;
-    /* Remove outline */
-    border: var(--RangeSlider_border-width) var(--RangeSlider_border-style) var(--RangeSlider_border-color);
-    border-radius: var(--RangeSlider_track_border-radius);
+    height: var(--pw_RangeSlider_track_default_height);
+    background-color: var(--pw_RangeSlider_track_default_background-color);
+    border: var(--pw_RangeSlider_track_default_border-width) var(--pw_RangeSlider_track_default_border-style) var(--pw_RangeSlider_track_default_border-color);
+    border-radius: var(--pw_RangeSlider_track_default_border-radius);
 
-    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    &:focus-visible {
+      outline: var(--pw_outline);
+      outline-offset: 0.125em;
+    }
+
     &::-webkit-slider-thumb {
-      border: var(--RangeSlider_border-width) var(--RangeSlider_border-style) var(--RangeSlider_border-color);
-      border-radius: var(--RangeSlider_thumb_border-radius);
+      border: var(--pw_RangeSlider_track_default_border-width) var(--pw_RangeSlider_track_default_border-style) var(--pw_RangeSlider_track_default_border-color);
+      border-radius: var(--pw_RangeSlider_thumb_default_border-radius);
       appearance: none;
-      width: var(--RangeSlider_thumb_width);
-      /* Set a specific slider handle width */
-      height: var(--RangeSlider_thumb_height);
-      /* Slider handle height */
-      background-color: var(--RangeSlider_background-color);
-      /* Grey background */
-      transition: all var(--RangeSlider_transition-duration) ease;
+      width: var(--pw_RangeSlider_thumb_default_width);
+      height: var(--pw_RangeSlider_thumb_default_height);
+      background-color: var(--pw_RangeSlider_thumb_default_background-color);
+      transition: all var(--pw_RangeSlider_thumb_default_transition-duration) ease;
       cursor: pointer;
-      /* Cursor on hover */
 
       &:hover {
         background-color: var(--pw_background-color);
@@ -122,15 +115,11 @@
     }
 
     &::-moz-range-thumb {
-      width: var(--RangeSlider_thumb_width);
-      /* Set a specific slider handle width */
-      height: var(--RangeSlider_thumb_height);
-      /* Slider handle height */
-      background-color: var(--RangeSlider_background-color);
-      /* Grey background */
-      transition: all var(--RangeSlider_transition-duration) ease;
+      width: var(--pw_RangeSlider_thumb_default_width);
+      height: var(--pw_RangeSlider_thumb_default_height);
+      background-color: var(--pw_RangeSlider_thumb_default_background-color);
+      transition: all var(--pw_RangeSlider_thumb_default_transition-duration) ease;
       cursor: pointer;
-      /* Cursor on hover */
 
       &:hover {
         background-color: var(--pw_background-color);
@@ -139,10 +128,10 @@
   }
 
   .label {
-    color: var(--RangeSlider_label_text_color);
-    font-size: var(--RangeSlider_font-size);
-    font-weight: var(--RangeSlider_font-weight);
-    line-height: var(--RangeSlider_line-height);
+    color: var(--pw_RangeSlider_label_default_color);
+    font-size: var(--pw_RangeSlider_label_default_font-size);
+    font-weight: var(--pw_RangeSlider_label_default_font-weight);
+    line-height: var(--pw_RangeSlider_label_default_line-height);
 
     &.top,
     &.top-start,
@@ -167,5 +156,25 @@
     &.right-end {
       margin-left: var(--pw_horizontal_margin);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .RangeSlider .slider::-webkit-slider-thumb,
+  .RangeSlider .slider::-moz-range-thumb {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .RangeSlider .slider {
+    border-color: ButtonText;
+    background-color: ButtonFace;
+  }
+
+  .RangeSlider .slider::-webkit-slider-thumb,
+  .RangeSlider .slider::-moz-range-thumb {
+    border-color: ButtonText;
+    background-color: ButtonFace;
   }
 }

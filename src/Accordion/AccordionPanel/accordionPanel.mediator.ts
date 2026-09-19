@@ -1,29 +1,63 @@
-import { reactive } from '@pastweb/tools';
+import { effect, getContextUtils, reactive } from '@pastweb/tools';
 import { idCache } from '../../utils';
-import type { AccordionPanelDefaultProps, AccordionPanelMediator, AccordionPanelState } from './types';
+import { ACCORDION_CONTEXT_KEY } from '../constants';
+import type { AccordionContext } from '../types';
+import { focusTriggerOnClose, onToggle, onTransitionEnd, updateState, useBeforeUnmount, useMounted } from './utils';
+import type { AccordionPanelDefaultProps, AccordionPanelMediator, AccordionPanelMediatorVars, AccordionPanelState } from './types';
 
 export function accordionPanelMediator(props: AccordionPanelDefaultProps): AccordionPanelMediator {
-  const uid = idCache.getId();
+  const { getContext } = getContextUtils();
+  const context = getContext<AccordionContext>(ACCORDION_CONTEXT_KEY)!;
+  const uid = idCache.getId('accordionPanel');
+  const id = props.id ? `_${props.id}` : uid;
+  const panelId = `panel${id}`;
+  const triggerId = `trigger${id}`;
+  const vars: AccordionPanelMediatorVars = {
+    triggerReference: null,
+    transitionTimer: undefined,
+  };
+
   const state = reactive<AccordionPanelState>({
+    className: '',
+    hideBorderBottom: !props.isOpen,
+    isDisabled: undefined,
     isOpen: !!props.isOpen,
-    hideBorderBottom: true,
+    isRtl: undefined,
+    role: undefined,
+    transitionDuration: '',
   });
 
-  function onToggleClick(): void {
-    state.isOpen = !state.isOpen;
+  updateState(props, state, context);
 
-    if (state.isOpen) {
-      state.hideBorderBottom = false;
-    } else {
-      setTimeout(() => {
-        state.hideBorderBottom = true;
-      }, props.transitionDuration);
-    }
-  }
+  effect(
+    () => updateState(props, state, context),
+    () => [
+      context.className,
+      context.disabled,
+      context.rtl,
+      context.transitionDuration,
+      props.className,
+      props.disabled,
+      props.landmark,
+      props.rtl,
+      props.transitionDuration,
+      state.isOpen,
+    ],
+  );
 
-  function onUnmount(): void {
-    idCache.removeId(uid);
-  }
+  effect(
+    isOpen => focusTriggerOnClose(vars, isOpen),
+    () => state.isOpen,
+  );
 
-  return { state, onToggleClick, uid, onUnmount };
+  return {
+    state,
+    id,
+    triggerId,
+    panelId,
+    useMounted: triggerReference => useMounted(vars, triggerReference),
+    onToggle: () => onToggle(props, state, context, vars),
+    onTransitionEnd: () => onTransitionEnd(state, vars),
+    useBeforeUnmount: () => useBeforeUnmount(vars, uid),
+  };
 }

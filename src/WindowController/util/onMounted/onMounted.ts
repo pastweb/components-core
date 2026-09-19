@@ -1,18 +1,23 @@
 import interact from 'interactjs';
 import { MODE } from '../../constants';
-import type { WindowControllerDefaultProps } from '../../types';
+import type { WindowControllerDefaultProps, WindowControllerVars } from '../../types';
 
 export function onMounted(params: {
   props: WindowControllerDefaultProps;
   windowElement: HTMLElement;
   onClosePortal: (e: any) => void;
-  bringToFront: () => void;
-  setMountElement: (element: HTMLElement) => void;
+  bringToFront: (activate?: boolean) => void;
+  vars: WindowControllerVars;
 }): void {
-  const { props, windowElement, onClosePortal, bringToFront, setMountElement } = params;
-  const { animation, portalElement, width, height, mode, resizable, moveCursor, resizeCursor } = props;
+  const { props, windowElement, onClosePortal, bringToFront, vars } = params;
+  const { animation, entryId, manager, portalElement, width, height, mode, resizable, moveCursor, resizeCursor } = props;
+  const draggingClass = props.cls('is-dragging');
 
   portalElement.addEventListener('close', onClosePortal);
+  vars.previousFocus = typeof document !== 'undefined' && document.activeElement instanceof HTMLElement
+    ? document.activeElement
+    : null;
+  vars.windowElement = windowElement;
 
   if (width) windowElement.style.width = `${width}px`;
   if (height) windowElement.style.height = `${height}px`;
@@ -23,7 +28,7 @@ export function onMounted(params: {
 
   if (mode === MODE.floating || resizable) {
     const parent = windowElement.parentElement as HTMLElement;
-    setMountElement(parent);
+    vars.mountElement = parent;
 
     const portalParent = portalElement.parentElement as HTMLElement;
     const parentRect = portalParent.getBoundingClientRect();
@@ -34,16 +39,25 @@ export function onMounted(params: {
     const position = { x, y };
     const size = { width, height };
 
+    setTimeout(() => {
+      if (manager?.setBounds(entryId, { ...position, ...size })) return;
+      setTimeout(() => manager?.setBounds(entryId, { ...position, ...size }));
+    });
+
 
     if (mode === MODE.floating) {
-      windowElement.onclick = () => bringToFront();
+      windowElement.onmousedown = () => bringToFront();
       windowElement.style.position = 'absolute';
       windowElement.style.left = `${position.x}px`;
       windowElement.style.top = `${position.y}px`;
 
       interact(windowElement).draggable({
+        ignoreFrom: 'a, button, input, select, textarea, [data-window-no-drag]',
         cursorChecker: () => moveCursor ? 'move' : 'auto',
         listeners: {
+          start() {
+            windowElement.classList.add(draggingClass);
+          },
           move(event) {
             position.x += event.dx;
             position.y += event.dy;
@@ -54,7 +68,11 @@ export function onMounted(params: {
               top: `${position.y}px`,
             });
 
-            bringToFront();
+            bringToFront(false);
+          },
+          end() {
+            manager?.setBounds(entryId, { ...position, ...size });
+            setTimeout(() => windowElement.classList.remove(draggingClass), 32);
           },
         },
       });
@@ -77,6 +95,9 @@ export function onMounted(params: {
           return `${cursor}-resize`;
         },
         listeners: {
+          start() {
+            windowElement.classList.add(draggingClass);
+          },
           move(e) {
             if (mode === MODE.floating) {
               const diff = {
@@ -103,8 +124,12 @@ export function onMounted(params: {
               height: `${e.rect.height}px`,
             });
 
-            bringToFront();
-          }
+            bringToFront(false);
+          },
+          end() {
+            manager?.setBounds(entryId, { ...position, ...size });
+            setTimeout(() => windowElement.classList.remove(draggingClass), 32);
+          },
         }
       });
     }

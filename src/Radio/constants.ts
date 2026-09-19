@@ -1,13 +1,18 @@
 import { noop } from '@pastweb/tools';
+import type { RadioDefaultOption, RadioDefaultProps } from './types';
 
-export const DEFAULT_PROPS = {
+export const DEFAULT_PROPS: Partial<RadioDefaultProps> = {
+  ariaLabel: 'Radio options',
   className: '',
-  orientation: 'horizontal',
+  disabled: false,
+  label: '',
+  orientation: 'horizontal' as const,
   onChange: noop,
-  labelPlacement: 'top-start',
+  labelPlacement: 'top-start' as const,
   value: '',
 };
 
-export const DEFAULT_RADIO_OPTIONS = {
-  tabIndex: 0,
+export const DEFAULT_RADIO_OPTIONS: Partial<RadioDefaultOption> = {
+  disabled: false,
+  labelPosition: 'right' as const,
 };

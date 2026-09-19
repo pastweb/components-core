@@ -1,9 +1,13 @@
 import { noop } from '@pastweb/tools';
+import type { ToggleDefaultProps } from './types';
 
-export const DEFAULT_PROPS = {
+export const DEFAULT_PROPS: Partial<ToggleDefaultProps> = {
+  ariaLabel: 'Toggle',
   className: '',
-  tabIndex: 0,
-  onChange: noop,
-  value: false,
+  disabled: false,
+  label: '',
   labelPlacement: 'top-start',
+  onChange: noop,
+  tabIndex: 0,
+  value: false,
 };

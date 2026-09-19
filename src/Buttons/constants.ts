@@ -1,6 +1,10 @@
+import type { ButtonsDefaultProps } from './types';
+
 export const DEFAULT_PROPS = {
-  ariaLabel: 'button group',
+  ariaLabel: 'Button group',
   className: '',
   disabled: false,
-  type: 'group',
-};
+} satisfies Partial<ButtonsDefaultProps>;
+
+export const BUTTONS_CONTEXT_KEY = '$$ButtonsContext';
+

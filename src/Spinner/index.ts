@@ -1,3 +1,9 @@
 export { DEFAULT_PROPS } from './constants';
+export { spinnerMediator } from './spinner.mediator';
 
-export type { SpinnerDefaultProps, SpinnerProps } from './types';
+export type {
+  SpinnerDefaultProps,
+  SpinnerMediator,
+  SpinnerProps,
+  SpinnerState,
+} from './types';

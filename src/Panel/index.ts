@@ -1,4 +1,10 @@
-export { panelMediator } from './panel.mediator';
 export { DEFAULT_PROPS } from './constants';
+export { panelMediator } from './panel.mediator';
 
-export type { PanelDefaultProps, PanelProps, PanelMediator } from './types';
+export type {
+  PanelDefaultProps,
+  PanelHeading,
+  PanelMediator,
+  PanelProps,
+  PanelState,
+} from './types';

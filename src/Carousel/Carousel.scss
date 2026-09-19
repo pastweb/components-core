@@ -1,14 +1,19 @@
 .Carousel {
-  --Carousel_controls_backgroud-color: rgba(0, 0, 0, 0.6);
-  --Carousel_controls_color: white;
-  --Carousel_controls_padding: 0.75em 1em;
-  --Carousel_controls_font-size: 1.25em;
-  --Carousel_controls_border-radius: var(--pw_border-radius);
-  --Carousel_controls_hover_background-color: rgba(0, 0, 0, 0.8);
+  --pw_Carousel_root_default_max-width: 800px;
+  --pw_Carousel_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Carousel_track_default_transition-duration: 0.5s;
+  --pw_Carousel_control_default_background-color: rgba(0, 0, 0, 0.6);
+  --pw_Carousel_control_hover_background-color: rgba(0, 0, 0, 0.8);
+  --pw_Carousel_control_default_color: white;
+  --pw_Carousel_control_default_padding: 0.75em 1em;
+  --pw_Carousel_control_default_font-size: 1.25em;
+  --pw_Carousel_control_default_border-radius: var(--pw_border-radius);
+  --pw_Carousel_control_default_transition-duration: 0.3s;
+  --pw_Carousel_control_default_z-index: var(--pw_z-index_local);
 
   position: relative;
   width: 100%;
-  max-width: 800px;
+  max-width: var(--pw_Carousel_root_default_max-width);
   margin: 0 auto;
   overflow: hidden;
 
@@ -18,7 +23,14 @@
 
   .carouselInner {
     display: flex;
-    transition: transform 0.5s ease;
+    width: 100%;
+    transition: transform var(--pw_Carousel_track_default_transition-duration) ease;
+
+    &:has(
+      > [aria-roledescription='slide'][aria-disabled='true']:not([aria-hidden='true'])
+    ) {
+      cursor: not-allowed;
+    }
   }
 
   .prev,
@@ -26,19 +38,15 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: var(--Carousel_controls_backgroud-color);
-    color: var(--Carousel_controls_color);
+    background-color: var(--pw_Carousel_control_default_background-color);
+    color: var(--pw_Carousel_control_default_color);
     border: none;
-    padding: var(--Carousel_controls_padding);
+    padding: var(--pw_Carousel_control_default_padding);
     cursor: pointer;
-    font-size: var(--Carousel_controls_font-size);
-    z-index: 2;
-    border-radius: var(--Carousel_controls_border-radius);
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: var(--Carousel_controls_hover_background-color);
-    }
+    font-size: var(--pw_Carousel_control_default_font-size);
+    z-index: var(--pw_Carousel_control_default_z-index);
+    border-radius: var(--pw_Carousel_control_default_border-radius);
+    transition: background-color var(--pw_Carousel_control_default_transition-duration) ease;
   }
 
   .prev {
@@ -47,5 +55,42 @@
 
   .next {
     right: 15px;
+  }
+
+  &:not(.is-disabled) {
+
+    .prev:hover,
+    .next:hover {
+      background-color: var(--pw_Carousel_control_hover_background-color);
+    }
+  }
+
+  &.is-disabled {
+    opacity: var(--pw_Carousel_root_disabled_opacity);
+    cursor: not-allowed;
+
+    .prev,
+    .next {
+      cursor: not-allowed;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Carousel .carouselInner {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Carousel {
+
+    .prev,
+    .next {
+      border: 0.0625em solid ButtonText;
+      background-color: ButtonFace;
+      color: ButtonText;
+      forced-color-adjust: none;
+    }
   }
 }

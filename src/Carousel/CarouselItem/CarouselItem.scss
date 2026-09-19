@@ -1,12 +1,30 @@
 .CarouselItem {
+  --pw_CarouselItem_root_default_min-height: 300px;
+  --pw_CarouselItem_root_default_transition-duration: 0.5s;
+  --pw_CarouselItem_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_CarouselItem_active_default_z-index: var(--pw_z-index_local);
+
   flex: 0 0 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 300px;
-  transition: transform 0.5s ease, opacity 0.5s ease;
+  min-height: var(--pw_CarouselItem_root_default_min-height);
+  transition:
+    transform var(--pw_CarouselItem_root_default_transition-duration) ease,
+    opacity var(--pw_CarouselItem_root_default_transition-duration) ease;
 
   &.active {
-    z-index: 1;
+    z-index: var(--pw_CarouselItem_active_default_z-index);
+  }
+
+  &.is-disabled {
+    opacity: var(--pw_CarouselItem_root_disabled_opacity);
+    cursor: not-allowed;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .CarouselItem {
+    transition: none;
   }
 }

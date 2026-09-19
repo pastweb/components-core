@@ -1,31 +1,34 @@
 .Toggle {
-  --Toggle_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
-  --Toggle_border-color: var(--pw_border-color);
-  --Toggle_border-width: var(--pw_border-width);
-  --Toggle_border-style: var(--pw_border-style);
-  --Toggle_background-color: var(--pw_control_background-color);
-  --Toggle_disabled_opacity: var(--pw_disabled_opacity);
-  --Toggle_text_color: var(--pw_text_strong_color);
-  --Toggle_label_text_color: var(--pw_label_text_color);
-  --Toggle_font-size: var(--pw_font-size);
-  --Toggle_font-weight: var(--pw_semibold_font-weight);
-  --Toggle_line-heigh: var(--pw_line-height);
-  --Toggle_transition-duration: var(--pw_transition-duration);
-  --Toggle_color_box-shadow: var(--pw_color_box-shadow);
-  --Toggle_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
-  --Toggle_size_box-shadow: var(--pw_size_box-shadow);
-  --Toggle_background-color_button: var(--pw_text_color);
-  --Toggle_width_background: 4em;
-  --Toggle_height_background: 2.375em;
-  --Toggle_border-radius_background: 3em;
-  --Toggle_top_button: 0.255em;
-  --Toggle_left_button: 0.35em;
-  --Toggle_height_button: 1.7em;
-  --Toggle_transform_translateX: 1.55em;
+  --pw_Toggle_root_default_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
+  --pw_Toggle_root_default_border-color: var(--pw_border-color);
+  --pw_Toggle_root_default_border-width: var(--pw_border-width);
+  --pw_Toggle_root_default_border-style: var(--pw_border-style);
+  --pw_Toggle_root_default_background-color: var(--pw_control_background-color);
+  --pw_Toggle_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Toggle_root_default_color: var(--pw_text_strong_color);
+  --pw_Toggle_label_default_color: var(--pw_label_text_color);
+  --pw_Toggle_root_default_font-size: var(--pw_font-size);
+  --pw_Toggle_root_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_Toggle_root_default_line-height: var(--pw_line-height);
+  --pw_Toggle_root_default_transition-duration: var(--pw_transition-duration);
+  --pw_Toggle_color_default_box-shadow: var(--pw_color_box-shadow);
+  --pw_Toggle_inset-color_default_box-shadow: var(--pw_inset_color_box-shadow);
+  --pw_Toggle_size_default_box-shadow: var(--pw_size_box-shadow);
+  --pw_Toggle_button_default_background-color: var(--pw_text_color);
+  --pw_Toggle_background_default_width: 4em;
+  --pw_Toggle_background_default_height: 2.75em;
+  --pw_Toggle_background_default_border-radius: 3em;
+  --pw_Toggle_button_default_left: 0.35em;
+  --pw_Toggle_button_default_height: 1.7em;
+  --pw_Toggle_button_default_transform: 1.55em;
 
 
   display: flex;
-  margin: var(--Toggle_margin);
+  margin: var(--pw_Toggle_root_default_margin);
+
+  .control {
+    display: contents;
+  }
 
   &.label-top,
   &.label-top-start,
@@ -72,70 +75,74 @@
     align-items: flex-end;
   }
 
-  &:has(input:disabled) {
+  &:has(input:disabled),
+  &.is-disabled {
     pointer-events: none;
-    opacity: var(--Toggle_disabled_opacity);
+    opacity: var(--pw_Toggle_root_disabled_opacity);
+    cursor: not-allowed;
   }
 
   .button {
     position: relative;
     display: flex;
-    background-color: var(--Toggle_background-color);
-    border: var(--Toggle_border-width) var(--Toggle_border-style) var(--Toggle_border-color);
-    width: var(--Toggle_width_background);
-    height: var(--Toggle_height_background);
-    border-radius: var(--Toggle_border-radius_background);
+    background-color: var(--pw_Toggle_root_default_background-color);
+    border: var(--pw_Toggle_root_default_border-width) var(--pw_Toggle_root_default_border-style) var(--pw_Toggle_root_default_border-color);
+    width: var(--pw_Toggle_background_default_width);
+    height: var(--pw_Toggle_background_default_height);
+    border-radius: var(--pw_Toggle_background_default_border-radius);
     cursor: pointer;
-    transition: all var(--Toggle_transition-duration);
+    transition: all var(--pw_Toggle_root_default_transition-duration);
 
     &:hover:not(:has(input:disabled)) {
-      box-shadow: inset var(--Toggle_size_box-shadow) var(--Toggle_inset_color_box-shadow);
+      box-shadow: inset var(--pw_Toggle_size_default_box-shadow) var(--pw_Toggle_inset-color_default_box-shadow);
     }
 
     &:focus-within:not(:has(input:disabled)) {
-      box-shadow: var(--Toggle_size_box-shadow) var(--Toggle_color_box-shadow);
-    }
-
-    &:focus-visible {
-      outline: none;
+      box-shadow: var(--pw_Toggle_size_default_box-shadow) var(--pw_Toggle_color_default_box-shadow);
     }
 
     &:has(input:focus-visible:not(:disabled)) {
       outline: var(--pw_outline);
+      outline-offset: 0.125em;
     }
 
     &::before {
       content: '';
-      background-color: var(--Toggle_border-color);
-      border: var(--Toggle_border-width) var(--Toggle_border-style) var(--Toggle_border-color);
+      background-color: var(--pw_Toggle_root_default_border-color);
+      border: var(--pw_Toggle_root_default_border-width) var(--pw_Toggle_root_default_border-style) var(--pw_Toggle_root_default_border-color);
       position: absolute;
-      top: var(--Toggle_top_button);
-      left: var(--Toggle_left_button);
-      height: var(--Toggle_height_button);
+      top: 50%;
+      left: var(--pw_Toggle_button_default_left);
+      height: var(--pw_Toggle_button_default_height);
       aspect-ratio: 1;
       border-radius: inherit;
-      transition: all var(--Toggle_transition-duration);
+      transform: translateY(-50%);
+      transition: all var(--pw_Toggle_root_default_transition-duration);
     }
 
     &:has(input:checked) {
-      background-color: var(--Toggle_border-color);
+      background-color: var(--pw_Toggle_root_default_border-color);
 
       &::before {
-        background-color: var(--Toggle_background-color);
-        transform: translateX(var(--Toggle_transform_translateX));
+        background-color: var(--pw_Toggle_root_default_background-color);
+        transform: translateY(-50%) translateX(var(--pw_Toggle_button_default_transform));
       }
     }
 
     .input {
-      scale: 0;
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      cursor: pointer;
     }
   }
 
   .label {
-    color: var(--Toggle_label_text_color);
-    font-size: var(--Toggle_font-size);
-    font-weight: var(--Toggle_font-weight);
-    line-height: var(--Toggle_line-height);
+    color: var(--pw_Toggle_label_default_color);
+    font-size: var(--pw_Toggle_root_default_font-size);
+    font-weight: var(--pw_Toggle_root_default_font-weight);
+    line-height: var(--pw_Toggle_root_default_line-height);
 
     &.top,
     &.top-start,
@@ -160,5 +167,33 @@
     &.right-end {
       margin-left: var(--pw_horizontal_margin);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Toggle .button,
+  .Toggle .button::before {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Toggle .button {
+    border-color: ButtonText;
+    background-color: ButtonFace;
+    forced-color-adjust: none;
+  }
+
+  .Toggle .button::before {
+    background-color: ButtonText;
+    border-color: ButtonText;
+  }
+
+  .Toggle .button:has(input:checked) {
+    background-color: Highlight;
+  }
+
+  .Toggle .button:has(input:checked)::before {
+    background-color: HighlightText;
   }
 }

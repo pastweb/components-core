@@ -43,12 +43,14 @@ export const ANIMATIONS: Record<string, Animation> = {
 };
 
 export const DEFAULT_PROPS = {
+  ariaLabel: 'Window',
   mode: MODE.modal,
   animation: ANIMATIONS.zoom,
   resizable: false,
   moveCursor: true,
   resizeCursor: true,
   closeOnBackdropClick: true,
+  closeOnEscape: true,
   onClose: noop,
   onKeyDown: noop,
 };

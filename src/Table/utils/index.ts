@@ -1,5 +1,21 @@
+export { collectLiveRows } from './collectLiveRows';
+export { createGetRowId } from './createGetRowId';
+export { toRowIdArray } from './toRowIdArray';
+export { toRowIdRecord } from './toRowIdRecord';
+export { getBranchMarks, getChildAncestorIsLast, BRANCH_BLANK, BRANCH_CONTINUE, BRANCH_END } from './getBranchMarks';
+export type { BranchMark } from './getBranchMarks';
+export { getExpandCellId, isFeatureColumn } from './getExpandCellId';
+export { getColumnDragTransform } from './getColumnDragTransform';
+export { getContext } from './getContext';
+export { getDragOverColumnId } from './getDragOverColumnId';
+export { getPinnedStyle } from './getPinnedStyle';
+export { getSubRows, isExpandableRow } from './getSubRows';
+export { getVisualColumnIds } from './getVisualColumnIds';
+export { orderByPin } from './orderByPin';
 export { setAllLeafColumns } from './setAllLeafColumns';
+export { setColumnDragImage } from './setColumnDragImage';
 export { setHeaderGroups } from './setHeaderGroups';
 export { setRows } from './setRows';
 export { setVisibleClumns } from './setVisibleColumns';
+export { startColumnResize } from './startColumnResize';
 

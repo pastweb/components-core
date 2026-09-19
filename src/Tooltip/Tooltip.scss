@@ -1,63 +1,110 @@
 .Tooltip {
-  --Tooltip_background-color: var(--pw_background-color);
-  --Tooltip_border-radius: var(--pw_small_border-radius);
-  --Tooltip_border-width: var(--pw_border-width);
-  --Tooltip_border-style: var(--pw_border-style);
-  --Tooltip_border-color: var(--pw_border-color);
-  --Tooltip_drop-shadow_size: var(--pw_size_box-shadow);
-  --Tooltip_drop-shadow_color: var(--pw_size_box-color);
-  --Tooltip_color: var(--pw_text_color);
-  --Tooltip_arrow_size: 1rem;
-  --Tooltip_content_padding: 0.25rem var(--pw_horizontal_padding);
+  --pw_Tooltip_root_default_background-color: var(--pw_background-color);
+  --pw_Tooltip_root_default_color: var(--pw_text_color);
+  --pw_Tooltip_root_default_border-color: var(--pw_border-color);
+  --pw_Tooltip_content_default_background-color: var(--pw_Tooltip_root_default_background-color);
+  --pw_Tooltip_content_default_color: var(--pw_Tooltip_root_default_color);
+  --pw_Tooltip_content_default_border-radius: var(--pw_small_border-radius);
+  --pw_Tooltip_content_default_border-width: var(--pw_border-width);
+  --pw_Tooltip_content_default_border-style: var(--pw_border-style);
+  --pw_Tooltip_content_default_border-color: var(--pw_Tooltip_root_default_border-color);
+  --pw_Tooltip_content_default_box-shadow: var(--pw_size_box-shadow) var(--pw_color_box-shadow);
+  --pw_Tooltip_content_default_drop-shadow: 0 0 0.2em var(--pw_color_box-shadow);
+  --pw_Tooltip_content_default_max-width: 20rem;
+  --pw_Tooltip_content_default_font-size: var(--pw_font-size);
+  --pw_Tooltip_content_default_line-height: 1.5em;
+  --pw_Tooltip_content_default_padding: 0.25em var(--pw_horizontal_padding);
+  --pw_Tooltip_content_default_transition-duration: var(--pw_transition-duration);
+  --pw_Tooltip_arrow_default_width: 0.625em;
+  --pw_Tooltip_arrow_default_height: 0.625em;
+  --pw_Tooltip_arrow_default_size: 1em;
+  --pw_Tooltip_content_default_z-index: var(--pw_z-index_system);
+  --pw_Tooltip_arrow-before_default_z-index: var(--pw_z-index_behind);
+  --pw_Tooltip_arrow-after_default_z-index: var(--pw_z-index_local);
+
 
   display: contents;
+
+  &.is-disabled {
+    .trigger {
+      cursor: default;
+    }
+  }
+
+  .trigger {
+    display: block;
+    width: 100%;
+  }
 
   .tooltipContent {
     position: fixed;
     pointer-events: none;
     opacity: 0;
-
-    background-color: var(--Tooltip_background-color);
-    color: var(--Tooltip_color);
-    border-radius: var(--Tooltip_border-radius);
-    border: var(--Tooltip_border-width) var(--Tooltip_border-style) var(--Tooltip_border-color);
-    padding: var(--Tooltip_content_padding);
-    z-index: 1000;
+    visibility: hidden;
+    max-width: var(--pw_Tooltip_content_default_max-width);
+    padding: var(--pw_Tooltip_content_default_padding);
+    border: var(--pw_Tooltip_content_default_border-width) var(--pw_Tooltip_content_default_border-style) var(--pw_Tooltip_content_default_border-color);
+    border-radius: var(--pw_Tooltip_content_default_border-radius);
+    background-color: var(--pw_Tooltip_content_default_background-color);
+    color: var(--pw_Tooltip_content_default_color);
+    filter: drop-shadow(var(--pw_Tooltip_content_default_drop-shadow));
+    font-size: var(--pw_Tooltip_content_default_font-size);
+    line-height: var(--pw_Tooltip_content_default_line-height);
     white-space: nowrap;
-    box-shadow: var(--Tooltip_drop-shadow_size) var(--Tooltip_drop-shadow_color);
+    z-index: var(--pw_Tooltip_content_default_z-index);
+    transition: opacity var(--pw_Tooltip_content_default_transition-duration);
 
     &.is-visible {
       opacity: 1;
-      pointer-events: all;
+      visibility: visible;
+      pointer-events: auto;
     }
 
     .arrow {
       position: absolute;
       top: 0;
-      width: calc(var(--Tooltip_arrow_size) * 2);
-      height: calc(var(--Tooltip_arrow_size) * 2);
+      width: calc(var(--pw_Tooltip_arrow_default_size) * 2);
+      height: calc(var(--pw_Tooltip_arrow_default_size) * 2);
+      pointer-events: none;
 
       .triangle {
         position: relative;
 
-        &::before, &::after {
+        &::before,
+        &::after {
           content: '';
           position: absolute;
-          border-width: var(--Tooltip_arrow_size); /* Controls the size of the triangle */
-          border-style: var(--Tooltip_border-style);
+          border-width: var(--pw_Tooltip_arrow_default_size);
+          border-style: var(--pw_Tooltip_content_default_border-style);
         }
-      
-        &::before { 
-          z-index: -1;
-          border-color: transparent transparent var(--Tooltip_border-color) transparent;
+
+        &::before {
+          z-index: var(--pw_Tooltip_arrow-before_default_z-index);
+          border-color: transparent transparent var(--pw_Tooltip_content_default_border-color) transparent;
         }
-      
+
         &::after {
-          border-color: transparent transparent var(--Tooltip_background-color) transparent;
-          top: var(--Tooltip_border-width);
-          z-index: 1;
+          border-color: transparent transparent var(--pw_Tooltip_content_default_background-color) transparent;
+          top: var(--pw_Tooltip_content_default_border-width);
+          z-index: var(--pw_Tooltip_arrow-after_default_z-index);
         }
       }
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Tooltip .tooltipContent {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Tooltip .tooltipContent {
+    border-color: CanvasText;
+    background-color: Canvas;
+    color: CanvasText;
+    filter: none;
+    forced-color-adjust: none;
   }
 }

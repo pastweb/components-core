@@ -1,32 +1,40 @@
 .Checkbox {
-  --Checkbox_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
-  --Checkbox_border-radius: var(--pw_border-radius);
-  --Checkbox_background-color: var(--pw_control_background-color);
-  --Checkbox_font-size: var(--pw_font-size);
-  --Checkbox_size: 2.375em;
-  --checkbox_check_size: 1.5em;
-  --Checkbox_text_color: var(--pw_text_strong_color);
-  --Checkbox_label_text_color: var(--pw_label_text_color);
-  --Checkbox_border-color: var(--pw_border-color);
-  --Checkbox_border-width: var(--pw_border-width);
-  --Checkbox_border-style: var(--pw_border-style);
-  --Checkbox_size_box-shadow: var(--pw_size_box-shadow);
-  --Checkbox_color_box-shadow: var(--pw_color_box-shadow);
-  --Checkbox_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
-  --Checkbox_transition-duration: var(--pw_transition-duration);
-  --Checkbox_disabled_opacity: var(--pw_disabled_opacity);
-
-  --Checkbox_font-size: var(--pw_font-size);
-  --Checkbox_font-weight: var(--pw_semibold_font-weight);
-  --Checkbox_line-height: var(--pw_line-height);
+  --pw_Checkbox_root_default_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
+  --pw_Checkbox_root_default_border-radius: var(--pw_border-radius);
+  --pw_Checkbox_root_default_background-color: var(--pw_control_background-color);
+  --pw_Checkbox_root_default_color: var(--pw_text_strong_color);
+  --pw_Checkbox_label_default_color: var(--pw_label_text_color);
+  --pw_Checkbox_root_default_border-color: var(--pw_border-color);
+  --pw_Checkbox_root_default_border-width: var(--pw_border-width);
+  --pw_Checkbox_root_default_border-style: var(--pw_border-style);
+  --pw_Checkbox_size_default_box-shadow: var(--pw_size_box-shadow);
+  --pw_Checkbox_color_default_box-shadow: var(--pw_color_box-shadow);
+  --pw_Checkbox_inset-color_default_box-shadow: var(--pw_inset_color_box-shadow);
+  --pw_Checkbox_root_default_transition-duration: var(--pw_transition-duration);
+  --pw_Checkbox_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Checkbox_root_default_font-size: var(--pw_font-size);
+  --pw_Checkbox_root_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_Checkbox_root_default_line-height: var(--pw_line-height);
+  --pw_Checkbox_root_default_size: calc(
+    var(--pw_Checkbox_root_default_line-height)
+    + (2 * var(--pw_vertical_padding))
+    + (2 * var(--pw_Checkbox_root_default_border-width))
+  );
+  --pw_Checkbox_check_default_size: 1.5em;
 
 
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin: var(--Checkbox_margin);
-  font-size: var(--Checkbox_check_size);
+  margin: var(--pw_Checkbox_root_default_margin);
+  font-size: var(--pw_Checkbox_root_default_font-size);
+  font-weight: var(--pw_Checkbox_root_default_font-weight);
+  line-height: var(--pw_Checkbox_root_default_line-height);
+
+  .control {
+    display: contents;
+  }
 
   &.label-top,
   &.label-top-start,
@@ -90,8 +98,9 @@
     }
   }
 
-  &:has(input:disabled) {
-    opacity: var(--Checkbox_disabled_opacity);
+  &:has(input:disabled),
+  &.is-disabled {
+    opacity: var(--pw_Checkbox_root_disabled_opacity);
     cursor: not-allowed;
 
     .box {
@@ -101,13 +110,13 @@
 
   &:hover:not(:has(input:disabled)) {
     .box {
-      box-shadow: inset var(--Checkbox_size_box-shadow) var(--Checkbox_inset_color_box-shadow);
+      box-shadow: inset var(--pw_Checkbox_size_default_box-shadow) var(--pw_Checkbox_inset-color_default_box-shadow);
     }
   }
 
   &:focus-within:not(:has(input:disabled)) {
     .box {
-      box-shadow: var(--Checkbox_size_box-shadow) var(--Checkbox_color_box-shadow);
+      box-shadow: var(--pw_Checkbox_size_default_box-shadow) var(--pw_Checkbox_color_default_box-shadow);
     }
   }
 
@@ -121,13 +130,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--Checkbox_size);
-    height: var(--Checkbox_size);
-    border: var(--Checkbox_border-width) var(--Checkbox_border-style) var(--Checkbox_border-color);
-    border-radius: var(--Checkbox_border-radius);
-    margin: var(--Checkbox_margin);
-    background-color: var(--Checkbox_background-color);
-    transition: all var(--Checkbox_transition-duration);
+    width: var(--pw_Checkbox_root_default_size);
+    height: var(--pw_Checkbox_root_default_size);
+    border: var(--pw_Checkbox_root_default_border-width) var(--pw_Checkbox_root_default_border-style) var(--pw_Checkbox_root_default_border-color);
+    border-radius: var(--pw_Checkbox_root_default_border-radius);
+    margin: var(--pw_Checkbox_root_default_margin);
+    background-color: var(--pw_Checkbox_root_default_background-color);
+    transition: all var(--pw_Checkbox_root_default_transition-duration);
 
     &:focus-visible {
       outline: none;
@@ -136,18 +145,18 @@
     .check {
       position: absolute;
       cursor: pointer;
-      font-size: var(--checkbox_check_size);
-      color: var(--Checkbox_text_color);
+      font-size: var(--pw_Checkbox_check_default_size);
+      color: var(--pw_Checkbox_root_default_color);
       transform: rotate3d(1, 30, 1, 90deg);
-      transition: all var(--Checkbox_transition-duration);
+      transition: all var(--pw_Checkbox_root_default_transition-duration);
     }
   }
 
   .label {
-    color: var(--Checkbox_label_text_color);
-    font-size: var(--Checkbox_font-size);
-    font-weight: var(--Checkbox_font-weight);
-    line-height: var(--Checkbox_line-height);
+    color: var(--pw_Checkbox_label_default_color);
+    font-size: var(--pw_Checkbox_root_default_font-size);
+    font-weight: var(--pw_Checkbox_root_default_font-weight);
+    line-height: var(--pw_Checkbox_root_default_line-height);
 
     &.top,
     &.top-start,
@@ -176,5 +185,19 @@
     &.bottom-end {
       margin-top: var(--pw_vertical_margin);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Checkbox .box,
+  .Checkbox .check {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Checkbox .box {
+    border-color: ButtonText;
+    background-color: ButtonFace;
   }
 }

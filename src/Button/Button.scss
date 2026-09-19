@@ -1,52 +1,56 @@
 .Button {
-  --Button_border-radius: var(--pw_border-radius);
-  --Button_rounded_border-radius: var(--pw_rounded_border-radius);
-  --Button_transition-duration: var(--pw_transition-duration);
-  --Button_background-color: var(--pw_control_background-color);
-  --Button_text_color: var(--pw_text_strong_color);
-  --Button_padding: var(--pw_padding);
-  --Button_margin: var(--pw_margin);
-  --Button_item_gap: var(--pw_horizontal_padding);
-  --Button_border-color: var(--pw_border-color);
-  --Button_border-width: var(--pw_border-width);
-  --Button_border-style: var(--pw_border-style);
-  --Button_color_box-shadow: var(--pw_color_box-shadow);
-  --Button_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
-  --Button_size_box-shadow: var(--pw_size_box-shadow);
-  --Button_icon_color: var(--Button_text_color);
-  --Button_icon_stroke: var(--Button_icon_color);
-  --Button_icon_size: var(--pw_icon_size);
-  --Button_disabled_opacity: var(--pw_disabled_opacity);
-  --Button_font-size: var(--pw_font-size);
-  --Button_font-weight: var(--pw_semibold_font-weight);
-  --Button_line-height: var(--pw_line-height);
+  --pw_Button_root_default_border-radius: var(--pw_border-radius);
+  --pw_Button_root_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_Button_root_default_transition-duration: var(--pw_transition-duration);
+  --pw_Button_root_default_background-color: var(--pw_control_background-color);
+  --pw_Button_root_default_color: var(--pw_text_strong_color);
+  --pw_Button_root_default_padding: var(--pw_padding);
+  --pw_Button_root_default_margin: var(--pw_margin);
+  --pw_Button_item_default_gap: var(--pw_horizontal_padding);
+  --pw_Button_root_default_border-color: var(--pw_border-color);
+  --pw_Button_root_default_border-width: var(--pw_border-width);
+  --pw_Button_root_default_border-style: var(--pw_border-style);
+  --pw_Button_color_default_box-shadow: var(--pw_color_box-shadow);
+  --pw_Button_inset-color_default_box-shadow: var(--pw_inset_color_box-shadow);
+  --pw_Button_size_default_box-shadow: var(--pw_size_box-shadow);
+  --pw_Button_icon_default_color: var(--pw_Button_root_default_color);
+  --pw_Button_icon_default_stroke: var(--pw_Button_icon_default_color);
+  --pw_Button_icon_default_size: var(--pw_icon_size);
+  --pw_Button_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Button_root_default_font-size: var(--pw_font-size);
+  --pw_Button_root_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_Button_root_default_line-height: var(--pw_line-height);
 
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: fit-content;
+  min-width: 2.75em;
+  min-height: 2.75em;
 
-  padding: var(--Button_padding);
-  margin: var(--Button_margin);
+  padding: var(--pw_Button_root_default_padding);
+  margin: var(--pw_Button_root_default_margin);
 
-  background-color: var(--Button_background-color);
-  border: var(--Button_border-width) var(--Button_border-style) var(--Button_border-color);
-  border-radius: var(--Button_border-radius);
-  color: var(--Button_text_color);
+  background-color: var(--pw_Button_root_default_background-color);
+  border: var(--pw_Button_root_default_border-width) var(--pw_Button_root_default_border-style) var(--pw_Button_root_default_border-color);
+  border-radius: var(--pw_Button_root_default_border-radius);
+  color: var(--pw_Button_root_default_color);
   white-space: nowrap;
 
-  font-size: var(--Button_font-size);
-  font-weight: var(--Button_font-weight);
-  line-height: var(--Button_line-height);
+  font-size: var(--pw_Button_root_default_font-size);
+  font-weight: var(--pw_Button_root_default_font-weight);
+  line-height: var(--pw_Button_root_default_line-height);
 
   cursor: pointer;
-  transition: all var(--Button_transition-duration);
+  transition: all var(--pw_Button_root_default_transition-duration);
 
-  span {
-    margin-left: var(--Button_item_gap);
+  .item {
+    margin-left: var(--pw_Button_item_default_gap);
     display: inline-block;
     width: max-content;
+    white-space: nowrap;
 
     &:first-child {
       margin-left: 0;
@@ -54,22 +58,21 @@
   }
 
   i {
-    color: var(--Button_icon_color);
-    // font-size: var(--Button_icon_size);
+    color: var(--pw_Button_icon_default_color);
   }
 
   &:disabled {
-    opacity: var(--Button_disabled_opacity);
+    opacity: var(--pw_Button_root_disabled_opacity);
     cursor: not-allowed;
     pointer-events: none;
   }
 
   &:hover:not(:disabled):not(.is-loading) {
-    box-shadow: inset var(--Button_size_box-shadow) var(--Button_inset_color_box-shadow);
+    box-shadow: inset var(--pw_Button_size_default_box-shadow) var(--pw_Button_inset-color_default_box-shadow);
   }
 
   &:focus:not(:active):not(.is-loading) {
-    box-shadow: var(--Button_size_box-shadow) var(--Button_color_box-shadow);
+    box-shadow: var(--pw_Button_size_default_box-shadow) var(--pw_Button_color_default_box-shadow);
   }
 
   &:focus-visible:not(.is-loading):not(:disabled) {
@@ -78,17 +81,17 @@
 
   &:active:not(.is-loading),
   &.is-active:not(.is-loading) {
-    border-color: var(--Button_actiove_border-color);
+    border-color: var(--pw_Button_root_active_border-color);
   }
 
   &:hover,
   &:focus,
   &.is-active {
-    transition: all var(--Button_transition-duration);
+    transition: all var(--pw_Button_root_default_transition-duration);
   }
 
   &.is-rounded {
-    border-radius: var(--Button_rounded_border-radius);
+    border-radius: var(--pw_Button_root_rounded_border-radius);
   }
 
   &.is-full-width {
@@ -113,7 +116,21 @@
     justify-content: center;
     width: 100%;
     height: 100%;
-    background-color: var(--Button_background-color);
+    background-color: var(--pw_Button_root_default_background-color);
     margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Button {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Button {
+    border-color: ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
   }
 }

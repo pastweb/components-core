@@ -1,5 +1,5 @@
 import type { ClassValue } from '@pastweb/tools';
-import { Placement } from '@floating-ui/dom';
+import type { Placement } from '@floating-ui/dom';
 
 export interface RadioOption {
   label: string;
@@ -9,21 +9,23 @@ export interface RadioOption {
   id?: string;
   tabIndex?: number;
   disabled?: boolean;
-};
+}
 
 export interface RadioDefaultOption {
   label: string;
   labelPosition: 'left' | 'right' | 'top' | 'bottom';
   value: any;
   name?: string;
-  id: string;
-  tabIndex: number;
-  disabled?: boolean;
+  id?: string;
+  tabIndex?: number;
+  disabled: boolean;
 }
 
 export interface RadioProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel?: string;
   className?: string;
+  id?: string;
   orientation?: 'horizontal' | 'vertical' | string;
   disabled?: boolean;
   value?: string;
@@ -32,30 +34,34 @@ export interface RadioProps {
   onChange?: (value: string, e: any) => void;
   label?: string;
   labelPlacement?: Placement;
-};
+}
 
 export interface RadioDefaultProps {
   cls: (...args: ClassValue[]) => string;
+  ariaLabel: string;
   className: string;
-  orientation?: 'horizontal' | 'vertical' | string;
-  disabled?: boolean;
+  id?: string;
+  orientation: 'horizontal' | 'vertical' | string;
+  disabled: boolean;
   value: string;
   name?: string;
   options: RadioOption[];
   onChange: (value: string, e: any) => void;
   label: string;
   labelPlacement: Placement;
-};
+}
 
 export interface RadioState {
-  value: string;
-  uid: string;
+  ariaLabel: string | undefined;
   groupId: string;
-  groupLabelId: string;
-};
+  groupLabelId: string | undefined;
+  isDisabled: true | undefined;
+  value: string;
+}
 
 export interface RadioMediator {
+  getOptionId: (index: number, id?: string) => string;
   onChange: (value: string, e: any) => void;
-  onUnmount: () => void;
   state: RadioState;
-};
+  useBeforeUnmount: () => void;
+}

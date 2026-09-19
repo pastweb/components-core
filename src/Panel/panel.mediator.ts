@@ -1,20 +1,40 @@
-import { reactive, computed, effect } from '@pastweb/tools';
+import { effect, reactive } from '@pastweb/tools';
 import { idCache } from '../utils';
-import type { PanelDefaultProps, PanelMediator } from './types';
+import {
+  getAriaLabel,
+  getHeading,
+  getPanelId,
+  getTitleId,
+  onClose,
+  onMaximize,
+  onMinimize,
+  updateState,
+  useBeforeUnmount,
+} from './utils';
+import type { PanelDefaultProps, PanelMediator, PanelState } from './types';
 
 export function panelMediator(props: PanelDefaultProps): PanelMediator {
-  const uid = idCache.getId();
+  const uid = idCache.getId('panel');
+  const id = getPanelId(props, uid);
+  const titleId = getTitleId(props, id);
 
-  const state = reactive({
-    uid,
-    titleId: undefined as string | undefined,
+  const state = reactive<PanelState>({
+    ariaLabel: getAriaLabel(props, titleId),
+    heading: getHeading(props),
+    id,
+    titleId,
   });
 
-  const titleId = computed<string | undefined>(() => props.title ? `panel-title-${uid}` : undefined);
+  effect(
+    () => updateState(props, state, uid),
+    () => [props.ariaLabel, props.headingLevel, props.id, props.title],
+  );
 
-  effect(() => { state.titleId = titleId.value; });
-
-  const onUnmount = () => idCache.removeId(uid);
-
-  return { state, onUnmount };
+  return {
+    onClose: () => onClose(props),
+    onMaximize: () => onMaximize(props),
+    onMinimize: () => onMinimize(props),
+    state,
+    useBeforeUnmount: () => useBeforeUnmount(uid),
+  };
 }

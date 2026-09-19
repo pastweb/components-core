@@ -1,27 +1,25 @@
 .Pagination {
-  --Pagination_button_margin: var(--pw_margin);
-  --Pagination_button_padding: var(--pw_padding);
-  --Pagination_button_background-color: var(--pw_background-color);
-  --Pagination_button_border-color: var(--pw_border-color);
-  --Pagination_button_border-width: var(--pw_border-width);
-  --Pagination_button_border-style: var(--pw_border-style);
-  --Pagination_button_border-radius: var(--pw_border-radius);
-  --Pagination_button_rounded_border-radius: var(--pw_rounded_border-radius);
-  --Pagination_button_text_color: var(--pw_text_strong_color);
-  --Pagination_button_transition-duration: var(--pw_transition-duration);
-  --Pagination_button_disabled_opacity: var(--pw_disabled_opacity);
-  --Pagination_button_font-size: var(--pw_font-size);
-  --Pagination_button_font-weight: var(--pw_semibold_font-weight);
-  --Pagination_button_line-height: var(--pw_line-height);
-  --Pagination_button_color_box-shadow: var(--pw_color_box-shadow);
-  --Pagination_button_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
-  --Pagination_button_size_box-shadow: var(--pw_size_box-shadow);
+  --pw_Pagination_button_default_margin: var(--pw_margin);
+  --pw_Pagination_button_default_padding: var(--pw_padding);
+  --pw_Pagination_button_default_background-color: var(--pw_background-color);
+  --pw_Pagination_button_default_border-color: var(--pw_border-color);
+  --pw_Pagination_button_default_border-width: var(--pw_border-width);
+  --pw_Pagination_button_default_border-style: var(--pw_border-style);
+  --pw_Pagination_button_default_border-radius: var(--pw_border-radius);
+  --pw_Pagination_button_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_Pagination_button_default_color: var(--pw_text_strong_color);
+  --pw_Pagination_button_default_transition-duration: var(--pw_transition-duration);
+  --pw_Pagination_button_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Pagination_button_default_font-size: var(--pw_font-size);
+  --pw_Pagination_button_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_Pagination_button_default_line-height: var(--pw_line-height);
+  --pw_Pagination_button_hover_box-shadow: inset var(--pw_size_box-shadow) var(--pw_inset_color_box-shadow);
+  --pw_Pagination_button_focus_box-shadow: var(--pw_size_box-shadow) var(--pw_color_box-shadow);
 
-  --Pagination_pageButton_margin: var(--pw_vertical_margin) 0.125em;
-  --Pagination_pageButton_active_color: var(--pw_text_strong_color);
-  --Pagination_pageButton_active_font-weight: var(--pw_bold_font-weight);
-  --Pagination_pageButton_active_background-color: var(--pw_control_background-color);
-
+  --pw_Pagination_page_default_margin: var(--pw_vertical_margin) 0.125em;
+  --pw_Pagination_page_active_color: var(--pw_text_strong_color);
+  --pw_Pagination_page_active_font-weight: var(--pw_bold_font-weight);
+  --pw_Pagination_page_active_background-color: var(--pw_control_background-color);
 
   display: flex;
   justify-content: space-between;
@@ -31,43 +29,49 @@
     width: 100%;
   }
 
+  &.is-rounded .button {
+    border-radius: var(--pw_Pagination_button_rounded_border-radius);
+  }
+
   .button {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 2.75em;
+    min-height: 2.75em;
 
-    padding: var(--Pagination_button_padding);
-    margin: var(--Pagination_button_margin);
+    padding: var(--pw_Pagination_button_default_padding);
+    margin: var(--pw_Pagination_button_default_margin);
 
-    background-color: var(--Pagination_button_background-color);
-    border: var(--Pagination_button_border-width) var(--Pagination_button_border-style) var(--Pagination_button_border-color);
-    border-radius: var(--Pagination_button_border-radius);
-    color: var(--Pagination_button_text_color);
+    background-color: var(--pw_Pagination_button_default_background-color);
+    border: var(--pw_Pagination_button_default_border-width) var(--pw_Pagination_button_default_border-style) var(--pw_Pagination_button_default_border-color);
+    border-radius: var(--pw_Pagination_button_default_border-radius);
+    color: var(--pw_Pagination_button_default_color);
     white-space: nowrap;
 
-    font-size: var(--Pagination_button_font-size);
-    font-weight: var(--Pagination_button_font-weight);
-    line-height: var(--Pagination_button_line-height);
+    font-size: var(--pw_Pagination_button_default_font-size);
+    font-weight: var(--pw_Pagination_button_default_font-weight);
+    line-height: var(--pw_Pagination_button_default_line-height);
 
     cursor: pointer;
-    transition: all var(--Pagination_button_transition-duration);
+    transition: all var(--pw_Pagination_button_default_transition-duration);
 
     i {
-      color: var(--Pagination_button_icon_color);
+      color: var(--pw_Pagination_button_default_color);
     }
 
     &:disabled {
-      opacity: var(--Pagination_button_disabled_opacity);
+      opacity: var(--pw_Pagination_button_disabled_opacity);
       cursor: not-allowed;
       pointer-events: none;
     }
 
     &:hover:not(:disabled) {
-      box-shadow: inset var(--Pagination_button_size_box-shadow) var(--Pagination_button_inset_color_box-shadow);
+      box-shadow: var(--pw_Pagination_button_hover_box-shadow);
     }
 
     &:focus:not(:active) {
-      box-shadow: var(--Pagination_button_size_box-shadow) var(--Pagination_button_color_box-shadow);
+      box-shadow: var(--pw_Pagination_button_focus_box-shadow);
     }
 
     &:focus-visible:not(:disabled) {
@@ -77,11 +81,11 @@
     &:hover,
     &:focus,
     &.is-active {
-      transition: all var(--Pagination_button_transition-duration);
+      transition: all var(--pw_Pagination_button_default_transition-duration);
     }
 
     &.is-rounded {
-      border-radius: var(--Pagination_button_rounded_border-radius);
+      border-radius: var(--pw_Pagination_button_rounded_border-radius);
     }
   }
 
@@ -89,30 +93,57 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
     font-size: inherit;
 
     .page {
-      margin: var(--Pagination_pageButton_margin);
-      padding: var(--Pagination_button_padding);
+      margin: var(--pw_Pagination_page_default_margin);
+      padding: var(--pw_Pagination_button_default_padding);
 
-      background-color: var(--Pagination_button_background-color);
-      border: var(--Pagination_button_border-width) var(--Pagination_button_border-style) var(--Pagination_button_border-color);
-      border-radius: var(--Pagination_button_border-radius);
-      color: var(--Pagination_button_text_color);
+      background-color: var(--pw_Pagination_button_default_background-color);
+      border: var(--pw_Pagination_button_default_border-width) var(--pw_Pagination_button_default_border-style) var(--pw_Pagination_button_default_border-color);
+      border-radius: var(--pw_Pagination_button_default_border-radius);
+      color: var(--pw_Pagination_button_default_color);
       white-space: nowrap;
 
-      font-size: var(--Pagination_button_font-size);
-      font-weight: var(--Pagination_button_font-weight);
-      line-height: var(--Pagination_button_line-height);
+      font-size: var(--pw_Pagination_button_default_font-size);
+      font-weight: var(--pw_Pagination_button_default_font-weight);
+      line-height: var(--pw_Pagination_button_default_line-height);
 
       cursor: pointer;
-      transition: all var(--Pagination_button_transition-duration);
+      transition: all var(--pw_Pagination_button_default_transition-duration);
 
       &.is-active {
-        color: var(--Pagination_pageButton_active_color);
-        font-weight: var(--Pagination_pageButton_active_font-weight);
-        background-color: var(--Pagination_pageButton_active_background-color);
+        color: var(--pw_Pagination_page_active_color);
+        font-weight: var(--pw_Pagination_page_active_font-weight);
+        background-color: var(--pw_Pagination_page_active_background-color);
       }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Pagination {
+    .button,
+    .page {
+      transition: none;
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .Pagination {
+    .button {
+      border-color: ButtonText;
+      background-color: ButtonFace;
+      color: ButtonText;
+    }
+
+    .page.is-active {
+      outline: 0.125em solid CanvasText;
+      outline-offset: 0.125em;
     }
   }
 }

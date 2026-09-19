@@ -3,6 +3,7 @@ export { paginationMediator } from './pagination.mediator';
 
 export type {
   PaginationDefaultProps,
+  PaginationItem,
   PaginationMediator,
   PaginationProps,
   PaginationState,

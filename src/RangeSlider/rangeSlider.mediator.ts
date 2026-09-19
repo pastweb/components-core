@@ -1,37 +1,42 @@
-import { reactive, effect } from '@pastweb/tools';
+import { effect, reactive } from '@pastweb/tools';
 import { idCache } from '../utils';
+import {
+  getAriaLabel,
+  getInputId,
+  getIsDisabled,
+  normalizeValue,
+  onChange,
+  onChangeEnd,
+  updateState,
+  updateValue,
+  useBeforeUnmount,
+} from './utils';
 import type { RangeSliderDefaultProps, RangeSliderMediator, RangeSliderState } from './types';
 
 export function rangeSliderMediator(props: RangeSliderDefaultProps): RangeSliderMediator {
-  const uid = idCache.getId();
+  const uid = idCache.getId('rangeSlider');
 
   const state = reactive<RangeSliderState>({
-    value: typeof props.value !== 'undefined' ? `${props.value}` : `${props.max / 2}`,
-    uid,
-    inputId: props.id ?? `range-slider-input-${uid}`,
+    ariaLabel: getAriaLabel(props),
+    inputId: getInputId(props, uid),
+    isDisabled: getIsDisabled(props),
+    value: normalizeValue(props, props.value),
   });
 
-  effect(() => { state.inputId = props.id ?? `range-slider-input-${uid}`; }, () => props.id);
   effect(
-    () => { state.value = `${props.value}` },
-    () => props.value,
+    () => updateState(props, state, uid),
+    () => [props.ariaLabel, props.disabled, props.id, props.label],
   );
 
-  function onChange(value: string, e: any) {
-    state.value = value;
-    props.onChange(value, e);
-  }
-
-  function onMouseUp() {
-    props.onMouseUp(parseFloat(state.value));
-  }
-
-  const onUnmount = () => idCache.removeId(uid);
+  effect(
+    () => updateValue(props, state),
+    () => [props.max, props.min, props.value],
+  );
 
   return {
-    onChange,
-    onMouseUp,
-    onUnmount,
+    onChange: (value, e) => onChange(props, state, value, e),
+    onChangeEnd: () => onChangeEnd(props, state),
     state,
+    useBeforeUnmount: () => useBeforeUnmount(uid),
   };
 }

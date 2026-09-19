@@ -1,17 +1,17 @@
-import type { CloseOptions, WindowControllerDefaultProps, WindowControllerState } from '../../types';
+import type { CloseOptions, WindowControllerDefaultProps, WindowControllerState, WindowControllerVars } from '../../types';
 
 export function closeWindow(params: {
   props: WindowControllerDefaultProps;
   onClosePortal: (e: any) => void;
-  confirmClose?: (() => void) | null;
+  vars: WindowControllerVars;
   state: WindowControllerState;
   closeOptions?: CloseOptions;
 }) {
-  const { props, onClosePortal, confirmClose, state, closeOptions = {} } = params;
+  const { props, onClosePortal, vars, state, closeOptions = {} } = params;
   const { entryId, portalElement, portal, onClose, animation } = props;
   const { id = entryId, isConfirmed } = closeOptions;
 
-  if (!confirmClose || isConfirmed) {
+  if (!vars.confirmClose || isConfirmed) {
     state.isOpen = false;
 
     setTimeout(() => {
@@ -20,6 +20,6 @@ export function closeWindow(params: {
       onClose();
     }, (animation.out?.animationDuration || 1) * 1000);
   } else {
-    confirmClose();
+    vars.confirmClose();
   }
 }

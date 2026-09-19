@@ -1,10 +1,12 @@
 import { MODE } from '../../constants';
-import type { WindowControllerDefaultProps } from '../../types';
+import type { WindowControllerDefaultProps, WindowControllerVars } from '../../types';
 
-export function bringToFront(props: WindowControllerDefaultProps, mountElement: HTMLElement) {
-  const { mode, portalElement } = props;
+export function bringToFront(props: WindowControllerDefaultProps, vars: WindowControllerVars, activate = true): void {
+  const { entryId, manager, mode, portalElement } = props;
+  const { mountElement } = vars;
 
-  if (mode === MODE.floating) {
+  if (mode === MODE.floating && mountElement) {
+    if (activate) manager?.activate(entryId);
     const portals = [...portalElement.children];
     const element = mountElement;
 

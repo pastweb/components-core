@@ -1,110 +1,60 @@
-import { reactive } from '@pastweb/tools';
-import { arrow, computePosition, flip, offset, shift } from '@floating-ui/dom';
-import type { TooltipMediator, TooltipDefaultProps, TooltipState } from './types';
+import { effect, reactive } from '@pastweb/tools';
+import { idCache } from '../utils';
+import {
+  getIsDisabled,
+  getTooltipId,
+  hide as hideTooltip,
+  onKeyDown as onKeyDownTooltip,
+  show as showTooltip,
+  updatePosition,
+  useBeforeUnmount as useBeforeUnmountTooltip,
+  useMounted as useMountedTooltip,
+} from './utils';
+import type {
+  TooltipDefaultProps,
+  TooltipKeyEvent,
+  TooltipMediator,
+  TooltipMediatorVars,
+  TooltipState,
+} from './types';
 
 export function tooltipMediator(props: TooltipDefaultProps): TooltipMediator {
-  const state = reactive<TooltipState>({ isVisible: false });
-  let referenceEl: HTMLElement;
-  let tooltipEl: HTMLElement;
-  let arrowEl: HTMLElement;
+  const uid = idCache.getId('tooltip');
+  const vars: TooltipMediatorVars = {
+    arrowReference: undefined,
+    hideTimer: undefined,
+    showTimer: undefined,
+    tooltipReference: undefined,
+    triggerReference: undefined,
+  };
+  const state = reactive<TooltipState>({
+    isDisabled: getIsDisabled(props),
+    isVisible: false,
+    tooltipId: getTooltipId(props, uid),
+  });
 
-  function setVisible(): void {
-    if (props.disabled) return;
+  effect(
+    () => {
+      state.isDisabled = getIsDisabled(props);
+      state.tooltipId = getTooltipId(props, uid);
+      if (state.isDisabled) hideTooltip(props, state, vars, true);
+    },
+    () => [props.disabled, props.id],
+  );
 
-    updatePosition();
-    state.isVisible = true;
-  }
+  effect(
+    () => {
+      if (state.isVisible) updatePosition(props, vars);
+    },
+    () => [props.placement, props.offset],
+  );
 
-  function setInVisible(): void {
-    if (props.disabled) return;
-
-    state.isVisible = false;
-  }
-
-  function updatePosition() {
-    const { placement } = props;
-
-    // Get trigger's bounding box relative to the viewport
-    const rect = referenceEl.getBoundingClientRect();
-
-    // Create a virtual reference element for viewport-based positioning
-    const virtualReference = {
-      getBoundingClientRect() {
-        return {
-          width: rect.width,
-          height: rect.height,
-          top: rect.top + window.scrollY,
-          right: rect.right + window.scrollX,
-          bottom: rect.bottom + window.scrollY,
-          left: rect.left + window.scrollX,
-          x: rect.left + window.scrollX,
-          y: rect.top + window.scrollY,
-        };
-      },
-    };
-
-    const arrowWidth = parseFloat(getComputedStyle(arrowEl).width);
-    computePosition(virtualReference, tooltipEl, {
-      placement,
-      middleware: [
-        offset((arrowWidth / 2) + props.offset),
-        shift({ padding: arrowWidth / 2 }),
-        arrow({ element: arrowEl }),
-        flip(),
-      ],
-    }).then(({ x, y, placement, middlewareData }) => {
-      // Ensure position is relative to viewport
-      Object.assign(tooltipEl.style, {
-        left: `${x}px`,
-        top: `${y}px`,
-      });
-
-      const { x: arrowX, y: arrowY } = middlewareData.arrow as any;
-      const staticSide = {
-        top: 'top',
-        right: 'left',
-        bottom: 'bottom',
-        left: 'right',
-      }[placement.split('-')[0]];
-
-      const sideValue: Record<string, string> = {
-        left: `-${arrowWidth - 2}px`,
-        right: `-${arrowWidth - 2}px`,
-        top: `${arrowWidth}px`,
-        bottom: `-${arrowWidth}px`,
-      };
-
-      const arrowDeg: Record<string, number> = {
-        top: 180,
-        right: 270,
-        bottom: 0,
-        left: 90,
-      };
-
-      const finalPlacement = middlewareData.offset?.placement || placement;
-
-      Object.assign(arrowEl.style, {
-        left: arrowX != null ? `${arrowX}px` : '',
-        top: arrowY != null ? `${arrowY}px` : '',
-        [(staticSide as string) === 'bottom' ? 'top' : (staticSide as string)]: sideValue[staticSide as string],
-        transform: `rotate(${arrowDeg[finalPlacement]}deg)`,
-      });
-    });
-  }
-
-  function onMouseEnter() {
-    setVisible();
-  }
-
-  function onMouseLeave() {
-    setInVisible();
-  }
-
-  function onMounted(target: HTMLElement, tooltip: HTMLElement, arrow: HTMLElement) {
-    referenceEl = target;
-    tooltipEl = tooltip;
-    arrowEl = arrow;
-  }
-
-  return { state, onMounted, onMouseEnter, onMouseLeave };
+  return {
+    hide: immediate => hideTooltip(props, state, vars, immediate),
+    onKeyDown: (event: TooltipKeyEvent) => onKeyDownTooltip(props, state, vars, event),
+    show: immediate => showTooltip(props, state, vars, immediate),
+    state,
+    useBeforeUnmount: () => useBeforeUnmountTooltip(uid, vars),
+    useMounted: (trigger, tooltip, arrow) => useMountedTooltip(vars, trigger, tooltip, arrow, state.isDisabled ? undefined : state.tooltipId),
+  };
 }

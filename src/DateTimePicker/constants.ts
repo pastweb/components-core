@@ -1,0 +1,40 @@
+import type { DateTimePickerDefaultProps, DateTimePickerLocale } from './types';
+
+export const DEFAULT_LOCALE: DateTimePickerLocale = {
+  months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+  weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  previousMonth: 'Previous month',
+  nextMonth: 'Next month',
+  clear: 'Clear',
+  today: 'Today',
+  hour: 'Hour',
+  minute: 'Minute',
+};
+
+export const DEFAULT_PROPS: Partial<DateTimePickerDefaultProps> = {
+  mode: 'single',
+  inline: false,
+  disabled: false,
+  placeholder: 'Select date',
+  ariaLabel: 'Select date',
+  previousMonthAriaLabel: 'Previous month',
+  nextMonthAriaLabel: 'Next month',
+  yearSelectAriaLabel: 'Select year',
+  selectTimeAriaLabel: 'Select time',
+  backToCalendarAriaLabel: 'Back to calendar',
+  prevMonth: '◀',
+  nextMonth: '▶',
+  labelPlacement: 'top-start' as const,
+  label: '',
+  className: '',
+  enableTime: false,
+  noCalendar: false,
+  time24hr: true,
+  minuteIncrement: 5,
+  showMonths: 1,
+  weekNumbers: false,
+  yearSelect: false,
+  firstDayOfWeek: 1,
+  workingWeekDays: 5,
+  locale: {},
+};

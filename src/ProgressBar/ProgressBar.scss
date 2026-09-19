@@ -1,22 +1,26 @@
 .ProgressBar {
-  --ProgressBar_background-color: var(--pw_background-color);
-  --ProgressBar_label_color: inherit;
-  --ProgerssBar_border-width: var(--pw_border-width);
-  --ProgerssBar_border-style: var(--pw_border-style);
-  --ProgerssBar_border-color: var(--pw_border-color);
-  --ProgerssBar_border-radius: var(--pw_border-radius);
-  --ProgressBar_filler_background-color: var(--ProgerssBar_border-color);
-  --ProgressBar_linear_height: 2em;
-  --ProgressBar_circular_height: 5em;
-  --ProgressBar_circular_stroke-width: 0.5em;
-  --ProgressBar_circular_stroke-linecap: round;
+  --pw_ProgressBar_root_default_background-color: var(--pw_control_background-color);
+  --pw_ProgressBar_label_default_color: inherit;
+  --pw_ProgressBar_root_default_border-width: var(--pw_border-width);
+  --pw_ProgressBar_root_default_border-style: var(--pw_border-style);
+  --pw_ProgressBar_root_default_border-color: var(--pw_border-color);
+  --pw_ProgressBar_root_default_border-radius: var(--pw_border-radius);
+  --pw_ProgressBar_root_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_ProgressBar_fill_default_background-color: var(--pw_ProgressBar_root_default_border-color);
+  --pw_ProgressBar_fill_default_stroke: var(--pw_ProgressBar_root_default_border-color);
+  --pw_ProgressBar_linear_default_height: 2em;
+  --pw_ProgressBar_circular_default_width: 5em;
+  --pw_ProgressBar_circular_default_height: 5em;
+  --pw_ProgressBar_circle_default_stroke-width: 0.5em;
+  --pw_ProgressBar_circle_default_stroke-linecap: round;
 
-  border: var(--ProgerssBar_border-width) var(--ProgerssBar_border-style) var(--ProgerssBar_border-color);
-  border-radius: var(--ProgerssBar_border-radius);
+  border: var(--pw_ProgressBar_root_default_border-width) var(--pw_ProgressBar_root_default_border-style) var(--pw_ProgressBar_root_default_border-color);
+  border-radius: var(--pw_ProgressBar_root_default_border-radius);
   overflow: hidden;
 
   &.type-linear {
     width: 100%;
+    background-color: var(--pw_ProgressBar_root_default_background-color);
   }
 
   &.type-circular {
@@ -24,16 +28,28 @@
     border: none;
   }
 
+  &.is-rounded {
+    border-radius: var(--pw_ProgressBar_root_rounded_border-radius);
+  }
+
+  &.is-outlined {
+    --pw_ProgressBar_root_default_background-color: var(--pw_background-color);
+  }
+
+  &.is-full-width {
+    width: 100%;
+  }
+
   .linear {
     position: relative;
     display: flex;
-    height: var(--ProgressBar_linear_height);
+    height: var(--pw_ProgressBar_linear_default_height);
 
     .filler {
       flex: 0 0 auto;
       height: 100%;
       transition: width 0.3s ease-in-out;
-      background-color: var(--ProgressBar_filler_background-color);
+      background-color: var(--pw_ProgressBar_fill_default_background-color);
 
       .label {
         position: absolute;
@@ -44,7 +60,7 @@
         align-items: center;
         width: 100%;
         height: 100%;
-        color: var(--ProgressBar_label_color);
+        color: var(--pw_ProgressBar_label_default_color);
         pointer-events: none;
       }
     }
@@ -59,30 +75,55 @@
     height: 100%;
 
     .svg {
-      width: var(--ProgressBar_circular_height);
-      height: var(--ProgressBar_circular_height);
+      width: var(--pw_ProgressBar_circular_default_width);
+      height: var(--pw_ProgressBar_circular_default_height);
       transform: rotate(-90deg);
     }
 
     .track {
       fill: none;
-      stroke: var(--ProgressBar_background-color);
-      stroke-width: var(--ProgressBar_circular_stroke-width);
+      stroke: var(--pw_ProgressBar_root_default_background-color);
+      stroke-width: var(--pw_ProgressBar_circle_default_stroke-width);
     }
 
     .fill {
       fill: none;
-      stroke: var(--ProgressBar_filler_background-color);
-      stroke-width: var(--ProgressBar_circular_stroke-width);
-      stroke-linecap: var(--ProgressBar_circular_stroke-linecap);
+      stroke: var(--pw_ProgressBar_fill_default_stroke);
+      stroke-width: var(--pw_ProgressBar_circle_default_stroke-width);
+      stroke-linecap: var(--pw_ProgressBar_circle_default_stroke-linecap);
       transition: stroke-dashoffset 0.3s ease-in-out;
     }
 
     .label {
       position: absolute;
-      color: var(--ProgressBar_label_color);
+      color: var(--pw_ProgressBar_label_default_color);
       text-align: center;
       pointer-events: none;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ProgressBar .filler,
+  .ProgressBar .fill {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .ProgressBar {
+    border-color: CanvasText;
+  }
+
+  .ProgressBar .filler {
+    background-color: Highlight;
+  }
+
+  .ProgressBar .track {
+    stroke: CanvasText;
+  }
+
+  .ProgressBar .fill {
+    stroke: Highlight;
   }
 }

@@ -1,46 +1,58 @@
 import type { ClassValue } from '@pastweb/tools';
 
 export interface Step {
-  className?: string;
-  label?: string;
-  description?: string;
   ariaLabel?: string;
-  onClick?: () => void;
+  className?: string;
   content?: any;
-};
+  description?: string;
+  disabled?: boolean;
+  label?: string;
+  onClick?: () => void;
+}
 
 export interface StepDefaultProps {
-  className: string;
-  label: string;
-  description: string;
   ariaLabel?: string;
-  onClick: () => void;
+  className: string;
   content?: any;
-};
+  description: string;
+  disabled: boolean;
+  label: string;
+  onClick: () => void;
+}
 
 export interface StepperProps {
   cls: (...args: ClassValue[]) => string;
   steps: Step[];
-  active: number;
+  active?: number;
+  ariaLabel?: string;
   className?: string;
+  id?: string;
   orientation?: 'horizontal' | 'vertical';
   labelPosition?: 'top' | 'bottom' | 'left' | 'right';
-};
+}
 
 export interface StepperDefaultProps {
   cls: (...args: ClassValue[]) => string;
   steps: Step[];
   active: number;
+  ariaLabel: string;
   className: string;
+  id?: string;
   orientation: 'horizontal' | 'vertical';
   labelPosition: 'top' | 'bottom' | 'left' | 'right';
-};
+}
+
+export type StepperStepState = 'active' | 'complete' | 'pending';
 
 export interface StepperState {
-  uid: string;
-};
+  ariaLabel: string | undefined;
+  id: string;
+  labelPosition: StepperDefaultProps['labelPosition'];
+}
 
 export interface StepperMediator {
+  getStepState: (index: number) => StepperStepState;
+  id: string;
   state: StepperState;
-  onUnmount: () => void;
-};
+  useBeforeUnmount: () => void;
+}

@@ -1,33 +1,84 @@
 .Tabs {
-  --Tabs_background-color: var(--pw_background-color);
-  --Tabs_border-color: var(--pw_border-color);
-  --Tabs_border-width: var(--pw_border-width);
-  --Tabs_border-style: var(--pw_border-style);
-  --Tabs_border-radius: var(--pw_border-radius);
-  --Tabs_rounded_border-radius: var(--pw_rounded_border-radius);
-  --Tabs_color: var(--pw_text_color);
-  --Tabs_active_color: var(--pw_text_strong_color);
-  --Tabs_active_background-color: var(--pw_control_background-color);
-  --Tabs_active_border-color: var(--pw_border-color);
-  --Tabs_font-size: var(--pw_font-size);
-  --Tabs_font-weight: var(--pw_semibold_font-weight);
-  --Tabs_horizontal_padding: var(--pw_padding);
-  --Tabs_vertical_padding: var(--pw_horizontal_padding) 0;
-  --Tabs_transition-duration: var(--pw_transition-duration);
-  --Tabs_disabled_opacity: var(--pw_disabled_opacity);
-  --Tabs_size_box-shadow: var(--pw_size_box-shadow);
-  --Tabs_color_box-shadow: var(--pw_color_box-shadow);
-  --Tabs_focus_border-color: var(--pw_focus_border-color);
-
+  --pw_Tabs_tab_active_background-color: var(--pw_background-color);
+  --pw_Tabs_tab_default_border-color: var(--pw_border-color);
+  --pw_Tabs_tab_default_border-width: var(--pw_border-width);
+  --pw_Tabs_tab_default_border-style: var(--pw_border-style);
+  --pw_Tabs_tab_default_border-radius: var(--pw_border-radius);
+  --pw_Tabs_tab_default_background-color: var(--pw_control_background-color);
+  --pw_Tabs_tab_default_color: var(--pw_text_strong_color);
+  --pw_Tabs_tab_default_font-size: var(--pw_font-size);
+  --pw_Tabs_tab_default_padding: var(--pw_padding);
+  --pw_Tabs_tab_default_transition-duration: var(--pw_transition-duration);
+  --pw_Tabs_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Tabs_tab_hover-size_box-shadow: var(--pw_size_box-shadow);
+  --pw_Tabs_tab_hover-color_box-shadow: var(--pw_color_box-shadow);
+  --pw_Tabs_content_default_border-color: var(--pw_border-color);
+  --pw_Tabs_content_default_border-radius: var(--pw_border-radius);
+  --pw_Tabs_content_default_border-style: var(--pw_border-style);
+  --pw_Tabs_content_default_border-width: var(--pw_border-width);
+  --pw_Tabs_content_default_padding: var(--pw_padding);
 
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
 
+  .tabsList {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: var(--pw_Tabs_tab_default_border-width) var(--pw_Tabs_tab_default_border-style) var(--pw_Tabs_tab_default_border-color);
+
+    &.is-top-right,
+    &.is-bottom-right {
+      justify-content: flex-end;
+    }
+
+    &.is-bottom,
+    &.is-bottom-left,
+    &.is-bottom-right {
+      border-top: var(--pw_Tabs_tab_default_border-width) var(--pw_Tabs_tab_default_border-style) var(--pw_Tabs_tab_default_border-color);
+      border-bottom: 0;
+    }
+
+    &.is-left,
+    &.is-left-top,
+    &.is-left-bottom,
+    &.is-right,
+    &.is-right-top,
+    &.is-right-bottom {
+      flex-direction: column;
+      align-items: stretch;
+      border-bottom: 0;
+    }
+
+    &.is-left,
+    &.is-left-top,
+    &.is-left-bottom {
+      border-right: var(--pw_Tabs_tab_default_border-width) var(--pw_Tabs_tab_default_border-style) var(--pw_Tabs_tab_default_border-color);
+    }
+
+    &.is-right,
+    &.is-right-top,
+    &.is-right-bottom {
+      border-right: 0;
+      border-left: var(--pw_Tabs_tab_default_border-width) var(--pw_Tabs_tab_default_border-style) var(--pw_Tabs_tab_default_border-color);
+    }
+
+    &.is-left-bottom,
+    &.is-right-bottom {
+      justify-content: flex-end;
+    }
+  }
+
   &.is-disabled {
     pointer-events: none;
-    opacity: var(--Tabs_disabled_opacity);
+    opacity: var(--pw_Tabs_root_disabled_opacity);
   }
 
   &.is-bottom,
@@ -49,5 +100,87 @@
   &.is-right-top,
   &.is-right-bottom {
     flex-direction: row-reverse;
+  }
+
+  .tabContent {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: var(--pw_Tabs_content_default_border-width) var(--pw_Tabs_content_default_border-style) var(--pw_Tabs_content_default_border-color);
+    border-top: none;
+    border-radius: 0 0 var(--pw_Tabs_content_default_border-radius) var(--pw_Tabs_content_default_border-radius);
+    margin-top: -1px;
+    padding: var(--pw_Tabs_content_default_padding);
+
+    &[hidden] {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: var(--pw_outline);
+      outline-offset: 0.125em;
+    }
+
+    &.is-bottom,
+    &.is-bottom-left,
+    &.is-bottom-right {
+      margin-top: 0;
+      margin-bottom: -1px;
+      border-top: var(--pw_Tabs_content_default_border-width) var(--pw_Tabs_content_default_border-style) var(--pw_Tabs_content_default_border-color);
+      border-bottom: 0;
+      border-radius: var(--pw_Tabs_content_default_border-radius) var(--pw_Tabs_content_default_border-radius) 0 0;
+    }
+
+    &.is-left,
+    &.is-left-top,
+    &.is-left-bottom,
+    &.is-right,
+    &.is-right-top,
+    &.is-right-bottom {
+      align-self: stretch;
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 0;
+      width: 100%;
+      height: auto;
+      margin-top: 0;
+      border-top: var(--pw_Tabs_content_default_border-width) var(--pw_Tabs_content_default_border-style) var(--pw_Tabs_content_default_border-color);
+    }
+
+    &.is-left,
+    &.is-left-top,
+    &.is-left-bottom {
+      border-left: 0;
+      border-radius: 0 var(--pw_Tabs_content_default_border-radius) var(--pw_Tabs_content_default_border-radius) 0;
+    }
+
+    &.is-right,
+    &.is-right-top,
+    &.is-right-bottom {
+      border-right: 0;
+      border-radius: var(--pw_Tabs_content_default_border-radius) 0 0 var(--pw_Tabs_content_default_border-radius);
+    }
+
+    &.no-content-padding,
+    &.no-padding {
+      padding: 0;
+    }
+
+    &.no-content-border,
+    &.no-border {
+      border: 0;
+    }
+  }
+}
+
+@media (forced-colors: active) {
+  .Tabs .tabContent {
+    border-color: CanvasText;
+    forced-color-adjust: none;
+
+    &:focus-visible {
+      outline-color: CanvasText;
+    }
   }
 }

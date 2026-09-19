@@ -10,3 +10,4 @@ export { calculateTime } from './calculateTime';
 export { calculateY } from './calculateY';
 export { reCalculateY } from './reCalculateY';
 export { onKeyDown } from './onKeyDown';
+export { onMounted, onMouseLeave, onMouseOver, removeEscapeListener, resetTimer, startTimer } from './actions';

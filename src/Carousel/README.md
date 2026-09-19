@@ -1,55 +1,208 @@
-## CarouselItem
-| PropName | type | required | default | Description |
-|----------|------|----------|---------|-------------|
-| content  | any  | yes      | -       | The content (JSX/element) to render inside the carousel item |
-| name     | string | yes    | -       | Unique identifier name for the carousel item |
+# Carousel
 
-## Props
-| PropName          | type                               | required | default | Description                                                   |
-|-------------------|------------------------------------|----------|---------|---------------------------------------------------------------|
-| cls               | (...args: ClassValue[]) => string; | yes      | -       | function to handle CssModules classes and classes switching   |
-| autoPlay          | boolean                            | no       | false   | enable automatic sliding through items                        |
-| autoPlayInterval  | number                             | no       | 3000    | interval in milliseconds for autoPlay advancement             |
-| className         | string                             | no       | ""      | additional classes to be applied to the carousel              |
-| showCommands      | boolean                            | no       | true    | show navigation (prev/next) buttons                           |
-| current           | number                             | no       | 0       | initial index of the active carousel item                     |
-| items             | CarouselItem[]                     | yes      | -       | array of items to display in the carousel                     |
+Carousel presents one item from an ordered collection and provides controls for
+moving through the collection. Its web contract follows the WAI-ARIA carousel
+pattern.
+
+## When to use
+
+Use a carousel only when the content has a meaningful sequence and users can
+understand the page without seeing every slide.
+
+## Carousel props
+
+| PropName | Type | Required | Default | Description |
+|---|---|---:|---:|---|
+| `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
+| `ariaLabel` | `string` | no | `'Carousel'` | Names the carousel region. Supply a content-specific label. |
+| `className` | `string` | no | `""` | Adds classes to the carousel. |
+| `current` | `number` | no | `0` | Sets the current slide index. |
+| `disabled` | `boolean` | no | `false` | Prevents navigation and disables controls. |
+| `id` | `string` | no | generated | Supplies the carousel ID. Generated IDs use the `carousel` prefix. |
+| `showCommands` | `boolean` | no | `true` | Renders navigation controls. |
+| `prevAriaLabel` | `string` | no | `'Previous slide'` | Names the previous control. |
+| `nextAriaLabel` | `string` | no | `'Next slide'` | Names the next control. |
+| `onCurrentChange` | `(current: number) => void` | no | - | Reports navigation changes. |
+
+## CarouselItem props
+
+| PropName | Type | Required | Default | Description |
+|---|---|---:|---:|---|
+| `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves item classes. |
+| `className` | `string` | no | `""` | Adds classes to the slide. |
+| `disabled` | `boolean` | no | `false` | Disables the slide and exposes its disabled state. |
+
+## Mediator state
+
+`carouselMediator` exposes renderer-ready state for the root semantics and
+track presentation:
+
+| State | Type | Description |
+|---|---|---|
+| `ariaLabel` | `string \| undefined` | Normalized carousel name. |
+| `ariaLive` | `'off' \| 'polite'` | Live-region mode for slide changes. |
+| `ariaRoleDescription` | `'carousel' \| undefined` | Carousel role description when the root is named. |
+| `className` | `string` | Complete root class name. |
+| `current` | `number` | Current slide index. |
+| `isDisabled` | `true \| undefined` | Renderer-ready disabled and ARIA value. |
+| `itemsCount` | `number` | Number of registered CarouselItem instances. |
+| `prevAriaLabel` / `nextAriaLabel` | `string` | Normalized navigation-control names. |
+| `role` | `'region' \| undefined` | Region role when the root is named. |
+| `transform` | `string` | Renderer-ready track transform. |
+
+`carouselItemMediator` reads the Carousel context internally and exposes the
+following renderer-ready state:
+
+| State | Type | Description |
+|---|---|---|
+| `ariaHidden` | `true \| undefined` | Hides an inactive slide from the accessibility tree. |
+| `ariaLabel` | `string` | One-based position label in the form `n of total`. |
+| `ariaRoleDescription` | `'slide'` | Renderer-ready slide role description. |
+| `className` | `string` | Complete item class name, including active and disabled state classes. |
+| `index` | `number` | Stable zero-based registration index. |
+| `inert` | `true \| undefined` | Prevents interaction with descendants of an inactive slide. |
+| `isActive` | `boolean` | Whether this item matches the current Carousel index. |
+| `isDisabled` | `true \| undefined` | Normalized local or inherited disabled state. |
+| `role` | `'group'` | Renderer-ready slide group role. |
+
+## Carousel mediator context
+
+`carouselMediator.getContext()` exposes live state and stable commands for
+`CarouselItem` and custom descendant controls. Framework renderers publish this
+contract through `CAROUSEL_CONTEXT_KEY`; command slots do not receive mediator
+state or methods as slot props.
+
+| Property or method | Type | Description |
+|---|---|---|
+| `current` | `number` | Live current slide index. |
+| `isDisabled` | `true \| undefined` | Live normalized Carousel disabled state. |
+| `itemsCount` | `number` | Live number of registered CarouselItem descendants. |
+| `prev` | `() => void` | Selects the previous enabled position when navigation is available. |
+| `next` | `() => void` | Selects the next enabled position when navigation is available. |
+| `registerItem` | `() => number` | Registers a CarouselItem and returns its stable zero-based index. |
 
 ## Slots
-| SlotName | Description | Props |
-|----------|-------------|-------|
-| commands | Slot for custom navigation controls (shown if `showCommands` is true) | `{ prev: () => void; next: () => void; }` |
 
-```tsx
-import { useMediator, withDefaultProps } from '@pastweb/x';
-import { carousel, DEFAULT_PROPS, type CarouselMediator } from '@pastweb/components/Carousel';
-import type { CarouselDefaultProps, CarouselProps } from './types';
+| SlotName | Description | Access |
+|---|---|---|
+| default | Supplies `CarouselItem` children. | - |
+| `commands` | Replaces the navigation controls while preserving behavior. | Carousel context |
+
+## Utility classes
+
+Apply this class through the Carousel `className` prop.
+
+| Class | Description |
+|---|---|
+| `carousel3D` | Adds perspective to the Carousel root for consumer-defined 3D slide transforms. It does not apply a transform by itself. |
+
+## CSS Variables
+
+| Variable | Part | State | CSS property | Default | Description | Platforms |
+|---|---|---|---|---|---|---|
+| `--pw_Carousel_root_default_max-width` | `root` | `default` | `max-width` | `800px` | Maximum carousel width. | Web, Capacitor |
+| `--pw_Carousel_root_disabled_opacity` | `root` | `disabled` | `opacity` | `var(--pw_disabled_opacity)` | Disabled carousel opacity. | Web, Capacitor, NativeScript |
+| `--pw_Carousel_track_default_transition-duration` | `track` | `default` | `transition-duration` | `0.5s` | Slide movement duration. | Web, Capacitor; NativeScript adapter |
+| `--pw_Carousel_control_default_background-color` | `control` | `default` | `background-color` | `rgba(0,0,0,.6)` | Control background. | Web, Capacitor, NativeScript |
+| `--pw_Carousel_control_hover_background-color` | `control` | `hover` | `background-color` | `rgba(0,0,0,.8)` | Hover background. | Web, Capacitor |
+| `--pw_Carousel_control_default_color` | `control` | `default` | `color` | `white` | Control foreground. | Web, Capacitor, NativeScript |
+| `--pw_Carousel_control_default_padding` | `control` | `default` | `padding` | `0.75em 1em` | Control spacing. | Web, Capacitor, NativeScript |
+| `--pw_Carousel_control_default_font-size` | `control` | `default` | `font-size` | `1.25em` | Control icon size. | Web, Capacitor, NativeScript |
+| `--pw_Carousel_control_default_border-radius` | `control` | `default` | `border-radius` | `var(--pw_border-radius)` | Control corner radius. | Web, Capacitor, NativeScript |
+| `--pw_Carousel_control_default_transition-duration` | `control` | `default` | `transition-duration` | `0.3s` | Control state duration. | Web, Capacitor |
+| `--pw_CarouselItem_root_default_min-height` | `root` | `default` | `min-height` | `300px` | Minimum slide height. | Web, Capacitor, NativeScript |
+| `--pw_CarouselItem_root_default_transition-duration` | `root` | `default` | `transition-duration` | `0.5s` | Slide visual transition duration. | Web, Capacitor; NativeScript adapter |
+| `--pw_CarouselItem_root_disabled_opacity` | `root` | `disabled` | `opacity` | `var(--pw_disabled_opacity)` | Disabled slide opacity. | Web, Capacitor, NativeScript |
+
+```xts
+import { setContext, useBeforeMount, useBeforeUnmount, useMediator, withDefaultProps } from '@pastweb/x';
+import {
+  carouselItemMediator,
+  carouselMediator,
+  CAROUSEL_CONTEXT_KEY,
+  DEFAULT_CAROUSEL_ITEM_PROPS,
+  DEFAULT_PROPS,
+} from '@pastweb/components-core/Carousel';
 
 export function Carousel(props: CarouselProps) {
   const p = withDefaultProps<CarouselDefaultProps>(props, DEFAULT_PROPS);
-  const m = useMediator<CarouselMediator>(carousel, p);
+  const m = useMediator<CarouselMediator>(carouselMediator, p);
   const s = m.state;
+  const c = m.getContext();
+
+  setContext(CAROUSEL_CONTEXT_KEY, c);
+
+  useBeforeUnmount(m.useBeforeUnmount);
 
   return (
-    <div class={p.cls('Carousel', p.className)}>
-      <div class={p.cls('carouselInner')} #style={{ transform: `translateX(-${s.current * 100}%)` }}>
-        <div
-          #for={(item, i) of items}
-          key={`${item.name}_${i}`}
-          class={p.cls('carouselItem', { active: i === s.current })}
-        >
-          <render content={item.content} />
-        </div>
+    <div
+      id={m.id}
+      class={s.className}
+      role={s.role}
+      aria-roledescription={s.ariaRoleDescription}
+      aria-label={s.ariaLabel}
+      aria-disabled={s.isDisabled}
+      @keydown={m.onKeyDown}
+    >
+      <div class={p.cls('carouselInner')} #style={{ transform: s.transform }} aria-live={s.ariaLive}>
+        {p.children}
       </div>
-      <slot #if={p.showCommands} name='commends' props={{ prev: m.prev, next: m.next }}>
-        <button class={p.cls('prev')} @click={m.prev}>
-          ◄
+      <slot #if={p.showCommands} name="commands">
+        <button class={p.cls('prev')} type="button" @click={m.prev} disabled={s.isDisabled} aria-disabled={s.isDisabled} aria-label={s.prevAriaLabel}>
+          <span aria-hidden="true">◄</span>
         </button>
-        <button class={p.cls('next')} @click={m.next}>
-          ►
+        <button class={p.cls('next')} type="button" @click={m.next} disabled={s.isDisabled} aria-disabled={s.isDisabled} aria-label={s.nextAriaLabel}>
+          <span aria-hidden="true">►</span>
         </button>
       </slot>
     </div>
   );
 }
+
+export function CarouselItem(props: CarouselItemProps) {
+  const p = withDefaultProps<CarouselItemDefaultProps>(props, DEFAULT_CAROUSEL_ITEM_PROPS);
+  const m = useMediator<CarouselItemMediator>(carouselItemMediator, p);
+  const s = m.state;
+
+  useBeforeMount(m.useBeforeMount);
+
+  return (
+    <div
+      class={s.className}
+      role={s.role}
+      aria-roledescription={s.ariaRoleDescription}
+      aria-label={s.ariaLabel}
+      aria-hidden={s.ariaHidden}
+      aria-disabled={s.isDisabled}
+      inert={s.inert}
+    >
+      <slot />
+    </div>
+  );
+}
 ```
+
+## Keyboard interaction
+
+- `Tab` and `Shift+Tab` move through the carousel and its native controls in document order.
+- `ArrowLeft` and `ArrowRight` move to the previous and next slides when the carousel is focused.
+- Collapsed or inactive slide content is inert and removed from sequential focus.
+
+## Accessibility notes
+
+- The carousel is a labelled region with `aria-roledescription="carousel"`.
+- Slides use `role="group"`, expose their position, and inactive slides are
+  `aria-hidden` and inert.
+- The default `ariaLabel` is `"Carousel"`. An explicit empty string omits the
+  root label, region role, and carousel role description.
+- A disabled Carousel passes the same normalized `true` value to its
+  `is-disabled` class, control `disabled`/`aria-disabled` attributes, root
+  `aria-disabled`, and inherited CarouselItem state.
+- Left and Right Arrow navigate; native buttons remain in normal tab order.
+- Shared styles honor `prefers-reduced-motion` and `forced-colors`.
+
+## Standards
+
+- WCAG 2.2: https://www.w3.org/TR/WCAG22/
+- WAI-ARIA Carousel pattern: https://www.w3.org/WAI/ARIA/apg/patterns/carousel/
+- GOV.UK guidance: https://design-system.service.gov.uk/components/

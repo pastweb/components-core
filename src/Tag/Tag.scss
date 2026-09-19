@@ -1,33 +1,133 @@
 .Tag {
-  --Tag_color: var(--pw_text_color);
-  --Tag_background-color: var(--pw_control_background-color);
-  --Tag_border-radius: var(--pw_border-radius);
-  --Tag_rounded_border-radius: var(--pw_rounded_border-radius);
-  --Tag_border-color: var(--pw_border-color);
-  --Tag_border-width: var(--pw__border-width);
-  --Tag_border-style: var(--pw_border-style);
-  --Tag_padding: 2px 14px 2px 6px;
-  --Tag_font-size: var(--pw_small_font-size);
-  --Tag_font-weight: var(--pw_medium_font-size);
+  --pw_Tag_root_default_color: var(--pw_text_color);
+  --pw_Tag_root_default_background-color: var(--pw_control_background-color);
+  --pw_Tag_root_default_border-radius: var(--pw_border-radius);
+  --pw_Tag_root_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_Tag_root_default_border-color: var(--pw_border-color);
+  --pw_Tag_root_default_border-width: var(--pw_border-width);
+  --pw_Tag_root_default_border-style: var(--pw_border-style);
+  --pw_Tag_root_default_padding: 0.125em 0.625em;
+  --pw_Tag_root_default_font-size: var(--pw_small_font-size);
+  --pw_Tag_root_default_font-weight: var(--pw_bold_font-weight);
+  --pw_Tag_root_default_letter-spacing: 0.04em;
+  --pw_Tag_close-button_default_min-width: 1.563em;
+  --pw_Tag_close-button_default_height: 1.563em;
+  --pw_Tag_close-button_default_transition-duration: 0.5s;
+  --pw_Tag_close-button_default_background-color: transparent;
+  --pw_Tag_close-button_hover_background-color: var(--pw_Tag_root_default_color);
+  --pw_Tag_close-bar_default_background-color: var(--pw_Tag_root_default_color);
+  --pw_Tag_close-bar_hover_background-color: var(--pw_Tag_root_default_background-color);
+  --pw_Tag_close-bar_default_width: 0.938em;
+  --pw_Tag_close-bar_default_height: 0.188em;
+  --pw_Tag_close-bar_default_top: 0.688em;
+  --pw_Tag_close-bar_default_left: 0.313em;
 
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   width: max-content;
-  padding: var(--Tag_padding);
-  border-radius: var(--Tag_border-radius);
-  border: var(--Tag_border-width) var(--Tag_border-style) var(--Tag_border-color);
-  color: var(--Tag_color);
-  background-color: var(--Tag_background-color);
-
-  font-size: var(--Tag_font-size);
-  font-weight: var(--Tag_font-weight);
+  max-width: 100%;
+  padding: var(--pw_Tag_root_default_padding);
+  border-radius: var(--pw_Tag_root_default_border-radius);
+  border: var(--pw_Tag_root_default_border-width) var(--pw_Tag_root_default_border-style) var(--pw_Tag_root_default_border-color);
+  color: var(--pw_Tag_root_default_color);
+  background-color: var(--pw_Tag_root_default_background-color);
+  font-size: var(--pw_Tag_root_default_font-size);
+  font-weight: var(--pw_Tag_root_default_font-weight);
+  letter-spacing: var(--pw_Tag_root_default_letter-spacing);
+  line-height: 1.25;
+  text-transform: uppercase;
+  white-space: nowrap;
 
   i {
-    color: var(--Tag_color);
-    font-size: var(--Tag_font-size);
+    color: var(--pw_Tag_root_default_color);
+    font-size: var(--pw_Tag_root_default_font-size);
     margin: 0 4px;
   }
 
-  &.is-rounded { border-radius: var(--Tag_rounded_borred-radius); }
+  &.is-rounded {
+    border-radius: var(--pw_Tag_root_rounded_border-radius);
+  }
+
+  &.has-close {
+    padding-inline-end: 0.125em;
+  }
+
+  .content {
+    min-width: 0;
+  }
+
+  .closeButton {
+    position: relative;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    margin-inline-start: 0.5em;
+    min-width: var(--pw_Tag_close-button_default_min-width);
+    height: var(--pw_Tag_close-button_default_height);
+    padding: 0;
+    border: none;
+    appearance: none;
+    border-radius: var(--pw_rounded_border-radius);
+    background-color: var(--pw_Tag_close-button_default_background-color);
+    color: inherit;
+    font: inherit;
+    letter-spacing: normal;
+    text-transform: none;
+    cursor: pointer;
+    transition: background-color ease var(--pw_Tag_close-button_default_transition-duration);
+
+    &:focus-visible {
+      outline: var(--pw_outline);
+      outline-offset: 0.125em;
+    }
+
+    .closeBar {
+      position: absolute;
+      top: var(--pw_Tag_close-bar_default_top);
+      left: var(--pw_Tag_close-bar_default_left);
+      width: var(--pw_Tag_close-bar_default_width);
+      height: var(--pw_Tag_close-bar_default_height);
+      border-radius: 0.313em;
+      background-color: var(--pw_Tag_close-bar_default_background-color);
+      transform: rotate(45deg);
+      transition: background-color ease var(--pw_Tag_close-button_default_transition-duration);
+
+      &:last-child {
+        transform: rotate(-45deg);
+      }
+    }
+
+    &:hover {
+      background-color: var(--pw_Tag_close-button_hover_background-color);
+
+      .closeBar {
+        background-color: var(--pw_Tag_close-bar_hover_background-color);
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Tag .closeButton,
+  .Tag .closeBar {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Tag {
+    border-color: CanvasText;
+    background-color: Canvas;
+    color: CanvasText;
+    forced-color-adjust: none;
+  }
+
+  .Tag .closeButton {
+    border: var(--pw_Tag_root_default_border-width) solid ButtonText;
+    background-color: ButtonFace;
+  }
+
+  .Tag .closeBar {
+    background-color: ButtonText;
+  }
 }

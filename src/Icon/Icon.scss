@@ -1,13 +1,16 @@
 .Icon {
-  --Icon_text_color: var(--pw_text_strong_color);
+  --pw_Icon_root_default_color: var(--pw_text_strong_color);
+  --pw_Icon_graphic_default_width: 1em;
+  --pw_Icon_graphic_default_height: 1em;
 
-  color: var(--Icon_text_color);
+  color: var(--pw_Icon_root_default_color);
   display: flex;
   align-items: center;
   justify-content: center;
 
-  img, svg {
-    width: 1em;
-    height: 1em;
+  img,
+  svg {
+    width: var(--pw_Icon_graphic_default_width);
+    height: var(--pw_Icon_graphic_default_height);
   }
 }

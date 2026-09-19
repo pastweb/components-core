@@ -2,7 +2,9 @@ export { DEFAULT_PROPS } from './constants';
 export { progressbarMediator } from './progressbar.mediator';
 
 export type {
-  ProgressBarProps,
   ProgressBarDefaultProps,
+  ProgressBarLabelValues,
   ProgressBarMediator,
+  ProgressBarProps,
+  ProgressBarState,
 } from './types';

@@ -2,12 +2,23 @@ import type { ClassValue } from '@pastweb/tools';
 
 export type Component = any;
 
+/**
+ * Table-owned fields on a row record.
+ *
+ * Feature properties use a leading underscore so they do not collide with
+ * application data.
+ */
+export interface TableRowFeatures<TData = any> {
+  _children?: TData[];
+  _select?: boolean;
+};
+
 export interface ColumnDef<TData = any> {
   id: string;
   accessorKey?: keyof TData;
   accessorFn?: (row: TData) => any;
   header: string | Component | ((props: { column: Column<TData> }) => Component);
-  cell?: (props: { row: Row<TData>; getValue: () => any }) => Component;
+  cell?: (props: { row: Row<TData>; getValue: () => any; isExpandable: boolean }) => Component;
   aggregatedCell?: (props: { row: Row<TData>; getValue: () => any }) => Component;
   footer?: string | Component | ((props: { column: Column<TData> }) => Component);
   sorting?: boolean;
@@ -27,7 +38,7 @@ export interface Column<TData = any> {
   columnDef: ColumnDef<TData>;
   canSort: () => boolean;
   isSorted: () => false | 'asc' | 'desc';
-  toggleSorting: () => void;
+  toggleSorting: (direction?: 'asc' | 'desc' | false) => void;
   canResize: () => boolean;
   canPin: () => boolean;
   isPinned: () => 'left' | 'right' | false;
@@ -35,6 +46,7 @@ export interface Column<TData = any> {
   isVisible: () => boolean;
   toggleVisibility: () => void;
   canFilter: () => boolean;
+  canGroup: () => boolean;
 
   getFilterValue: () => any;
   isOptionsVisible: () => boolean;
@@ -78,6 +90,7 @@ export interface Header<TData = any> {
   onResize: (e: any) => void;
   onDragStart: (e: any) => void;
   onDragOver: (e: any) => void;
+  onDragEnd: (e: any) => void;
   onDrop: (e: any) => void;
   getContext: () => any;
 };
@@ -92,7 +105,7 @@ export interface TableInstance<TData = any> {
     columnOrder: ColumnOrderState;
     columnPinning: ColumnPinningState;
     grouping: GroupingState;
-    expanded: ExpandedState;
+    expandedRows: string[];
   };
   setTableFilter: (value: string) => void;
   getHeaderGroups: () => HeaderGroup<TData>[];
@@ -100,6 +113,8 @@ export interface TableInstance<TData = any> {
   getAllLeafColumns: () => Column<TData>[];
   toggleRowSelection: (rowId: string, value?: boolean) => void;
 };
+
+export type GetRowId<TData = any> = (row: TData, index: number) => string;
 
 export type SortingState = Array<{ id: string; desc: boolean }>;
 export type ColumnFiltersState = Record<string, any>;
@@ -111,59 +126,173 @@ export type GroupingState = string[];
 export type ExpandedState = Record<string, boolean>;
 
 export interface TableProps<TData = any> {
+  /**
+   * Resolves component, part, and state classes.
+   */
   cls: (...args: ClassValue[]) => string;
+  /**
+   * Names the table when `caption` is absent.
+   */
+  ariaLabel?: string;
+  /**
+   * Provides the preferred visible table caption and accessible name.
+   */
+  caption?: string;
+  /**
+   * Adds classes to the root container.
+   */
   className?: string;
+  /**
+   * Labels the spanning cell rendered when no rows remain.
+   */
+  emptyMessage?: string;
+  /**
+   * Supplies the source records.
+   */
   data: TData[];
+  /**
+   * Defines column identity, values, rendered content, and optional features.
+   */
   columns: ColumnDef<TData>[];
-  enableRowSelection?: boolean;
-  enableExpanding?: boolean;
-  enableColumnResizing?: boolean;
-  enableColumnOrdering?: boolean;
-  enableColumnPinning?: boolean;
-  enableColumnSorting?: boolean;
-  enableGrouping?: boolean;
+  /**
+   * Enables row selection. Selection is applied manually through `selectedRows`
+   * or `toggleRowSelection`.
+   */
+  rowSelection?: boolean;
+  /**
+   * Enables expandable rows. Nested records are read from `_children`.
+   * Table feature properties on row data use a leading underscore.
+   */
+  expanding?: boolean;
+  /**
+   * Enables pointer and touch column resizing.
+   */
+  columnResizing?: boolean;
+  /**
+   * Enables drag-and-drop column ordering.
+   */
+  columnOrdering?: boolean;
+  /**
+   * Enables left and right column pinning.
+   */
+  columnPinning?: boolean;
+  /**
+   * Enables sorting for every column unless the column sets `sorting`.
+   */
+  columnSorting?: boolean;
+  /**
+   * Enables grouping by column.
+   */
+  grouping?: boolean;
+  /**
+   * Prevents local sorting so the consumer can supply already-sorted data.
+   */
   manualSorting?: boolean;
+  /**
+   * Prevents local table and column filtering.
+   */
   manualFiltering?: boolean;
+  /**
+   * Prevents local grouping.
+   */
   manualGrouping?: boolean;
-
-  // Controlled state
+  /**
+   * Controlled sorting descriptors.
+   */
   sorting?: SortingState;
+  /**
+   * Controlled filter applied across row values.
+   */
   tableFilter?: string;
+  /**
+   * Controlled filter values keyed by column ID.
+   */
   columnFilters?: ColumnFiltersState;
-  rowSelection?: RowSelectionState;
+  /**
+   * Controlled selected row IDs.
+   */
+  selectedRows?: string[];
+  /**
+   * Controlled visibility keyed by column ID. `false` hides a column.
+   */
   columnVisibility?: VisibilityState;
+  /**
+   * Controlled ordered column IDs.
+   */
   columnOrder?: ColumnOrderState;
-  columnPinning?: ColumnPinningState;
-  grouping?: GroupingState;
-  expanded?: ExpandedState;
-
-  // Callbacks
+  /**
+   * Controlled expanded row IDs.
+   */
+  expandedRows?: string[];
+  /**
+   * Reports the next sorting state.
+   */
   onSortingChange?: (updater: SortingState | ((prev: SortingState) => SortingState)) => void;
+  /**
+   * Reports the next table-wide filter value.
+   */
   onTableFilterChange?: (value: string) => void;
+  /**
+   * Reports the next column filter state.
+   */
   onColumnFiltersChange?: (updater: ColumnFiltersState | ((prev: ColumnFiltersState) => ColumnFiltersState)) => void;
+  /**
+   * Reports the next row-selection map keyed by row ID.
+   */
   onRowSelectionChange?: (updater: RowSelectionState | ((prev: RowSelectionState) => RowSelectionState)) => void;
+  /**
+   * Reports the next selected row IDs.
+   */
+  onSelectedRowsChange?: (ids: string[]) => void;
+  /**
+   * Reports the next column-visibility state.
+   */
   onColumnVisibilityChange?: (updater: VisibilityState | ((prev: VisibilityState) => VisibilityState)) => void;
+  /**
+   * Reports the next column order.
+   */
   onColumnOrderChange?: (updater: ColumnOrderState | ((prev: ColumnOrderState) => ColumnOrderState)) => void;
+  /**
+   * Reports the next column-pinning state.
+   */
   onColumnPinningChange?: (updater: ColumnPinningState | ((prev: ColumnPinningState) => ColumnPinningState)) => void;
-  onColumnSizingChange?: (updater: Record<string, number> | ((prev: Record<string, number>) => Record<string, number>)) => void; // ← Added
+  /**
+   * Reports the next column widths keyed by column ID.
+   */
+  onColumnSizingChange?: (updater: Record<string, number> | ((prev: Record<string, number>) => Record<string, number>)) => void;
+  /**
+   * Reports the column IDs whose option panels are open.
+   */
   onColumnFilterVisiblityChange?: (updater: string[]) => void;
+  /**
+   * Reports the next grouping state.
+   */
   onGroupingChange?: (updater: GroupingState | ((prev: GroupingState) => GroupingState)) => void;
-  onExpandedChange?: (updater: ExpandedState | ((prev: ExpandedState) => ExpandedState)) => void;
-
-  getRowId?: (row: TData, index: number) => string;
-  getSubRows?: (row: TData) => TData[] | undefined;
+  /**
+   * Reports the next expanded row IDs.
+   */
+  onExpandedRowsChange?: (ids: string[]) => void;
+  /**
+   * Optional override for row identity. When omitted, Table assigns a stable
+   * id per row object for the lifetime of the table instance.
+   */
+  getRowId?: GetRowId<TData>;
+  /**
+   * Handles row pointer activation.
+   */
   onRowClick?: (row: Row<TData>) => void;
 };
 
 export interface TableDefaultProps<TData = any> extends TableProps<TData> {
   className: string;
-  enableRowSelection: boolean;
-  enableExpanding: boolean;
-  enableColumnResizing: boolean;
-  enableColumnOrdering: boolean;
-  enableColumnPinning: boolean;
-  enableColumnSorting: boolean;
-  enableGrouping: boolean;
+  emptyMessage: string;
+  rowSelection: boolean;
+  expanding: boolean;
+  columnResizing: boolean;
+  columnOrdering: boolean;
+  columnPinning: boolean;
+  columnSorting: boolean;
+  grouping: boolean;
   manualSorting: boolean;
   manualFiltering: boolean;
   manualGrouping: boolean;
@@ -171,15 +300,14 @@ export interface TableDefaultProps<TData = any> extends TableProps<TData> {
   onTableFilterChange: (value: string) => void;
   onColumnFiltersChange: (updater: any) => void;
   onRowSelectionChange: (updater: any) => void;
+  onSelectedRowsChange: (ids: string[]) => void;
   onColumnVisibilityChange: (updater: any) => void;
   onColumnOrderChange: (updater: any) => void;
   onColumnPinningChange: (updater: any) => void;
   onColumnSizingChange: (updater: any) => void;
   onColumnFilterVisiblityChange: (updater: string[]) => void;
   onGroupingChange: (updater: any) => void;
-  onExpandedChange: (updater: any) => void;
-  getRowId: (row: TData, index: number) => string;
-  getSubRows: (row: TData) => TData[] | undefined;
+  onExpandedRowsChange: (ids: string[]) => void;
 };
 
 export interface TableState<TData = any> {
@@ -200,11 +328,23 @@ export interface TableState<TData = any> {
   columnPinning: ColumnPinningState;
   grouping: GroupingState;
   expanded: ExpandedState;
-  dragOverColumnId: string | null; // for column ordering
+  dragOverColumnId: string | null;
+  draggingColumnId: string | null;
+  columnDragRects: Record<string, { left: number; width: number }>;
 }
 
-export interface TableMediator<TData = any> {
+export interface TableContext<TData = any> extends TableInstance<TData> {
+  cls: TableDefaultProps['cls'];
   state: TableState<TData>;
   table: TableInstance<TData>;
+};
+
+export interface TableMediator<TData = any> {
+  /** Unique table prefix used to connect header and cell accessibility IDs. */
+  id: string;
+  state: TableState<TData>;
+  table: TableInstance<TData>;
+  getContext: () => TableContext<TData>;
   onMounted: (target: HTMLTableElement) => void;
+  useBeforeUnmount: () => void;
 };

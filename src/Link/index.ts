@@ -1,3 +1,10 @@
 export { DEFAULT_PROPS } from './constants';
+export { linkMediator } from './link.mediator';
 
-export type { LinkDefaultProps, LinkProps } from './types';
+export type {
+  LinkClickEvent,
+  LinkDefaultProps,
+  LinkMediator,
+  LinkProps,
+  LinkState,
+} from './types';

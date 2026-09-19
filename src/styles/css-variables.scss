@@ -55,6 +55,20 @@ $pw_link_line-height: 1.25em !default;
   --pw_background-color: #{ $pw_background-color };
   --pw_control_background-color: #{ $pw_control_background-color };
   --pw_backdrop_background-color: #{ $pw_backdrop_background-color };
+  // Stacking order
+  --pw_z-index_behind: -1;
+  --pw_z-index_local: 1;
+  --pw_z-index_sticky: 10;
+  --pw_z-index_sticky-header: 11;
+  --pw_z-index_loading: 20;
+  --pw_z-index_flyout: 50;
+  --pw_z-index_sheet: 600;
+  --pw_z-index_navigation: 800;
+  --pw_z-index_window-base: 850;
+  --pw_z-index_window-max: 899;
+  --pw_z-index_toast: 700;
+  --pw_z-index_walktour: 900;
+  --pw_z-index_system: 1000;
   // Border
   --pw_outline_color: #{ $pw_outline_color };
   --pw_outline_style: #{ $pw_outline_style };

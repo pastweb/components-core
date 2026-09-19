@@ -1,31 +1,31 @@
 .Buttons {
-  --Buttons_margin: var(--pw_margin);
-  --Buttons_border-radius: var(--pw_border-radius);
-  --Buttons_rounded_border-radius: var(--pw_rounded_border-radius);
-  --Buttons_color_box-shadow: var(--pw_color_box-shadow);
-  --Buttons_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
-  --Buttons_size_box-shadow: var(--pw_size_box-shadow);
+  --pw_Buttons_root_default_margin: var(--pw_margin);
+  --pw_Buttons_root_default_border-radius: var(--pw_border-radius);
+  --pw_Buttons_root_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_Buttons_color_default_box-shadow: var(--pw_color_box-shadow);
+  --pw_Buttons_inset-color_default_box-shadow: var(--pw_inset_color_box-shadow);
+  --pw_Buttons_size_default_box-shadow: var(--pw_size_box-shadow);
 
 
   display: flex;
-  margin: var(--Buttons_margin);
+  margin: var(--pw_Buttons_root_default_margin);
 
   button {
     margin: 0;
     border-radius: 0;
     
     &:first-child {
-      border-radius: var(--Buttons_border-radius) 0 0 var(--Buttons_border-radius);
+      border-radius: var(--pw_Buttons_root_default_border-radius) 0 0 var(--pw_Buttons_root_default_border-radius);
 
-      &:hover { box-shadow: inset var(--Buttons_size_box-shadow) var(--Buttons_inset_color_box-shadow); }
+      &:hover { box-shadow: inset var(--pw_Buttons_size_default_box-shadow) var(--pw_Buttons_inset-color_default_box-shadow); }
 
-      &:focus { box-shadow: var(--Buttons_size_box-shadow) var(--Buttons_color_box-shadow); }
+      &:focus { box-shadow: var(--pw_Buttons_size_default_box-shadow) var(--pw_Buttons_color_default_box-shadow); }
     }
 
     &:not(:first-child):not(:hover) { border-left-color: transparent; }
 
     &:last-child {
-      border-radius: 0 var(--Buttons_border-radius) var(--Buttons_border-radius) 0;
+      border-radius: 0 var(--pw_Buttons_root_default_border-radius) var(--pw_Buttons_root_default_border-radius) 0;
     }
   }
 
@@ -34,11 +34,11 @@
       border-radius: 0;
 
       &:first-child {
-        border-radius: var(--Buttons_rounded_border-radius) 0 0 var(--Buttons_rounded_border-radius);
+        border-radius: var(--pw_Buttons_root_rounded_border-radius) 0 0 var(--pw_Buttons_root_rounded_border-radius);
       }
 
       &:last-child {
-        border-radius: 0 var(--Buttons_rounded_border-radius) var(--Buttons_rounded_border-radius) 0;
+        border-radius: 0 var(--pw_Buttons_root_rounded_border-radius) var(--pw_Buttons_root_rounded_border-radius) 0;
       }
     }
   }

@@ -1,31 +1,59 @@
 import { effect, reactive } from '@pastweb/tools';
-import type { TabsDefaultProps, TabsMediator, TabsState } from './types';
+import { idCache } from '../utils';
+import {
+  getActiveTab,
+  getAriaLabel,
+  getContext as getContextTabs,
+  getIsDisabled,
+  getOrientation,
+  useBeforeUnmount as useBeforeUnmountTabs,
+} from './utils';
+import type {
+  TabsDefaultProps,
+  TabsMediator,
+  TabsMediatorVars,
+  TabsState,
+} from './types';
 
 export function tabsMediator(props: TabsDefaultProps): TabsMediator {
-  let tabCount = 0;
-  let contentCount = 0;
+  const uid = idCache.getId('tabs');
+  const vars: TabsMediatorVars = {
+    focusRequestIndex: null,
+    tabs: [],
+  };
 
   const state = reactive<TabsState>({
-    activeTab: props.activeTab,
+    activeTab: getActiveTab(props),
+    ariaLabel: getAriaLabel(props),
     className: props.className,
-    disabled: props.disabled,
+    isDisabled: getIsDisabled(props),
+    orientation: getOrientation(props.className),
   });
 
-  effect(activeTab => { state.activeTab = activeTab }, () => props.activeTab);
-  effect(className => { state.className = className }, () => props.className);
-  effect(disabled => { state.disabled = disabled }, () => props.disabled);
+  effect(
+    () => {
+      state.activeTab = getActiveTab(props);
+    },
+    () => props.activeTab,
+  );
 
-  function setActiveTab(tab: number) {
-    state.activeTab = tab;
-  }
-
-  const registerTab = () => tabCount++;
-  const registerContent = () => contentCount++;
+  effect(
+    () => {
+      state.ariaLabel = getAriaLabel(props);
+      state.className = props.className;
+      state.isDisabled = getIsDisabled(props);
+      state.orientation = getOrientation(props.className);
+    },
+    () => [
+      props.ariaLabel,
+      props.className,
+      props.disabled,
+    ],
+  );
 
   return {
     state,
-    setActiveTab,
-    registerTab,
-    registerContent,
+    getContext: () => getContextTabs(props, state, vars, uid),
+    useBeforeUnmount: () => useBeforeUnmountTabs(uid),
   };
 }

@@ -3,9 +3,10 @@ export { selectMediator } from './select.mediator';
 export { DEFAULT_SELECT_ITEM_PROPS } from './SelectItem';
 
 export type {
-  SelectDefaultProps,
-  SelectMediator,
   SelectContext,
+  SelectDefaultProps,
+  SelectKeyEvent,
+  SelectMediator,
   SelectProps,
   SelectState,
 } from './types';

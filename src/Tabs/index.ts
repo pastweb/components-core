@@ -1,8 +1,7 @@
 export { tabsMediator } from './tabs.mediator';
 
 export { DEFAULT_PROPS, TABS_CONTEXT_KEY } from './constants';
-export { DEFAULT_TAB_PROPS } from './Tab';
-export { DEFAULT_TAB_CONTENT_PROPS } from './TabContent';
+export { DEFAULT_TAB_PROPS, tabMediator } from './Tab';
 
 export type {
   TabsDefaultProps,
@@ -10,8 +9,16 @@ export type {
   TabsProps,
   TabsState,
   TabsContext,
+  TabsKeyEvent,
+  TabsMediatorVars,
+  TabsOrientation,
 } from './types';
 
-export type { TabProps, TabDefaultProps } from './Tab';
-export type { TabsListProps } from './TabsList';
-export type { TabContentProps, TabContentDefaultProps } from './TabContent';
+export type {
+  TabButtonReference,
+  TabDefaultProps,
+  TabMediator,
+  TabMediatorVars,
+  TabProps,
+  TabState,
+} from './Tab';

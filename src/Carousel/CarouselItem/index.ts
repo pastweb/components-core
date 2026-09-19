@@ -1,3 +1,9 @@
 export { DEFAULT_CAROUSEL_ITEM_PROPS } from './constants';
+export { carouselItemMediator } from './carouselItem.mediator';
 
-export type { CarouselItemProps, CarouselItemDefaultProps } from './types';
+export type {
+  CarouselItemDefaultProps,
+  CarouselItemMediator,
+  CarouselItemProps,
+  CarouselItemState,
+} from './types';

@@ -1,35 +1,35 @@
 .Radio {
-  --Radio_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
-  --Radio_border-radius: var(--pw_rounded_border-radius);
-  --Radio_background-color: var(--pw_control_background-color);
-  --Radio_size: 2.375em;
-  --Radio_indicator_size: 1em;
-  --Radio_text_color: var(--pw_text_strong_color);
-  --Radio_label_text_color: var(--pw_label_text_color);
-  --Radio_border-color: var(--pw_border-color);
-  --Radio_border-width: var(--pw_border-width);
-  --Radio_border-style: var(--pw_border-style);
-  --Radio_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
-  --Radio_vertical_margin: 1rem 0.5rem;
-  --Radio_size_box-shadow: var(--pw_size_box-shadow);
-  --Radio_color_box-shadow: var(--pw_color_box-shadow);
-  --Radio_inset_color_box-shadow: var(--pw_inset_color_box-shadow);
-  --Radio_font-size: var(--pw_font-size);
-  --Radio_font-weight: var(--pw_semibold_font-weight);
-  --Radio_line-heigh: var(--pw_line-height);
-  --Radio_transition-duration: var(--pw_transition-duration);
-  --Radio_disabled_opacity: var(--pw_disabled_opacity);
-
+  --pw_Radio_root_default_margin: var(--pw_vertical_margin) var(--pw_horizontal_margin);
+  --pw_Radio_control_default_border-radius: var(--pw_rounded_border-radius);
+  --pw_Radio_control_default_background-color: var(--pw_control_background-color);
+  --pw_Radio_control_default_width: 2.375em;
+  --pw_Radio_control_default_height: 2.375em;
+  --pw_Radio_indicator_default_width: 1em;
+  --pw_Radio_indicator_default_height: 1em;
+  --pw_Radio_indicator_default_background-color: var(--pw_text_strong_color);
+  --pw_Radio_label_default_color: var(--pw_label_text_color);
+  --pw_Radio_control_default_border-color: var(--pw_border-color);
+  --pw_Radio_control_default_border-width: var(--pw_border-width);
+  --pw_Radio_control_default_border-style: var(--pw_border-style);
+  --pw_Radio_option_default_margin: var(--pw_Radio_root_default_margin);
+  --pw_Radio_option_vertical_margin: 1em 0.5em;
+  --pw_Radio_control_hover_box-shadow: inset var(--pw_size_box-shadow) var(--pw_inset_color_box-shadow);
+  --pw_Radio_control_focus_box-shadow: var(--pw_size_box-shadow) var(--pw_color_box-shadow);
+  --pw_Radio_root_default_font-size: var(--pw_font-size);
+  --pw_Radio_root_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_Radio_root_default_line-height: var(--pw_line-height);
+  --pw_Radio_control_default_transition-duration: var(--pw_transition-duration);
+  --pw_Radio_root_disabled_opacity: var(--pw_disabled_opacity);
 
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: var(--Radio_margin);
+  margin: var(--pw_Radio_root_default_margin);
 
-  font-size: var(--Radio_font-size);
-  font-weight: var(--Radio_font-weight);
-  line-height: var(--Radio_line-height);
+  font-size: var(--pw_Radio_root_default_font-size);
+  font-weight: var(--pw_Radio_root_default_font-weight);
+  line-height: var(--pw_Radio_root_default_line-height);
 
   &.label-top,
   &.label-top-start,
@@ -146,20 +146,21 @@
       flex-direction: column;
 
       .group {
-        margin: var(--Radio_vertical_margin);
+        margin: var(--pw_Radio_option_vertical_margin);
       }
     }
   }
 
   &.is-disabled,
-  .box:has(input:disabled) {
-    opacity: var(--Radio_disabled_opacity);
+  .group.is-disabled {
+    opacity: var(--pw_Radio_root_disabled_opacity);
     cursor: not-allowed;
 
     .group,
     .box,
     .indicator,
-    .label {
+    .label,
+    .buttonLabel {
       cursor: not-allowed;
     }
   }
@@ -170,15 +171,16 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    margin: var(--Radio_margin);
+    margin: var(--pw_Radio_option_default_margin);
 
     &.is-disabled {
-      opacity: var(--Radio_disabled_opacity);
+      opacity: var(--pw_Radio_root_disabled_opacity);
       cursor: not-allowed;
 
       .box,
       .indicator,
-      .label {
+      .label,
+      .buttonLabel {
         cursor: not-allowed;
       }
     }
@@ -189,10 +191,13 @@
   }
 
   .input {
-    scale: 0;
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    opacity: 0;
 
-    &:checked+span {
+    &:checked + span {
       transform: rotate3d(1, 30, 1, 0deg);
     }
   }
@@ -202,54 +207,54 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: var(--Radio_size);
-    height: var(--Radio_size);
-    border: var(--Radio_border-width) var(--Radio_border-style) var(--Radio_border-color);
-    border-radius: var(--Radio_border-radius);
-    background-color: var(--Radio_background-color);
-    transition: all var(--Radio_transition-duration);
+    width: var(--pw_Radio_control_default_width);
+    height: var(--pw_Radio_control_default_height);
+    border: var(--pw_Radio_control_default_border-width) var(--pw_Radio_control_default_border-style) var(--pw_Radio_control_default_border-color);
+    border-radius: var(--pw_Radio_control_default_border-radius);
+    background-color: var(--pw_Radio_control_default_background-color);
+    transition: all var(--pw_Radio_control_default_transition-duration);
   }
 
   .group:not(.is-disabled):hover .box,
-  input:focus+.box {
-    box-shadow: inset var(--Radio_size_box-shadow) var(--Radio_inset_color_box-shadow);
+  input:focus + .box {
+    box-shadow: var(--pw_Radio_control_hover_box-shadow);
   }
 
   .group:not(.is-disabled):focus-within .box {
-    box-shadow: var(--Radio_size_box-shadow) var(--Radio_color_box-shadow);
+    box-shadow: var(--pw_Radio_control_focus_box-shadow);
   }
 
-  input:focus-visible+.box {
+  input:focus-visible + .box {
     outline: var(--pw_outline);
   }
 
   .indicator {
     position: absolute;
     cursor: pointer;
-    border-radius: var(--Radio_border-radius);
-    background-color: var(--Radio_text_color);
-    width: var(--Radio_indicator_size);
-    height: var(--Radio_indicator_size);
+    border-radius: var(--pw_Radio_control_default_border-radius);
+    background-color: var(--pw_Radio_indicator_default_background-color);
+    width: var(--pw_Radio_indicator_default_width);
+    height: var(--pw_Radio_indicator_default_height);
     transform: rotate3d(1, 30, 1, 90deg);
-    transition: all var(--Radio_transition-duration);
+    transition: all var(--pw_Radio_control_default_transition-duration);
   }
 
-  input[type='radio']:checked+.box .indicator {
+  input[type='radio']:checked + .box .indicator {
     transform: rotate3d(1, 30, 1, 0deg);
   }
 
   .buttonLabel {
     cursor: pointer;
-    color: var(--Radio_label_text_color);
-    margin-left: 8px;
-    margin-right: 8px;
+    color: var(--pw_Radio_label_default_color);
+    margin-left: 0.5em;
+    margin-right: 0.5em;
   }
 
   .label {
-    color: var(--Radio_label_text_color);
-    font-size: var(--Radio_font-size);
-    font-weight: var(--Radio_font-weight);
-    line-height: var(--Radio_line-height);
+    color: var(--pw_Radio_label_default_color);
+    font-size: var(--pw_Radio_root_default_font-size);
+    font-weight: var(--pw_Radio_root_default_font-weight);
+    line-height: var(--pw_Radio_root_default_line-height);
 
     &.top,
     &.top-start,
@@ -274,5 +279,23 @@
     &.right-end {
       margin-left: var(--pw_horizontal_margin);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Radio .box,
+  .Radio .indicator {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Radio .box {
+    border-color: ButtonText;
+    background-color: ButtonFace;
+  }
+
+  .Radio .indicator {
+    background-color: ButtonText;
   }
 }

@@ -1,35 +1,43 @@
 .Accordion {
-  --Accordion_background-color: var(--pw_background-color);
-  --Accordion_text_color: var(--pw_text_color);
-  --Accordion_font-size: var(--pw_font-size);
-  --Accordion_line-height: var(--pw_line-height);
-  --Accordion_border-color: var(--pw_border-color);
-  --Accordion_border-width: var(--pw_border-width);
-  --Accordion_border-style: var(--pw_border-style);
-  --Accordion_border-radius: var(--pw_border-radius);
-  --Accordion_border: var(--Accordion_border-width) var(--Accordion_border-style) var(--Accordion_border-color);
-  // header
-  --Accordion_header_padding: var(--pw_padding);
-  --Accordion_header_background-color: var(--pw_control_background-color);
-  --Accordion_header_text_color: var(--pw_text_strong_color);
-  --Accordion_header_font-size: 1em;
-  --Accordion_header_font-weight: var(--bold_font-weight);
-  --Accordion_header_line-height: var(--pw_line-height);
-  --Accordion_transition-duration: 0.5s;
-  // closeButton
-  --Accordion_closeButton_background-color: var(--Accordion_header_background-color);
-  --Accordion_closeButton_hover_background-color: var(--Accordion_header_text_color);
-  --Accordion_closeBar_background-color: var(--Accordion_header_text_color);
-  --Accordion_closeBar_hover_background-color: var(--Accordion_closeButton_background-color);
-  // Content
-  --Accordion_content_padding: var(--Accordion_header_padding);
-
+  --pw_Accordion_root_default_background-color: var(--pw_background-color);
+  --pw_Accordion_root_default_color: var(--pw_text_color);
+  --pw_Accordion_root_default_font-size: var(--pw_font-size);
+  --pw_Accordion_root_default_line-height: var(--pw_line-height);
+  --pw_Accordion_root_default_border-color: var(--pw_border-color);
+  --pw_Accordion_root_default_border-width: var(--pw_border-width);
+  --pw_Accordion_root_default_border-style: var(--pw_border-style);
+  --pw_Accordion_root_default_border-radius: var(--pw_border-radius);
+  --pw_Accordion_root_default_border: var(--pw_Accordion_root_default_border-width) var(--pw_Accordion_root_default_border-style) var(--pw_Accordion_root_default_border-color);
+  --pw_Accordion_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Accordion_header_default_padding: var(--pw_padding);
+  --pw_Accordion_header_default_background-color: var(--pw_control_background-color);
+  --pw_Accordion_header_default_color: var(--pw_text_strong_color);
+  --pw_Accordion_header_default_font-size: 1em;
+  --pw_Accordion_header_default_font-weight: var(--bold_font-weight);
+  --pw_Accordion_header_default_line-height: var(--pw_line-height);
+  --pw_Accordion_header_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Accordion_root_default_transition-duration: 0.5s;
+  --pw_Accordion_close-button_default_background-color: var(--pw_Accordion_header_default_background-color);
+  --pw_Accordion_close-button_hover_background-color: var(--pw_Accordion_header_default_color);
+  --pw_Accordion_close-bar_default_background-color: var(--pw_Accordion_header_default_color);
+  --pw_Accordion_close-bar_hover_background-color: var(--pw_Accordion_close-button_default_background-color);
+  --pw_Accordion_content_default_padding: var(--pw_Accordion_header_default_padding);
 
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow: hidden;
-  border: var(--Accordion_border);
-  border-radius: var(--Accordion_border-radius);
-  font-size: var(--Accordion_font-size);
+  border: var(--pw_Accordion_root_default_border);
+  border-radius: var(--pw_Accordion_root_default_border-radius);
+  font-size: var(--pw_Accordion_root_default_font-size);
+  transition-duration: var(--pw_Accordion_root_default_transition-duration);
+
+  &.is-disabled {
+    opacity: var(--pw_Accordion_root_disabled_opacity);
+    cursor: not-allowed;
+
+    .AccordionPanel {
+      opacity: 1;
+    }
+  }
 }

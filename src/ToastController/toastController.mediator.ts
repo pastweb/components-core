@@ -1,16 +1,21 @@
 import { reactive, noop } from '@pastweb/tools';
-import { TOAST_REMOVED_EVENT } from './constants';
 import {
   closeToast as _closeToast,
   getContext as _getContext,
   onClosePortal as _onClosePortal,
   onKeyDown as _onKeyDown,
   reCalculateY as _reCalculateY,
-  calculateTime,
   calculateY,
   getToastIndex,
   initData,
   initState,
+  onMounted as _onMounted,
+  onMouseLeave as _onMouseLeave,
+  onMouseOver as _onMouseOver,
+  removeEscapeListener,
+  resetTimer as _resetTimer,
+  startTimer as _startTimer,
+  stopTimer as _stopTimer,
 } from './util';
 import type {
   ToastControllerDefaultProps,
@@ -26,19 +31,9 @@ export function toastControllerMediator(props: ToastControllerDefaultProps): Toa
   let setTime: (percent: number) => void = noop;
   let confirmClose: (() => void) | null = null;
 
-  function startTimer() {
-    data.interval = setInterval(() => calculateTime({
-      props,
-      data,
-      setTime,
-      stopTimer,
-      closeToast,
-    }), props.timeUpdate);
-  }
-
-  const stopTimer = () => { clearInterval(data.interval); };
-
-  const resetTimer = () => { data.time = 0; };
+  const stopTimer = () => _stopTimer(data);
+  const resetTimer = () => _resetTimer(data);
+  const startTimer = () => _startTimer({ props, data, setTime, stopTimer, closeToast });
 
   const observer = new IntersectionObserver(entries => {
     const [entry] = entries;
@@ -54,18 +49,6 @@ export function toastControllerMediator(props: ToastControllerDefaultProps): Toa
 
   const onClosePortal = _onClosePortal(data.toastId, closeToast);
 
-  function closeToast() {
-    _closeToast({
-      props,
-      confirmClose,
-      state,
-      toastRef: toastRef as HTMLElement,
-      observer,
-      reCalculateY,
-      onClosePortal,
-    });
-  }
-
   const onKeyDown = (e: any) => _onKeyDown(props, e, closeToast);
 
   function getContext() {
@@ -79,27 +62,33 @@ export function toastControllerMediator(props: ToastControllerDefaultProps): Toa
   }
 
   function onMouseOver() {
-    if (props.pauseTimerOnOver) {
-      stopTimer();
-      if (props.resetTimerOnPause) {
-        resetTimer();
-      }
-    }
+    _onMouseOver({ props, data, resetTimer });
   }
 
   function onMouseLeave() {
-    if (props.pauseTimerOnOver) {
-      startTimer();
-    }
+    _onMouseLeave(props, startTimer);
+  }
+
+  function escapeListener(event: KeyboardEvent): void {
+    onKeyDown(event);
+  }
+
+  function closeToast() {
+    removeEscapeListener(escapeListener);
+    _closeToast({
+      props,
+      confirmClose,
+      state,
+      toastRef: toastRef as HTMLElement,
+      observer,
+      reCalculateY,
+      onClosePortal,
+    });
   }
 
   function onMounted(toastElement: HTMLElement) {
     toastRef = toastElement;
-    const { portalElement } = data;
-    data.toastIndex = getToastIndex(data);
-    portalElement.addEventListener(TOAST_REMOVED_EVENT, reCalculateY);
-    portalElement.addEventListener('close', onClosePortal);
-    observer.observe(toastRef);
+    _onMounted({ data, toastElement, observer, reCalculateY, onClosePortal, escapeListener, getToastIndex });
   }
 
   return {

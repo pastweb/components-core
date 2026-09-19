@@ -1,20 +1,25 @@
 .ToastController {
-  --ToastController_transition-duration: .5s;
-  --ToastController_width: 31.25rem;
+  --pw_ToastController_root_default_transition-duration: .5s;
+  --pw_ToastController_root_default_width: 31.25rem;
+  --pw_ToastController_root_default_z-index: var(--pw_z-index_toast);
 
 
   position: absolute;
   display: flex;
   width: 100%;
   pointer-events: none;
-  z-index: 1;
-  transition: top var(--ToastController_transition-duration), bottom var(--ToastController_transition-duration);
+  z-index: var(--pw_ToastController_root_default_z-index);
+  transition: top var(--pw_ToastController_root_default_transition-duration), bottom var(--pw_ToastController_root_default_transition-duration);
 
   .toast {
     pointer-events: all;
-    outline: none;
     position: absolute;
-    width: var(--ToastController_width);
+    width: var(--pw_ToastController_root_default_width);
+
+    &:focus-visible {
+      outline: var(--pw_outline);
+      outline-offset: 0.125em;
+    }
   }
 
   [class*='-bottom'] {
@@ -376,5 +381,17 @@
 
   to {
     opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ToastController .toast,
+  .ToastController [class*='slide-'],
+  .ToastController [class*='bounce-'],
+  .ToastController [class*='zoom-'],
+  .ToastController [class*='flip-'],
+  .ToastController [class*='fade-'] {
+    animation: none;
+    transition: none;
   }
 }

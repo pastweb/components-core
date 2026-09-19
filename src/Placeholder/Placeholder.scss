@@ -1,0 +1,74 @@
+.Placeholder {
+  --pw_Placeholder_root_default_color: var(--pw_text_color);
+  --pw_Placeholder_root_default_background-color: currentcolor;
+  --pw_Placeholder_root_default_opacity: 0.5;
+  --pw_Placeholder_root_pulse_opacity: 0.2;
+  --pw_Placeholder_root_default_width: 100%;
+  --pw_Placeholder_root_default_height: 2.75em;
+  --pw_Placeholder_root_default_border-radius: var(--pw_border-radius);
+  --pw_Placeholder_root_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_Placeholder_root_pill_border-radius: 999px;
+  --pw_Placeholder_root_circle_width: 3em;
+  --pw_Placeholder_root_circle_height: 3em;
+  --pw_Placeholder_root_square_width: 3em;
+  --pw_Placeholder_root_square_height: 3em;
+  --pw_Placeholder_root_block_width: 100%;
+  --pw_Placeholder_root_block_height: 8em;
+  --pw_Placeholder_root_default_animation-duration: 2s;
+
+  display: block;
+  flex: 0 0 auto;
+  width: var(--pw_Placeholder_root_default_width);
+  height: var(--pw_Placeholder_root_default_height);
+  border-radius: var(--pw_Placeholder_root_default_border-radius);
+  color: var(--pw_Placeholder_root_default_color);
+  background-color: var(--pw_Placeholder_root_default_background-color);
+  opacity: var(--pw_Placeholder_root_default_opacity);
+  pointer-events: none;
+  animation: placeholder-pulse var(--pw_Placeholder_root_default_animation-duration) ease-in-out infinite;
+
+  &.is-circle {
+    width: var(--pw_Placeholder_root_circle_width);
+    height: var(--pw_Placeholder_root_circle_height);
+    border-radius: 50%;
+  }
+
+  &.is-square {
+    width: var(--pw_Placeholder_root_square_width);
+    height: var(--pw_Placeholder_root_square_height);
+  }
+
+  &.is-block {
+    width: var(--pw_Placeholder_root_block_width);
+    height: var(--pw_Placeholder_root_block_height);
+  }
+
+  &.is-rounded:not(.is-circle) {
+    border-radius: var(--pw_Placeholder_root_rounded_border-radius);
+  }
+
+  &.is-pill:not(.is-circle) {
+    border-radius: var(--pw_Placeholder_root_pill_border-radius);
+  }
+}
+
+@keyframes placeholder-pulse {
+  50% {
+    opacity: var(--pw_Placeholder_root_pulse_opacity);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Placeholder {
+    animation: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Placeholder {
+    background-color: GrayText;
+    border: 1px solid GrayText;
+    forced-color-adjust: none;
+    animation: none;
+  }
+}

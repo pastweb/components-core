@@ -1,53 +1,43 @@
 .ScrollArea {
-  --ScrollArea_scrollbar-color: #e3e3e3 transparent;
-  /* Thumb: gray, Track: dark gray */
-  --SrollAera_scrollbar-width: thin;
-  /* Optional: thin, auto, or none */
-  --ScrollArea_webkit_scrollbar_width: 12px;
-  /* Vertical scrollbar width */
-  --ScrollArea_webkit_scrollbar_height: var(--ScrollArea_webkit_scrollbar_width);
-  /* Horizontal scrollbar height */
-  --ScrollArea_webkit_scrollbar_track_background: #fcfcfc;
-  /* Track color */
-  --ScrollArea_webkit_scrollbar_thumb_background: #dfdfdf;
-  /* Thumb background */
-  --ScrollArea_webkit_scrollbar_thumb_radius: 6px;
-  /* Thumb radius */
-  --ScrollArea_webkit_scrollbar_thumb_hover_background: #7a7a7a;
-  /* Hover color */
-  --ScrollArea_webkit_scrollbar_corner_background: #fbfbfb;
-  /* Corner where horizontal/vertical meet */
+  --pw_ScrollArea_content_default_scrollbar-color: #e3e3e3 transparent;
+  --pw_ScrollArea_content_default_scrollbar-width: thin;
+  --pw_ScrollArea_scrollbar_default_width: 12px;
+  --pw_ScrollArea_scrollbar_default_height: var(--pw_ScrollArea_scrollbar_default_width);
+  --pw_ScrollArea_scrollbar-track_default_background-color: #fcfcfc;
+  --pw_ScrollArea_scrollbar-thumb_default_background-color: #dfdfdf;
+  --pw_ScrollArea_scrollbar-thumb_default_border-radius: 6px;
+  --pw_ScrollArea_scrollbar-thumb_hover_background-color: #7a7a7a;
+  --pw_ScrollArea_scrollbar-corner_default_background-color: #fbfbfb;
 
   position: relative;
   display: flex;
   height: 100%;
   width: 100%;
 
-  scrollbar-color: var(--ScrollArea_scrollbar-color);
-  scrollbar-width: var(--SrollAera_scrollbar-width);
+  scrollbar-color: var(--pw_ScrollArea_content_default_scrollbar-color);
+  scrollbar-width: var(--pw_ScrollArea_content_default_scrollbar-width);
 
-  /* Global scrollbar for body */
   ::-webkit-scrollbar {
-    width: var(--ScrollArea_webkit_scrollbar_width);
-    height: var(--ScrollArea_webkit_scrollbar_height);
+    width: var(--pw_ScrollArea_scrollbar_default_width);
+    height: var(--pw_ScrollArea_scrollbar_default_height);
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--ScrollArea_webkit_scrollbar_track_background);
+    background: var(--pw_ScrollArea_scrollbar-track_default_background-color);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--ScrollArea_webkit_scrollbar_thumb_background);
-    border-radius: var(--ScrollArea_webkit_scrollbar_thumb_radius);
+    background: var(--pw_ScrollArea_scrollbar-thumb_default_background-color);
+    border-radius: var(--pw_ScrollArea_scrollbar-thumb_default_border-radius);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--ScrollArea_webkit_scrollbar_thumb_hover_background);
+    background: var(--pw_ScrollArea_scrollbar-thumb_hover_background-color);
   }
 
   ::-webkit-scrollbar-corner {
-    background: var(--ScrollArea_webkit_scrollbar_corner_background);
-    border-radius: var(--ScrollArea_webkit_scrollbar_thumb_radius);
+    background: var(--pw_ScrollArea_scrollbar-corner_default_background-color);
+    border-radius: var(--pw_ScrollArea_scrollbar-thumb_default_border-radius);
   }
 
   .content {
@@ -57,23 +47,24 @@
     overflow: auto;
     width: 100%;
     height: 100%;
+
+    &:focus-visible {
+      outline: var(--pw_outline);
+      outline-offset: -0.125em;
+    }
   }
 
-  .hide-x {
+  &.hide-x .content {
     overflow-x: hidden;
   }
 
-  .hide-y {
+  &.hide-y .content {
     overflow-y: hidden;
   }
+}
 
-  .scroll-right {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-
-  .scroll-bottom {
-    display: flex;
-    flex-direction: column-reverse;
+@media (forced-colors: active) {
+  .ScrollArea .content {
+    outline-color: CanvasText;
   }
 }

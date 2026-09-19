@@ -1,28 +1,55 @@
 .Link {
-  --Link_text_color: var(--pw_link_color);
-  --Link_hover_text_color: var(--pw_link_hover_color);
-  --Link_font-size: var(--pw_link_font-size);
-  --Link_font-weight: var(--pw_link_font-weight);
-  --Link_line-height: var(--pw_link_line-height);
-  --Link_disabled_opacity: var(--pw_disabled_opacity);
-
+  --pw_Link_root_default_color: var(--pw_link_color);
+  --pw_Link_root_hover_color: var(--pw_link_hover_color);
+  --pw_Link_root_default_font-size: var(--pw_link_font-size);
+  --pw_Link_root_default_font-weight: var(--pw_link_font-weight);
+  --pw_Link_root_default_line-height: var(--pw_link_line-height);
+  --pw_Link_root_disabled_opacity: var(--pw_disabled_opacity);
 
   display: flex;
   align-items: center;
   width: max-content;
-  color: var(--Link_text_color);
-  
-  font-size: var(--Link_font-size);
-  font-weight: var(--Link_font-weight);
-  line-height: var(--Link_line-height);
+  color: var(--pw_Link_root_default_color);
+  font-size: var(--pw_Link_root_default_font-size);
+  font-weight: var(--pw_Link_root_default_font-weight);
+  line-height: var(--pw_Link_root_default_line-height);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  cursor: pointer;
 
-  &:hover { color: var(--Link_hover_text_color); }
+  &:hover {
+    color: var(--pw_Link_root_hover_color);
+  }
+
+  &:focus-visible {
+    outline: var(--pw_outline);
+    outline-offset: 0.125em;
+  }
 
   &.is-disabled {
     pointer-events: none;
+    cursor: not-allowed;
     text-decoration: none;
-    opacity: var(--Link_disabled_opacity);
+    opacity: var(--pw_Link_root_disabled_opacity);
   }
 
-  i { margin: 0 5px; }
+  i {
+    margin: 0 0.313em;
+  }
+}
+
+@media (forced-colors: active) {
+  .Link {
+    color: LinkText;
+    forced-color-adjust: none;
+
+    &:hover,
+    &:focus-visible {
+      color: LinkText;
+    }
+
+    &.is-disabled {
+      color: GrayText;
+    }
+  }
 }

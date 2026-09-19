@@ -1,29 +1,31 @@
 .Input {
-  --Input_min-width: 5em;
-  --Input_background-color: var(--pw_control_background-color);
-  --Input_text_color: var(--pw_text_color);
-  --Input_border-radius: var(--pw_border-radius);
-  --Input_rounded_border-radius: var(--pw_rounded_border-radius);
-  --Input_border-color: var(--pw_border-color);
-  --Input_border-width: var(--pw_border-width);
-  --Input_border-style: var(--pw_border-style);
-  --Input_size_box-shadow: var(--pw_size_box-shadow);
-  --Input_color_box-shadow: var(--pw_color_box-shadow);
-  --Input_horizontal_padding: var(--pw_horizontal_padding);
-  --Input_padding: var(--pw_padding);
-  --Input_margin: var(--pw_vertical_margin);
-  --Input_font-size: var(--pw_font-size);
-  --Input_font-weight: var(--pw_font-weight);
-  --Input_transition-duration: var(--pw_transition-duration);
-  --Input_disabled_opacity: var(--pw_disabled_opacity);
-  --Input_label_text_color: var(--pw_label_text_color);
-  --Input_label_font-weight: var(--pw_semibold_font-weight);
-  --Input__number_btn_width: 2em;
-  --Input__number_btn_font-size: 0.813em;
-
+  --pw_Input_root_default_margin: var(--pw_vertical_margin);
+  --pw_Input_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_Input_container_default_min-width: 5em;
+  --pw_Input_container_default_min-height: 2.75em;
+  --pw_Input_container_default_background-color: var(--pw_control_background-color);
+  --pw_Input_container_default_color: var(--pw_text_color);
+  --pw_Input_container_default_border-color: var(--pw_border-color);
+  --pw_Input_container_default_border-width: var(--pw_border-width);
+  --pw_Input_container_default_border-style: var(--pw_border-style);
+  --pw_Input_container_default_border-radius: var(--pw_border-radius);
+  --pw_Input_container_rounded_border-radius: var(--pw_rounded_border-radius);
+  --pw_Input_container_hover_box-shadow: inset var(--pw_size_box-shadow) var(--pw_color_box-shadow);
+  --pw_Input_container_focus-visible_box-shadow: var(--pw_size_box-shadow) var(--pw_color_box-shadow);
+  --pw_Input_container_default_transition-duration: var(--pw_transition-duration);
+  --pw_Input_input_default_padding: var(--pw_padding);
+  --pw_Input_input_default_font-size: var(--pw_font-size);
+  --pw_Input_input_default_font-weight: var(--pw_font-weight);
+  --pw_Input_affix_default_padding: var(--pw_horizontal_padding);
+  --pw_Input_label_default_color: var(--pw_label_text_color);
+  --pw_Input_label_default_font-size: var(--pw_font-size);
+  --pw_Input_label_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_Input_number-buttons_default_width: 2em;
+  --pw_Input_number-button_default_min-height: 1.5em;
+  --pw_Input_number-button_default_font-size: 0.813em;
 
   display: flex;
-  margin: var(--Input_margin);
+  margin: var(--pw_Input_root_default_margin);
 
   &.label-top,
   &.label-top-start,
@@ -71,15 +73,52 @@
   }
 
   &.is-rounded {
-    border-radius: var(--Input_rounded_border-radius);
-
-    .input {
-      border-radius: var(--Input_rounded_border-radius);
+    .inputContainer,
+    .inputElement,
+    .loading {
+      border-radius: var(--pw_Input_container_rounded_border-radius);
     }
   }
 
   &.is-full-width {
     width: 100%;
+
+    .label,
+    .inputContainer {
+      width: 100%;
+    }
+  }
+
+  &.is-disabled {
+    opacity: var(--pw_Input_root_disabled_opacity);
+    cursor: not-allowed;
+
+    .inputContainer {
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &.is-loading {
+    cursor: wait;
+
+    .inputContainer {
+      cursor: wait;
+    }
+  }
+
+  &:not(.is-disabled):not(.is-loading) .inputContainer {
+    &:hover {
+      box-shadow: var(--pw_Input_container_hover_box-shadow);
+    }
+
+    &:focus-within {
+      box-shadow: var(--pw_Input_container_focus-visible_box-shadow);
+    }
+
+    &:has(:focus-visible) {
+      outline: var(--pw_outline);
+    }
   }
 
   .inputContainer {
@@ -87,20 +126,21 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-    transition: all var(--Input_transition-duration);
-    color: var(--Input_text_color);
+    min-width: var(--pw_Input_container_default_min-width);
+    min-height: var(--pw_Input_container_default_min-height);
+    transition: box-shadow var(--pw_Input_container_default_transition-duration);
+    color: var(--pw_Input_container_default_color);
     box-shadow: 0cap;
-    border-radius: var(--Input_border-radius);
-    background-color: var(--Input_background-color);
-    border: var(--Input_border-width) var(--Input_border-style) var(--Input_border-color);
-    min-width: var(--Input_min-width);
+    border-radius: var(--pw_Input_container_default_border-radius);
+    background-color: var(--pw_Input_container_default_background-color);
+    border: var(--pw_Input_container_default_border-width) var(--pw_Input_container_default_border-style) var(--pw_Input_container_default_border-color);
 
     .number-buttons {
       display: flex;
       flex-direction: column;
-      height: stretch;
-      width: var(--Input__number_btn_width);
-      border-left: var(--Input_border-width) var(--Input_border-style) var(--Input_border-color);
+      align-self: stretch;
+      width: var(--pw_Input_number-buttons_default_width);
+      border-left: var(--pw_Input_container_default_border-width) var(--pw_Input_container_default_border-style) var(--pw_Input_container_default_border-color);
     }
 
     .number-btn {
@@ -108,47 +148,47 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex: 1;
       width: 100%;
-      height: stretch;
+      min-height: var(--pw_Input_number-button_default_min-height);
       background: transparent;
       border: none;
-      font-size: var(--Input__number_btn_font-size);
-      color: var(--Input_text_color);
-      transition: all 0.2s ease;
+      font-size: var(--pw_Input_number-button_default_font-size);
+      color: var(--pw_Input_container_default_color);
+      transition: background-color var(--pw_Input_container_default_transition-duration),
+        color var(--pw_Input_container_default_transition-duration);
 
       &:first-child {
-        border-bottom: var(--Input_border-width) var(--Input_border-style) var(--Input_border-color);
+        border-bottom: var(--pw_Input_container_default_border-width) var(--pw_Input_container_default_border-style) var(--pw_Input_container_default_border-color);
       }
 
       &:hover:not(:disabled) {
-        background: var(--Input_text_color);
-        color: var(--Input_background-color);
+        background: var(--pw_Input_container_default_color);
+        color: var(--pw_Input_container_default_background-color);
       }
 
       &:active:not(:disabled) {
-        background: var(--Input_text_color);
-        color: var(--Input_background-color);
+        background: var(--pw_Input_container_default_color);
+        color: var(--pw_Input_container_default_background-color);
       }
 
       &:disabled {
         cursor: not-allowed;
-        opacity: var(--Input_disabled_opacity);
       }
     }
 
     .inputElement {
       cursor: text;
       width: 100%;
-      margin: var(--Input_padding);
+      margin: var(--pw_Input_input_default_padding);
       border: none;
       background-color: transparent;
-      color: var(--Input_text_color);
-
-      font-size: var(--Input_font-size);
-      font-weight: var(--Input_font-weight);
+      color: var(--pw_Input_container_default_color);
+      font-size: var(--pw_Input_input_default_font-size);
+      font-weight: var(--pw_Input_input_default_font-weight);
 
       &::placeholder {
-        color: var(--Input_text_color);
+        color: var(--pw_Input_container_default_color);
         opacity: 0.5;
       }
 
@@ -168,40 +208,18 @@
       }
     }
 
-    &:disabled {
-      opacity: var(--Input_disabled_opacity);
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    &:hover:not(.is-loading) {
-      box-shadow: inset var(--Input_size_box-shadow) var(--Input_color_box-shadow);
-    }
-
-    &:focus-within:not(.is-loading) {
-      box-shadow: var(--Input_size_box-shadow) var(--Input_color_box-shadow);
-    }
-
     .leftComponent {
-      padding-left: var(--Input_horizontal_padding);
+      padding-left: var(--pw_Input_affix_default_padding);
     }
 
     .rightComponent {
-      padding-right: var(--Input_horizontal_padding);
-    }
-
-    &.is-rounded {
-      border-radius: var(--Input_rounded_border-radius);
-    }
-
-    &.is-full-width {
-      width: 100%;
+      padding-right: var(--pw_Input_affix_default_padding);
     }
 
     &.is-outlined {
       i {
-        color: var(--Input_background-color);
-        stroke: var(--Input_color);
+        color: var(--pw_Input_container_default_background-color);
+        stroke: var(--pw_Input_container_default_color);
       }
     }
 
@@ -215,17 +233,17 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-      border-radius: var(--Input_border-radius);
-      background-color: var(--Input_background-color);
+      border-radius: var(--pw_Input_container_default_border-radius);
+      background-color: var(--pw_Input_container_default_background-color);
       box-shadow: none;
       margin: 0;
     }
   }
 
   .label {
-    color: var(--Input_label_text_color);
-    font-size: var(--Input_font-size);
-    font-weight: var(--Input_label_font-weight);
+    color: var(--pw_Input_label_default_color);
+    font-size: var(--pw_Input_label_default_font-size);
+    font-weight: var(--pw_Input_label_default_font-weight);
 
     &.top,
     &.top-start,
@@ -250,5 +268,32 @@
     &.right-end {
       margin-left: var(--pw_horizontal_margin);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .Input .inputContainer,
+  .Input .number-btn {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .Input .inputContainer {
+    border-color: FieldText;
+    background-color: Field;
+    color: FieldText;
+  }
+
+  .Input .inputElement,
+  .Input .number-btn,
+  .Input .label {
+    color: FieldText;
+  }
+
+  .Input .number-btn:hover:not(:disabled),
+  .Input .number-btn:active:not(:disabled) {
+    background: Highlight;
+    color: HighlightText;
   }
 }

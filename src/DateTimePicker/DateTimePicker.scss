@@ -1,0 +1,501 @@
+.DateTimePicker {
+  --pw_DateTimePicker_root_default_background-color: var(--pw_background-color);
+  --pw_DateTimePicker_root_default_color: var(--pw_text_color);
+  --pw_DateTimePicker_root_default_border-color: var(--pw_border-color);
+  --pw_DateTimePicker_root_default_border-width: var(--pw_border-width);
+  --pw_DateTimePicker_root_default_border-style: var(--pw_border-style);
+  --pw_DateTimePicker_root_default_border-radius: var(--pw_border-radius);
+  --pw_DateTimePicker_root_default_small-border-radius: var(--pw_small_border-radius);
+  --pw_DateTimePicker_root_default_outline: var(--pw_outline);
+  --pw_DateTimePicker_root_default_padding: var(--pw_padding);
+  --pw_DateTimePicker_root_default_font-size: var(--pw_font-size);
+  --pw_DateTimePicker_root_default_horizontal-padding: var(--pw_horizontal_padding);
+  --pw_DateTimePicker_target_default_max-width: 20rem;
+  --pw_DateTimePicker_root_disabled_opacity: var(--pw_disabled_opacity);
+  --pw_DateTimePicker_control_default_background-color: var(--pw_control_background-color);
+  --pw_DateTimePicker_label_default_color: var(--pw_label_text_color);
+  --pw_DateTimePicker_label_default_font-size: var(--pw_font-size);
+  --pw_DateTimePicker_label_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_DateTimePicker_label_default_line-height: var(--pw_line-height);
+  --pw_DateTimePicker_popup_default_z-index: var(--pw_z-index_flyout);
+  --pw_DateTimePicker_calendar_default_box-shadow: 0 8px 24px rgb(0 0 0 / 18%);
+  --pw_DateTimePicker_time-panel_default_transition-duration: var(--pw_transition-duration);
+  --pw_DateTimePicker_time-close_default_background-color: var(--pw_DateTimePicker_control_default_background-color);
+  --pw_DateTimePicker_time-close_hover_background-color: var(--pw_DateTimePicker_day_default_color);
+  --pw_DateTimePicker_time-close-bar_default_background-color: var(--pw_DateTimePicker_day_default_color);
+  --pw_DateTimePicker_time-close-bar_hover_background-color: var(--pw_DateTimePicker_time-close_default_background-color);
+  --pw_DateTimePicker_day_default_color: var(--pw_text_strong_color);
+  --pw_DateTimePicker_day_default_light-color: var(--pw_text_light_color);
+  --pw_DateTimePicker_day_default_focus-color: var(--pw_color_box-shadow);
+  --pw_DateTimePicker_day_default_hover-box-shadow: var(--pw_size_box-shadow) var(--pw_color_box-shadow);
+  --pw_DateTimePicker_day_default_transition-duration: var(--pw_transition-duration);
+  --pw_DateTimePicker_day_default_hover-background-color: var(--pw_DateTimePicker_control_default_background-color);
+  --pw_DateTimePicker_day_default_focus-background-color: var(--pw_DateTimePicker_control_default_background-color);
+  --pw_DateTimePicker_day_selected_background-color: var(--pw_DateTimePicker_control_default_background-color);
+  --pw_DateTimePicker_day_selected_color: var(--pw_DateTimePicker_day_default_color);
+  --pw_DateTimePicker_day_selected_border-color: var(--pw_DateTimePicker_day_selected_color);
+  --pw_DateTimePicker_day_selected_border-style: solid;
+  --pw_DateTimePicker_day_range_background-color: var(--pw_DateTimePicker_day_default_hover-background-color);
+  --pw_DateTimePicker_day_default_border-width: var(--pw_DateTimePicker_root_default_border-width);
+  --pw_DateTimePicker_day_default_border-radius: var(--pw_DateTimePicker_root_default_small-border-radius);
+  --pw_DateTimePicker_day_range_border-color: var(--pw_DateTimePicker_day_selected_color);
+  --pw_DateTimePicker_day_range_border-width: var(--pw_DateTimePicker_day_default_border-width);
+  --pw_DateTimePicker_day_today_border-color: var(--pw_DateTimePicker_day_default_color);
+  --pw_DateTimePicker_day_today_border-style: dashed;
+  --pw_DateTimePicker_day_sat_default_color: var(--pw_text_light_color);
+  --pw_DateTimePicker_day_sun_default_font-weight: var(--pw_semibold_font-weight);
+  --pw_DateTimePicker_day_free_default_opacity: .75;
+  --pw_DateTimePicker_day_holiday_default_font-weight: var(--pw_bold_font-weight);
+
+  position: relative;
+  font-size: var(--pw_DateTimePicker_root_default_font-size);
+
+  &.label-top .field,
+  &.label-top-start .field,
+  &.label-top-end .field { flex-direction: column-reverse; }
+
+  &.label-bottom .field,
+  &.label-bottom-start .field,
+  &.label-bottom-end .field { flex-direction: column; }
+
+  &.label-left .field,
+  &.label-left-start .field,
+  &.label-left-end .field { flex-direction: row-reverse; }
+
+  &.label-right .field,
+  &.label-right-start .field,
+  &.label-right-end .field { flex-direction: row; }
+
+  &.label-top .field,
+  &.label-bottom .field,
+  &.label-left .field,
+  &.label-right .field { align-items: center; }
+
+  &.label-top-start .field,
+  &.label-bottom-start .field,
+  &.label-left-start .field,
+  &.label-right-start .field { align-items: flex-start; }
+
+  &.label-top-end .field,
+  &.label-bottom-end .field,
+  &.label-left-end .field,
+  &.label-right-end .field { align-items: flex-end; }
+
+  &.is-disabled {
+    .trigger {
+      cursor: not-allowed;
+      opacity: var(--pw_DateTimePicker_root_disabled_opacity);
+    }
+  }
+
+  .field {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .control {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .label {
+    color: var(--pw_DateTimePicker_label_default_color);
+    font-size: var(--pw_DateTimePicker_label_default_font-size);
+    font-weight: var(--pw_DateTimePicker_label_default_font-weight);
+    line-height: var(--pw_DateTimePicker_label_default_line-height);
+
+    &.top,
+    &.top-start,
+    &.top-end { margin-bottom: var(--pw_vertical_margin); }
+
+    &.bottom,
+    &.bottom-start,
+    &.bottom-end { margin-top: var(--pw_vertical_margin); }
+
+    &.left,
+    &.left-start,
+    &.left-end { margin-right: var(--pw_horizontal_margin); }
+
+    &.right,
+    &.right-start,
+    &.right-end { margin-left: var(--pw_horizontal_margin); }
+  }
+
+  .trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: var(--pw_DateTimePicker_target_default_max-width);
+    min-height: 2.75em;
+    padding: var(--pw_DateTimePicker_root_default_padding);
+    border: var(--pw_DateTimePicker_root_default_border-width) var(--pw_DateTimePicker_root_default_border-style) var(--pw_DateTimePicker_root_default_border-color);
+    border-radius: var(--pw_DateTimePicker_root_default_border-radius);
+    color: var(--pw_DateTimePicker_root_default_color);
+    background: var(--pw_DateTimePicker_control_default_background-color);
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    white-space: nowrap;
+
+    &:focus-visible {
+      outline: var(--pw_DateTimePicker_root_default_outline);
+      outline-offset: 2px;
+    }
+  }
+
+  .triggerValue {
+    min-width: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .arrow { padding-left: var(--pw_DateTimePicker_root_default_horizontal-padding); }
+
+  .placeholder {
+    color: var(--pw_DateTimePicker_day_default_light-color);
+  }
+
+  .calendar {
+    display: grid;
+    overflow: hidden;
+    width: min(21rem, calc(100vw - 1rem));
+    padding: .75rem;
+    border: var(--pw_DateTimePicker_root_default_border-width) var(--pw_DateTimePicker_root_default_border-style) var(--pw_DateTimePicker_root_default_border-color);
+    border-radius: var(--pw_DateTimePicker_root_default_border-radius);
+    color: var(--pw_DateTimePicker_root_default_color);
+    background: var(--pw_DateTimePicker_root_default_background-color);
+    box-shadow: var(--pw_DateTimePicker_calendar_default_box-shadow);
+  }
+
+  .calendarContent {
+    max-height: 32rem;
+    overflow: hidden;
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      max-height var(--pw_DateTimePicker_time-panel_default_transition-duration) ease,
+      opacity var(--pw_DateTimePicker_time-panel_default_transition-duration) ease,
+      transform var(--pw_DateTimePicker_time-panel_default_transition-duration) ease;
+  }
+
+  .calendar.is-time-open .calendarContent {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+
+  .inlineCalendar { margin-top: .5rem; }
+
+  .popupCalendar {
+    position: absolute;
+    z-index: var(--pw_DateTimePicker_popup_default_z-index);
+  }
+
+  .header,
+  .footer,
+  .time {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .header {
+    justify-content: space-between;
+    margin-bottom: .5rem;
+  }
+
+  .month {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    font-weight: 600;
+  }
+
+  .yearSelect {
+    min-width: 4.5rem;
+    padding: .125rem .25rem;
+    border: var(--pw_DateTimePicker_root_default_border-width) var(--pw_DateTimePicker_root_default_border-style) var(--pw_DateTimePicker_root_default_border-color);
+    border-radius: var(--pw_DateTimePicker_root_default_small-border-radius);
+    color: inherit;
+    background: var(--pw_DateTimePicker_control_default_background-color);
+    font: inherit;
+
+    &:focus-visible {
+      outline: var(--pw_DateTimePicker_root_default_outline);
+      outline-offset: 2px;
+    }
+  }
+
+  .navigation,
+  .action {
+    padding: .25rem .5rem;
+    border: var(--pw_DateTimePicker_root_default_border-width) solid transparent;
+    border-radius: var(--pw_DateTimePicker_root_default_small-border-radius);
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: var(--pw_DateTimePicker_root_default_outline);
+      outline-offset: 2px;
+    }
+  }
+
+  .weekdays,
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+
+    &.has-week-numbers { grid-template-columns: 1.5rem repeat(7, minmax(0, 1fr)); }
+  }
+
+  .weekdays:has(.weekNumber) { grid-template-columns: 1.5rem repeat(7, minmax(0, 1fr)); }
+
+  .weekday {
+    padding: .25rem 0;
+    color: var(--pw_DateTimePicker_day_default_light-color);
+    font-size: .75rem;
+    text-align: center;
+  }
+
+  .weekNumber {
+    display: grid;
+    place-items: center;
+    color: var(--pw_DateTimePicker_day_default_light-color);
+    font-size: .75rem;
+  }
+
+  .day {
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    border-radius: var(--pw_DateTimePicker_day_default_border-radius);
+    border-width: var(--pw_DateTimePicker_day_default_border-width);
+    border-style: solid;
+    border-color: transparent;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+    transition:
+      color var(--pw_DateTimePicker_day_default_transition-duration) ease,
+      background-color var(--pw_DateTimePicker_day_default_transition-duration) ease,
+      box-shadow var(--pw_DateTimePicker_day_default_transition-duration) ease;
+
+    &:hover:not(:disabled) { background: var(--pw_DateTimePicker_day_default_hover-background-color); }
+
+    &:focus-visible {
+      outline: var(--pw_DateTimePicker_root_default_outline);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    &.is-outside { color: var(--pw_DateTimePicker_day_default_light-color); }
+
+    &.is-sat:not(.is-selected) {
+      color: var(--pw_DateTimePicker_day_sat_default_color);
+    }
+
+    &.is-sun:not(.is-selected) {
+      font-weight: var(--pw_DateTimePicker_day_sun_default_font-weight);
+    }
+
+    &.is-free-day:not(.is-selected) {
+      opacity: var(--pw_DateTimePicker_day_free_default_opacity);
+    }
+
+    &.is-holiday {
+      font-weight: var(--pw_DateTimePicker_day_holiday_default_font-weight);
+      text-decoration: underline double;
+    }
+    &.is-today:not(.is-selected):not(.is-in-range) {
+      border-color: var(--pw_DateTimePicker_day_today_border-color);
+      border-style: var(--pw_DateTimePicker_day_today_border-style);
+    }
+
+    &.is-focused:not(.is-selected) {
+      background: var(--pw_DateTimePicker_day_default_focus-background-color);
+      box-shadow: inset 0 0 0 1px var(--pw_DateTimePicker_day_default_focus-color);
+    }
+
+    &.is-selected:not(.is-range-start):not(.is-range-end) {
+      border-color: var(--pw_DateTimePicker_day_selected_border-color);
+      border-style: var(--pw_DateTimePicker_day_selected_border-style);
+      color: var(--pw_DateTimePicker_day_selected_color);
+      background: var(--pw_DateTimePicker_day_selected_background-color);
+
+      &:hover:not(:disabled) {
+        box-shadow: var(--pw_DateTimePicker_day_default_hover-box-shadow);
+      }
+    }
+
+    &.is-in-range {
+      border-radius: 0;
+      color: var(--pw_DateTimePicker_day_selected_color);
+      background: var(--pw_DateTimePicker_day_range_background-color);
+      border-left-width: 0;
+      border-right-width: 0;
+      box-shadow:
+        inset 0 var(--pw_DateTimePicker_day_range_border-width) 0 var(--pw_DateTimePicker_day_range_border-color),
+        inset 0 calc(var(--pw_DateTimePicker_day_range_border-width) * -1) 0 var(--pw_DateTimePicker_day_range_border-color);
+    }
+
+    &.is-range-start {
+      border-radius: var(--pw_DateTimePicker_day_default_border-radius) 0 0 var(--pw_DateTimePicker_day_default_border-radius);
+      color: var(--pw_DateTimePicker_day_selected_color);
+      border-left-width: var(--pw_DateTimePicker_day_range_border-width);
+      background: var(--pw_DateTimePicker_day_range_background-color);
+      box-shadow:
+        inset var(--pw_DateTimePicker_day_range_border-width) 0 0 var(--pw_DateTimePicker_day_range_border-color),
+        inset 0 var(--pw_DateTimePicker_day_range_border-width) 0 var(--pw_DateTimePicker_day_range_border-color),
+        inset 0 calc(var(--pw_DateTimePicker_day_range_border-width) * -1) 0 var(--pw_DateTimePicker_day_range_border-color);
+    }
+
+    &.is-range-end {
+      border-radius: 0 var(--pw_DateTimePicker_day_default_border-radius) var(--pw_DateTimePicker_day_default_border-radius) 0;
+      color: var(--pw_DateTimePicker_day_selected_color);
+      border-right-width: var(--pw_DateTimePicker_day_range_border-width);
+      background: var(--pw_DateTimePicker_day_range_background-color);
+      box-shadow:
+        inset calc(var(--pw_DateTimePicker_day_range_border-width) * -1) 0 0 var(--pw_DateTimePicker_day_range_border-color),
+        inset 0 var(--pw_DateTimePicker_day_range_border-width) 0 var(--pw_DateTimePicker_day_range_border-color),
+        inset 0 calc(var(--pw_DateTimePicker_day_range_border-width) * -1) 0 var(--pw_DateTimePicker_day_range_border-color);
+    }
+  }
+
+  .timePanel {
+    position: relative;
+    display: grid;
+    place-content: center;
+    gap: 1rem;
+    max-height: 0;
+    padding: 0 .75rem;
+    overflow: hidden;
+    background: var(--pw_DateTimePicker_root_default_background-color);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(100%);
+    transition:
+      max-height var(--pw_DateTimePicker_time-panel_default_transition-duration) ease,
+      padding var(--pw_DateTimePicker_time-panel_default_transition-duration) ease,
+      opacity var(--pw_DateTimePicker_time-panel_default_transition-duration) ease,
+      transform var(--pw_DateTimePicker_time-panel_default_transition-duration) ease;
+
+    &.is-open {
+      max-height: 12rem;
+      padding: 3rem .75rem .75rem;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    &.is-time-only {
+      max-height: 12rem;
+      padding: .75rem;
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  }
+
+  .timeClose {
+    position: absolute;
+    top: .75rem;
+    right: .75rem;
+    width: 1.25em;
+    min-width: 1.25em;
+    height: 1.25em;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--pw_DateTimePicker_time-close_default_background-color);
+    cursor: pointer;
+    transform: rotate(45deg);
+    transition:
+      background-color var(--pw_DateTimePicker_time-panel_default_transition-duration) ease,
+      transform var(--pw_DateTimePicker_time-panel_default_transition-duration) ease;
+
+    &.is-open { transform: rotate(0); }
+
+    &:focus-visible {
+      outline: var(--pw_DateTimePicker_root_default_outline);
+      outline-offset: 2px;
+    }
+
+    &:hover {
+      background: var(--pw_DateTimePicker_time-close_hover_background-color);
+
+      .timeCloseBar { background: var(--pw_DateTimePicker_time-close-bar_hover_background-color); }
+    }
+  }
+
+  .timeCloseBar {
+    position: absolute;
+    top: .531em;
+    left: .218em;
+    width: .813em;
+    height: .156em;
+    border-radius: .313em;
+    background: var(--pw_DateTimePicker_time-close-bar_default_background-color);
+    transform: rotate(45deg);
+    transition: background-color var(--pw_DateTimePicker_time-panel_default_transition-duration) ease;
+
+    &:last-child { transform: rotate(-45deg); }
+  }
+
+  .time {
+    justify-content: center;
+    align-items: end;
+  }
+
+  .time label {
+    display: grid;
+    gap: .375rem;
+    color: var(--pw_DateTimePicker_label_default_color);
+    font-size: .875rem;
+    text-align: center;
+  }
+
+  .timeSeparator {
+    padding-bottom: .35rem;
+    font-size: 1.5rem;
+  }
+
+  .timeSelect {
+    min-width: 4.5rem;
+    padding: .5rem;
+    border: var(--pw_DateTimePicker_root_default_border-width) var(--pw_DateTimePicker_root_default_border-style) var(--pw_DateTimePicker_root_default_border-color);
+    border-radius: var(--pw_DateTimePicker_root_default_small-border-radius);
+    color: inherit;
+    background: var(--pw_DateTimePicker_control_default_background-color);
+    font-size: 1.125rem;
+    text-align: center;
+
+    &:focus-visible {
+      outline: var(--pw_DateTimePicker_root_default_outline);
+      outline-offset: 2px;
+    }
+  }
+
+  .footer {
+    justify-content: space-between;
+    margin-top: .75rem;
+
+    .action:hover:not(:disabled) {
+      background: var(--pw_DateTimePicker_day_default_hover-background-color);
+    }
+  }
+
+  .timeToggle {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+}
