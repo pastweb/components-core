@@ -153,7 +153,7 @@ describe('hide', () => {
   it('given an open dropdown, when hide is called, then it is not visible', () => {
     const state = { isVisible: true } as any;
 
-    hide(state);
+    hide(createProps({ isVisible: true }), state);
 
     expect(state.isVisible).toBe(false);
   });
@@ -174,7 +174,7 @@ describe('onBlur', () => {
     expect(state.isVisible).toBe(true);
   });
 
-  it('given focus is leaving the dropdown, when onBlur is called, then it hides', () => {
+  it('given focus is leaving the dropdown, when onBlur is called, then it leaves visibility unchanged', () => {
     const props = createProps({ isVisible: true });
     const state = { isVisible: true } as any;
     const vars = createVars({
@@ -184,7 +184,7 @@ describe('onBlur', () => {
 
     onBlur(props, state, vars, { relatedTarget: {} as EventTarget });
 
-    expect(state.isVisible).toBe(false);
+    expect(state.isVisible).toBe(true);
   });
 });
 

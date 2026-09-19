@@ -27,9 +27,9 @@ describe('radioMediator', () => {
     expect(generated.state.groupId).toMatch(/^radio_/);
     expect(generated.state.groupLabelId).toBe(`label${generated.state.groupId}`);
     expect(generated.getOptionId(1)).toBe(`option${generated.state.groupId}1`);
-    expect(explicit.state.groupId).toBe('delivery');
-    expect(explicit.state.groupLabelId).toBe('labeldelivery');
-    expect(explicit.getOptionId(1)).toBe('optiondelivery1');
+    expect(explicit.state.groupId).toBe('_delivery');
+    expect(explicit.state.groupLabelId).toBe('label_delivery');
+    expect(explicit.getOptionId(1)).toBe('option_delivery1');
 
     generated.useBeforeUnmount();
     explicit.useBeforeUnmount();

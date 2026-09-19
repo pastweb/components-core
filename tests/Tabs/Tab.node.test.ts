@@ -78,8 +78,8 @@ describe('tabMediator', () => {
       isDisabled: undefined,
       tabIndex: 0,
     });
-    expect(tab.state.id).toBe(tabs.getTabId(0));
-    expect(tab.state.controlsId).toBe(tabs.getContentId(0));
+    expect(tab.state.id).toBe(tabs.getContext().getTabId(0));
+    expect(tab.state.controlsId).toBe(tabs.getContext().getContentId(0));
 
     tabs.useBeforeUnmount();
   });
@@ -128,19 +128,19 @@ describe('tabMediator', () => {
     const { tab } = createTab(createTabProps(), tabs);
     tab.useMounted({ focus });
 
-    tabs.setActiveTab(1);
+    tabs.getContext().setActiveTab(1);
 
     await vi.waitFor(() => {
       expect(tab.state.isActive).toBe(true);
     });
     expect(focus).not.toHaveBeenCalled();
 
-    tabs.setActiveTab(0);
+    tabs.getContext().setActiveTab(0);
     await vi.waitFor(() => {
       expect(tab.state.isActive).toBe(false);
     });
 
-    tabs.onTabKeyDown({ key: 'ArrowRight' }, 0);
+    tabs.getContext().onTabKeyDown({ key: 'ArrowRight' }, 0);
 
     await vi.waitFor(() => {
       expect(tab.state.isActive).toBe(true);

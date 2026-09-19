@@ -85,7 +85,7 @@ either trigger slot.
 
 | SlotName | Description | Default content |
 |---|---|---|
-| `target` | Custom trigger. When present, wrapped in a `span.selectTarget` with `role="button"` and `display: contents`. Supply the visual trigger in the slot. | Empty. |
+| `target` | Replaces the native trigger. It receives the trigger ID, ARIA state, keyboard handler, toggle handler, and tab index through slot props; the replacement must apply them to one focusable control. | The native `content` trigger. |
 | `content` | Labelled content of the styled native-button trigger (`.selectButton`), which includes a decorative arrow. When present, the button is rendered. | `placeholder` |
 | `options` | Supplies listbox options such as `SelectItem`. | Empty. |
 | default | Supplies additional listbox content. | Empty. |
@@ -108,8 +108,15 @@ either trigger slot.
 | `--pw_Select_root_default_margin` | `root` | `default` | `margin` | vertical/horizontal margin | Outer spacing. | Web, Capacitor, NativeScript |
 | `--pw_Select_root_disabled_opacity` | `root` | `disabled` | `opacity` | `var(--pw_disabled_opacity)` | Disabled opacity. | Web, Capacitor, NativeScript |
 
-```tsx
-import { setContext, useBeforeUnmount, useMediator, useMounted, useRef, useSlots, withDefaultProps } from '@pastweb/x';
+```xts
+import {
+  setContext,
+  useBeforeUnmount,
+  useMediator,
+  useMounted,
+  useRef,
+  withDefaultProps,
+} from '@pastweb/x';
 import { selectMediator } from '@pastweb/components-core/Select';
 import { DEFAULT_PROPS, SELECT_CONTEXT_KEY } from './constants';
 
@@ -118,14 +125,14 @@ export function Select(props: SelectProps) {
   const m = useMediator<SelectMediator>(selectMediator, p);
   const s = m.state;
   const c = m.getContext();
-  const triggerRef = useRef(null);
-  const listboxRef = useRef(null);
-  const slots = useSlots();
+  const triggerReference = useRef(null);
+  const listboxReference = useRef(null);
 
   setContext(SELECT_CONTEXT_KEY, c);
   useMounted(() => {
-    if (!triggerRef.value || !listboxRef.value) return;
-    m.useMounted(triggerRef.value, listboxRef.value);
+    if (triggerReference.value && listboxReference.value) {
+      m.useMounted(triggerReference.value, listboxReference.value);
+    }
   });
   useBeforeUnmount(m.useBeforeUnmount);
 
@@ -134,51 +141,49 @@ export function Select(props: SelectProps) {
       id={s.inputId}
       class={p.cls('Select', `label-${p.labelPlacement}`, p.className, {
         'is-disabled': s.isDisabled,
-        'is-open': s.isOpen,
         'is-loading': s.isLoading,
+        'is-open': s.isOpen,
       })}
     >
       <div class={p.cls('selectControl')}>
-        <span
-          #if={slots.target}
-          #ref={triggerRef}
-          role='button'
-          class={p.cls('selectTarget')}
-          tabIndex={p.tabIndex}
-          aria-disabled={s.isUnavailable}
-          aria-haspopup='listbox'
-          aria-expanded={s.isOpen}
-          aria-controls={s.listboxId}
-          aria-labelledby={p.label ? s.labelId : undefined}
-          aria-label={s.ariaLabel}
-          aria-busy={s.isLoading || undefined}
-          @keydown={m.onKeyDown}
-          @click={m.onToggle}
+        <slot
+          name='target'
+          props={{
+            ariaBusy: s.isLoading || undefined,
+            ariaControls: s.listboxId,
+            ariaExpanded: s.isOpen,
+            ariaHasPopup: 'listbox',
+            ariaLabel: s.ariaLabel,
+            ariaLabelledBy: p.label ? s.labelId : undefined,
+            ariaDisabled: s.isUnavailable,
+            id: s.triggerId,
+            onKeyDown: m.onKeyDown,
+            onToggle: m.onToggle,
+            tabIndex: p.tabIndex,
+          }}
         >
-          <slot name='target' />
-        </span>
-        <button
-          #if={slots.content}
-          #ref={triggerRef}
-          type='button'
-          id={s.triggerId}
-          class={p.cls('selectButton')}
-          tabIndex={p.tabIndex}
-          disabled={s.isUnavailable}
-          aria-haspopup='listbox'
-          aria-expanded={s.isOpen}
-          aria-controls={s.listboxId}
-          aria-labelledby={p.label ? s.labelId : undefined}
-          aria-label={s.ariaLabel}
-          aria-busy={s.isLoading || undefined}
-          @keydown={m.onKeyDown}
-          @click={m.onToggle}
-        >
-          <slot name='content'>{p.placeholder}</slot>
-          <span class={p.cls('arrow')} aria-hidden='true'>▼</span>
-        </button>
+          <button
+            #ref={triggerReference}
+            id={s.triggerId}
+            type='button'
+            class={p.cls('selectButton')}
+            tabIndex={p.tabIndex}
+            disabled={s.isUnavailable}
+            aria-haspopup='listbox'
+            aria-expanded={s.isOpen}
+            aria-controls={s.listboxId}
+            aria-labelledby={p.label ? s.labelId : undefined}
+            aria-label={s.ariaLabel}
+            aria-busy={s.isLoading || undefined}
+            @keydown={m.onKeyDown}
+            @click={m.onToggle}
+          >
+            <slot name='content'>{p.placeholder}</slot>
+            <span class={p.cls('arrow')} aria-hidden='true'>▼</span>
+          </button>
+        </slot>
         <ul
-          #ref={listboxRef}
+          #ref={listboxReference}
           id={s.listboxId}
           role='listbox'
           class={p.cls('options')}
@@ -212,8 +217,7 @@ export function Select(props: SelectProps) {
   expanded, controls, disabled, and busy state.
 - The `content` trigger is a native button with a decorative arrow. Do not place
   another button in the `content` slot.
-- The `target` trigger is a `span` with `role="button"` and `display: contents`.
-  Supply the visual trigger in the slot; do not nest another button.
+- A `target` replacement receives the required trigger semantics as slot props. Apply them to one focusable control and do not nest controls.
 - Visible `label` text is the accessible name. `ariaLabel` is used only when there is no visible label.
 - The visible `label` is associated with the `content` button through `for` and
   `triggerId`. The `target` trigger is named with `aria-labelledby` when a

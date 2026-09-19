@@ -58,6 +58,94 @@ and include an obvious close control in the projected content. Floating
 renderers must not begin a drag from interactive descendants; use
 `data-window-no-drag` for custom interactive regions.
 
+## XTS rendering contract
+
+```xts
+import {
+  setContext,
+  useBeforeUnmount,
+  useMediator,
+  useMounted,
+  useRef,
+  withDefaultProps,
+} from '@pastweb/x';
+import {
+  MODE,
+  WINDOW_CONTEXT_KEY,
+  windowControllerMediator,
+} from '@pastweb/components-core/WindowController';
+import { DEFAULT_PROPS } from './constants';
+
+export function WindowController(props: WindowControllerProps) {
+  const p = withDefaultProps<WindowControllerDefaultProps>(props, DEFAULT_PROPS);
+  const m = useMediator<WindowControllerMediator>(windowControllerMediator, p);
+  const s = m.state;
+  const c = m.getContext();
+  const windowReference = useRef(null);
+
+  setContext(WINDOW_CONTEXT_KEY, c);
+  useMounted(() => {
+    if (windowReference.value) m.onMounted(windowReference.value);
+  });
+  useBeforeUnmount(m.useBeforeUnmount);
+
+  const className = p.cls(
+    p.mode === MODE.floating ? 'window' : 'modal',
+    {
+      [`${p.animation.name}-in`]: s.isOpen && !s.manager,
+      [`${p.animation.name}-out`]: !s.isOpen,
+      'is-managed': !!s.manager,
+      'is-hide': s.isHidden || s.manager?.isHidden,
+      'is-maximised': s.manager?.status === 'maximized',
+      'is-minimised': s.manager?.status === 'minimized',
+      'is-resizable': p.resizable,
+    },
+  );
+
+  return p.mode === MODE.floating ? (
+    <div
+      #ref={windowReference}
+      class={className}
+      style={m.getAnimationStyle()}
+      role='dialog'
+      aria-label={p.ariaLabel}
+      tabIndex={-1}
+      @mousedown={() => c.bringToFront()}
+      @keydown={m.onKeyDown}
+    >
+      <slot />
+    </div>
+  ) : (
+    <div class={p.cls('WindowController', { 'is-hide': s.isHidden || s.manager?.isHidden })}>
+      <button
+        type='button'
+        class={p.cls('backdrop')}
+        tabIndex={-1}
+        aria-hidden='true'
+        @click={m.onBackdropClick}
+      />
+      <div
+        #ref={windowReference}
+        class={className}
+        style={m.getAnimationStyle()}
+        role='dialog'
+        aria-modal='true'
+        aria-label={p.ariaLabel}
+        tabIndex={-1}
+        @mousedown={() => c.bringToFront()}
+        @keydown={m.onKeyDown}
+      >
+        <slot />
+      </div>
+    </div>
+  );
+}
+```
+
+The controller publishes `WindowContext` before projected content renders, so a
+Panel or custom child can call `close`, `hide`, `show`, `minimize`, `maximize`,
+or `bringToFront` through the framework context hook.
+
 ## Keyboard interaction
 
 - Focus moves to the dialog when mounted.

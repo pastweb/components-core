@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   createMediatorContextUtils,
   reactive,
@@ -19,15 +19,11 @@ function createProps(overrides: Partial<CarouselDefaultProps> = {}): CarouselDef
   return {
     cls: (...values) => values.filter(Boolean).join(' '),
     ariaLabel: 'Featured content',
-    autoPlay: false,
-    autoPlayInterval: 3000,
     className: '',
     current: 0,
     disabled: false,
     nextAriaLabel: 'Next slide',
-    pauseAriaLabel: 'Pause slide rotation',
     prevAriaLabel: 'Previous slide',
-    resumeAriaLabel: 'Resume slide rotation',
     showCommands: true,
     ...overrides,
   };
@@ -62,8 +58,6 @@ function createItemMediator(
     context,
   );
 }
-
-afterEach(() => vi.useRealTimers());
 
 describe('carouselMediator', () => {
   it('given generated and explicit IDs, when initialized, then it follows the component ID format', () => {
@@ -136,7 +130,7 @@ describe('carouselMediator', () => {
   });
 
   it('given Carousel context, when commands are used, then it exposes live command state and behavior', () => {
-    const mediator = carouselMediator(createProps({ autoPlay: true }));
+    const mediator = carouselMediator(createProps());
     mediator.registerItem();
     mediator.registerItem();
     const context = mediator.getContext();
@@ -147,31 +141,7 @@ describe('carouselMediator', () => {
     context.prev();
     expect(context.current).toBe(0);
 
-    context.toggleAutoplay();
-    expect(context.isPaused).toBe(true);
-
     mediator.useBeforeUnmount();
-  });
-
-  it('given autoplay, when time advances, then slides rotate and explicit pause stops rotation', () => {
-    vi.useFakeTimers();
-    const mediator = carouselMediator(createProps({ autoPlay: true, autoPlayInterval: 100 }));
-    mediator.registerItem();
-    mediator.registerItem();
-
-    vi.advanceTimersByTime(100);
-    expect(mediator.state.current).toBe(1);
-    expect(mediator.state.ariaLive).toBe('off');
-
-    mediator.toggleAutoplay();
-    expect(mediator.state.isPaused).toBe(true);
-    expect(mediator.state.ariaLive).toBe('polite');
-
-    vi.advanceTimersByTime(200);
-    expect(mediator.state.current).toBe(1);
-
-    mediator.useBeforeUnmount();
-    expect(vi.getTimerCount()).toBe(0);
   });
 
   it('given a disabled carousel, when navigation is requested, then its slide remains unchanged', () => {
@@ -200,9 +170,6 @@ describe('carouselItemMediator', () => {
       get isDisabled() {
         return parentState.isDisabled;
       },
-      get isPaused() {
-        return false;
-      },
       get itemsCount() {
         return parentState.itemsCount;
       },
@@ -213,7 +180,6 @@ describe('carouselItemMediator', () => {
         parentState.itemsCount += 1;
         return index;
       },
-      toggleAutoplay: vi.fn(),
     };
     const mediator = createItemMediator(
       reactive(createItemProps({ className: 'story' })),

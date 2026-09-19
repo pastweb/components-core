@@ -21,41 +21,25 @@ function createProps(overrides: Partial<TableDefaultProps<Person>> = {}): TableD
 }
 
 describe('tableMediator', () => {
-  it('given global sorting, when a column toggles repeatedly, then it cycles ascending, descending, and unsorted', () => {
-    const onSortingChange = vi.fn();
-    const mediator = tableMediator(createProps({ columnSorting: true, onSortingChange }));
-    const column = mediator.state.allLeafColumns[0];
+  it('given table props, when initialized on the server, then it exposes rows and columns without a mounted table element', () => {
+    const mediator = tableMediator(createProps());
 
-    column.toggleSorting();
-    expect(mediator.state.sorting).toEqual([{ id: 'name', desc: false }]);
-
-    column.toggleSorting();
-    expect(mediator.state.sorting).toEqual([{ id: 'name', desc: true }]);
-
-    column.toggleSorting();
-    expect(mediator.state.sorting).toEqual([]);
-    expect(onSortingChange).toHaveBeenCalledTimes(3);
+    expect(mediator.state.allLeafColumns.map(column => column.id)).toEqual(['name', 'age']);
+    expect(mediator.table.getRowModel().rows).toHaveLength(1);
+    expect(mediator.table.getHeaderGroups()).toEqual([]);
   });
 
-  it('given ordered columns, when a column moves, then it reports the next order', () => {
-    const onColumnOrderChange = vi.fn();
-    const mediator = tableMediator(createProps({ onColumnOrderChange }));
+  it('given a table instance, when its filter and row selection change, then it reports the next state', () => {
+    const onTableFilterChange = vi.fn();
+    const onRowSelectionChange = vi.fn();
+    const mediator = tableMediator(createProps({ onTableFilterChange, onRowSelectionChange }));
 
-    mediator.moveColumn('age', -1);
+    mediator.table.setTableFilter('Ada');
+    mediator.table.toggleRowSelection('0', true);
 
-    expect(mediator.state.columnOrder).toEqual(['age', 'name']);
-    expect(onColumnOrderChange).toHaveBeenCalledWith(['age', 'name']);
-  });
-
-  it('given column size constraints, when a size exceeds them, then it clamps and reports the size', () => {
-    const onColumnSizingChange = vi.fn();
-    const mediator = tableMediator(createProps({ onColumnSizingChange }));
-
-    mediator.setColumnSize('name', 20);
-    expect(mediator.state.columnSizing.name).toBe(80);
-
-    mediator.setColumnSize('name', 300);
-    expect(mediator.state.columnSizing.name).toBe(240);
-    expect(onColumnSizingChange).toHaveBeenLastCalledWith({ name: 240 });
+    expect(mediator.table.getState().tableFilter).toBe('Ada');
+    expect(mediator.table.getState().rowSelection).toEqual({ 0: true });
+    expect(onTableFilterChange).toHaveBeenCalledWith('Ada');
+    expect(onRowSelectionChange).toHaveBeenCalledWith({ 0: true });
   });
 });

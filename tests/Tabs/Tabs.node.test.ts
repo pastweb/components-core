@@ -1,7 +1,7 @@
 import { reactive } from '@pastweb/tools';
 import { describe, expect, it, vi } from 'vitest';
 import { tabsMediator } from '../../src/Tabs';
-import type { TabsDefaultProps } from '../../src/Tabs';
+import type { TabDefaultProps, TabsDefaultProps } from '../../src/Tabs';
 
 function createProps(
   overrides: Partial<TabsDefaultProps> = {},
@@ -20,12 +20,13 @@ function createProps(
 function create() {
   const onChange = vi.fn();
   const mediator = tabsMediator(createProps({ onChange }));
+  const context = mediator.getContext();
 
-  mediator.registerTab({});
-  mediator.registerTab({});
-  mediator.registerTab({});
+  context.registerTab({} as TabDefaultProps);
+  context.registerTab({} as TabDefaultProps);
+  context.registerTab({} as TabDefaultProps);
 
-  return { mediator, onChange };
+  return { context, mediator, onChange };
 }
 
 describe('tabsMediator', () => {
@@ -46,18 +47,20 @@ describe('tabsMediator', () => {
   it('given a Tab and panel index, when relationship IDs are requested, then mediator-owned IDs use the standard format', () => {
     const mediator = tabsMediator(createProps());
 
-    expect(mediator.getTabId(0)).toMatch(/^tabtabs_/);
-    expect(mediator.getContentId(0)).toMatch(/^paneltabs_/);
-    expect(mediator.getTabId(0)).not.toContain('-tab-');
-    expect(mediator.getContentId(0)).not.toContain('-panel-');
+    const context = mediator.getContext();
+
+    expect(context.getTabId(0)).toMatch(/^tabtabs_/);
+    expect(context.getContentId(0)).toMatch(/^paneltabs_/);
+    expect(context.getTabId(0)).not.toContain('-tab-');
+    expect(context.getContentId(0)).not.toContain('-panel-');
 
     mediator.useBeforeUnmount();
   });
 
   it('given tabs, when an enabled Tab is selected, then state and callback update', () => {
-    const { mediator, onChange } = create();
+    const { context, mediator, onChange } = create();
 
-    mediator.setActiveTab(1);
+    context.setActiveTab(1);
 
     expect(mediator.state.activeTab).toBe(1);
     expect(onChange).toHaveBeenCalledWith(1);
@@ -67,18 +70,19 @@ describe('tabsMediator', () => {
   it('given a disabled Tab, when selection is requested, then selection does not change', () => {
     const mediator = tabsMediator(createProps());
 
-    mediator.registerTab({});
-    mediator.registerTab({}, true);
-    mediator.setActiveTab(1);
+    const context = mediator.getContext();
+    context.registerTab({ disabled: false } as TabDefaultProps);
+    context.registerTab({ disabled: true } as TabDefaultProps);
+    context.setActiveTab(1);
 
     expect(mediator.state.activeTab).toBe(0);
     mediator.useBeforeUnmount();
   });
 
   it('given the last Tab, when ArrowRight is pressed, then selection wraps', () => {
-    const { mediator } = create();
+    const { context, mediator } = create();
 
-    mediator.onTabKeyDown(
+    context.onTabKeyDown(
       { key: 'ArrowRight', preventDefault: vi.fn() },
       2,
     );
@@ -90,10 +94,11 @@ describe('tabsMediator', () => {
   it('given a left-positioned Tabs instance, when ArrowDown is pressed, then the next enabled Tab is selected', () => {
     const mediator = tabsMediator(createProps({ className: 'is-left' }));
 
-    mediator.registerTab({});
-    mediator.registerTab({}, true);
-    mediator.registerTab({});
-    mediator.onTabKeyDown(
+    const context = mediator.getContext();
+    context.registerTab({ disabled: false } as TabDefaultProps);
+    context.registerTab({ disabled: true } as TabDefaultProps);
+    context.registerTab({ disabled: false } as TabDefaultProps);
+    context.onTabKeyDown(
       { key: 'ArrowDown', preventDefault: vi.fn() },
       0,
     );
@@ -120,10 +125,10 @@ describe('tabsMediator', () => {
         isDisabled: true,
         orientation: 'vertical',
       });
-      expect(context.ariaLabel).toBeUndefined();
-      expect(context.className).toBe('is-right');
-      expect(context.isDisabled).toBe(true);
-      expect(context.orientation).toBe('vertical');
+      expect(context.state.ariaLabel).toBeUndefined();
+      expect(context.state.className).toBe('is-right');
+      expect(context.state.isDisabled).toBe(true);
+      expect(context.state.orientation).toBe('vertical');
     });
 
     mediator.useBeforeUnmount();
@@ -135,7 +140,7 @@ describe('tabsMediator', () => {
     }));
 
     expect(mediator.state.orientation).toBe('horizontal');
-    expect(mediator.getContext().orientation).toBe('horizontal');
+    expect(mediator.getContext().state.orientation).toBe('horizontal');
 
     mediator.useBeforeUnmount();
   });

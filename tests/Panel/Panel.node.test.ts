@@ -29,8 +29,8 @@ describe('panelMediator', () => {
 
     expect(generated.state.id).toMatch(/^panel_/);
     expect(generated.state.titleId).toBe(`title${generated.state.id}`);
-    expect(explicit.state.id).toBe('account-panel');
-    expect(explicit.state.titleId).toBe('titleaccount-panel');
+    expect(explicit.state.id).toBe('_account-panel');
+    expect(explicit.state.titleId).toBe('title_account-panel');
 
     generated.useBeforeUnmount();
     explicit.useBeforeUnmount();

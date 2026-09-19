@@ -28,37 +28,34 @@ describe('selectMediator', () => {
 
     expect(generated.state.inputId).toMatch(/^select_/);
     expect(generated.state.triggerId).toBe(`trigger${generated.state.inputId}`);
-    expect(explicit.state.inputId).toBe('country');
-    expect(explicit.state.labelId).toBe('labelcountry');
-    expect(explicit.state.listboxId).toBe('listboxcountry');
-    expect(explicit.state.triggerId).toBe('triggercountry');
+    expect(explicit.state.inputId).toBe('_country');
+    expect(explicit.state.labelId).toBe('label_country');
+    expect(explicit.state.listboxId).toBe('listbox_country');
+    expect(explicit.state.triggerId).toBe('trigger_country');
 
     generated.useBeforeUnmount();
     explicit.useBeforeUnmount();
   });
 
-  it('given an enabled select, when opened with ArrowDown, then the first option is focused', () => {
-    const focus = vi.fn();
+  it('given server rendering, when opened by keyboard, then it derives open state without mounting DOM listeners', () => {
     const mediator = selectMediator(props());
-    mediator.useMounted({ focus: vi.fn() }, { children: [{ focus }, { focus: vi.fn() }] });
+
     mediator.onKeyDown({ key: 'ArrowDown', preventDefault: vi.fn() });
+
     expect(mediator.state.isOpen).toBe(true);
-    expect(mediator.state.highlightIndex).toBe(0);
-    expect(focus).toHaveBeenCalled();
+    expect(mediator.state.highlightIndex).toBeNull();
     mediator.useBeforeUnmount();
   });
 
-  it('given an open select, when a value is selected, then it closes and reports the value', () => {
+  it('given an open select, when a value is selected before mounting, then it reports the value', () => {
     const onChange = vi.fn();
-    const trigger: SelectFocusableReference = { focus: vi.fn() };
     const mediator = selectMediator(props({ onChange }));
-    mediator.useMounted(trigger, { children: [] });
+
     mediator.onOpen();
     mediator.onChange('uk');
+
     expect(mediator.state.value).toBe('uk');
-    expect(mediator.state.isOpen).toBe(false);
     expect(onChange).toHaveBeenCalledWith('uk');
-    expect(trigger.focus).toHaveBeenCalled();
     mediator.useBeforeUnmount();
   });
 

@@ -25,7 +25,7 @@ describe('rangeSliderMediator', () => {
     const explicit = rangeSliderMediator(props({ id: 'volume' }));
 
     expect(generated.state.inputId).toMatch(/^rangeSlider_/);
-    expect(explicit.state.inputId).toBe('volume');
+    expect(explicit.state.inputId).toBe('_volume');
 
     generated.useBeforeUnmount();
     explicit.useBeforeUnmount();

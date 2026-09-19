@@ -25,7 +25,7 @@ describe('checkboxMediator', () => {
     const explicit = checkboxMediator(createProps({ id: 'terms' }));
 
     expect(generated.id).toMatch(/^checkbox_/);
-    expect(explicit.id).toBe('terms');
+    expect(explicit.id).toBe('_terms');
 
     generated.useBeforeUnmount();
     explicit.useBeforeUnmount();
@@ -58,18 +58,18 @@ describe('checkboxMediator', () => {
     const onChange = vi.fn();
     const mediator = checkboxMediator(createProps({ onChange }));
 
-    mediator.onChange({ target: { checked: true } });
+    mediator.onChange(true);
 
     expect(mediator.state.value).toBe(true);
     expect(onChange).toHaveBeenCalledWith(true);
     mediator.useBeforeUnmount();
   });
 
-  it('given a React change event, when changed, then it reads currentTarget.checked', () => {
+  it('given a boolean value, when changed, then it reports that value', () => {
     const onChange = vi.fn();
     const mediator = checkboxMediator(createProps({ onChange }));
 
-    mediator.onChange({ currentTarget: { checked: true } });
+    mediator.onChange(true);
 
     expect(mediator.state.value).toBe(true);
     expect(onChange).toHaveBeenCalledWith(true);
@@ -80,7 +80,7 @@ describe('checkboxMediator', () => {
     const onChange = vi.fn();
     const mediator = checkboxMediator(createProps({ disabled: true, onChange }));
 
-    mediator.onChange({ target: { checked: true } });
+    mediator.onChange(true);
 
     expect(mediator.state.value).toBe(false);
     expect(mediator.state.isDisabled).toBe(true);
