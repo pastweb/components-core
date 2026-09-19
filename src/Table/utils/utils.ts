@@ -1,4 +1,4 @@
-import { TableDefaultProps, TableState, ColumnDef } from '../types';
+import type { TableDefaultProps, TableState, ColumnDef } from '../types';
 
 export function canSort(props: TableDefaultProps, colDef: ColumnDef): boolean {
   return !!props.columnSorting || !!colDef.sorting;
