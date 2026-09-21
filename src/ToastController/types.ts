@@ -1,6 +1,6 @@
 import type { ClassValue, Portal } from '@pastweb/tools';
 import type { PLACEMENT } from './constants';
-import { Animation } from '../types';
+import type { Animation } from '../types';
 
 export type CloseOptions = { id?: string, isConfirmed?: boolean };
 

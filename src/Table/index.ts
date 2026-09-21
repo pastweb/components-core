@@ -27,7 +27,6 @@ export type {
   GetRowId,
   SortingState,
   ColumnFiltersState,
-  PaginationState,
   RowSelectionState,
   VisibilityState,
   ColumnOrderState,

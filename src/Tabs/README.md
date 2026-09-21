@@ -147,6 +147,7 @@ remain horizontal unless `has-vertical-labels` is applied to Tabs or
 | `--pw_Tabs_content_default_border-radius` | content | default | `border-radius` | `var(--pw_border-radius)` | Radius applied to the exposed outer corners of a tab panel. | Browser, Capacitor |
 | `--pw_Tabs_content_default_border-style` | content | default | `border-style` | `var(--pw_border-style)` | Border style of a tab panel. | Browser, Capacitor |
 | `--pw_Tabs_content_default_border-width` | content | default | `border-width` | `var(--pw_border-width)` | Border width of a tab panel. | Browser, Capacitor |
+| `--pw_Tabs_content_default_background-color` | content | default | `background-color` | `var(--pw_background-color)` | Background of a tab panel. | Browser, Capacitor |
 | `--pw_Tabs_content_default_padding` | content | default | `padding` | `var(--pw_padding)` | Inner spacing of a tab panel. | Browser, Capacitor |
 
 ```xts

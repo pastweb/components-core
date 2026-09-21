@@ -1,15 +1,16 @@
 .Tab {
-  --pw_Tabs_tab_active_default_z-index: var(--pw_z-index_local);
   --pw_Tabs_tab_default_color: var(--pw_text_strong_color);
 
   display: flex;
   justify-content: start;
+  z-index: var(--pw_z-index_local);
   cursor: pointer;
 
   margin-bottom: calc(var(--pw_Tabs_tab_default_border-width) * -1);
   transition: all ease var(--pw_Tabs_tab_default_transition-duration);
   background-color: var(--pw_Tabs_tab_default_background-color);
   border: var(--pw_Tabs_tab_default_border-width) var(--pw_Tabs_tab_default_border-style) var(--pw_Tabs_tab_default_border-color);
+  border-bottom-color: var(--pw_Tabs_content_default_background-color);
   color: var(--pw_Tabs_tab_default_color);
   font-size: var(--pw_Tabs_tab_default_font-size);
 
@@ -69,7 +70,6 @@
   }
 
   &.is-active {
-    z-index: var(--pw_Tabs_tab_active_default_z-index);
     background-color: var(--pw_Tabs_tab_active_background-color);
     border-bottom-color: var(--pw_Tabs_tab_active_background-color);
     cursor: auto;
@@ -145,7 +145,7 @@
     margin-top: 0;
     margin-right: calc(var(--pw_Tabs_tab_default_border-width) * -1);
     margin-left: 0;
-    border-right-color: transparent;
+    border-right-color: var(--pw_Tabs_content_default_background-color);
 
     &:last-child {
       border-bottom-color: var(--pw_Tabs_tab_default_border-color);
@@ -164,7 +164,7 @@
     margin-top: 0;
     margin-right: 0;
     margin-left: calc(var(--pw_Tabs_tab_default_border-width) * -1);
-    border-left-color: var(--pw_Tabs_tab_default_border-color);
+    border-left-color: var(--pw_Tabs_content_default_background-color);
 
     &:first-child {
       border-radius: 0 var(--pw_Tabs_tab_default_border-radius) 0 0;

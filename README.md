@@ -365,7 +365,7 @@ yarn add @pastweb/components-core
 ```
 
 Framework applications also install the corresponding renderer package, such
-as `@pastweb/react-components-core`.
+as `@pastweb/react-components`.
 
 ## Documentation Overview
 

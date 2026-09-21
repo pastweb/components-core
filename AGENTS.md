@@ -7,7 +7,7 @@ This package is open source.
 `components-core` owns the public, framework-neutral component contracts,
 mediator logic, shared style contracts, and XJS/XTS rendering templates
 documented in each component README. Framework renderers such as
-`react-components-core` implement those templates without redefining shared
+`react-components` implement those templates without redefining shared
 behavior. Browser/Capacitor and NativeScript renderers may require separate SCSS
 entrypoints when their supported properties, selectors, or native view types
 differ.
