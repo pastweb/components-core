@@ -303,6 +303,10 @@ own local stacking context.
 1. Prefer DOM order before increasing a z-index within the same layer.
 2. Use local values only inside an established component layer. A local
    `z-index: 1` is not a global overlay level.
+
+TaskBar controls that manage floating windows should use
+`--pw_z-index_window-max` so minimizing, restoring, and activating a window
+remain possible when the window overlaps the taskbar.
 3. Create a new token and document its range before adding a new global layer.
 4. Avoid `transform`, `filter`, `opacity < 1`, `isolation`, and positioned
    ancestors with z-index on shared layout containers unless they intentionally
