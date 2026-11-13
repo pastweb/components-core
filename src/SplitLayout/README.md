@@ -21,11 +21,23 @@ when a small viewport cannot support the minimum panel sizes.
 | `sizes` | `number[]` | no | equal | Relative percentages normalized to total 100. |
 | `minSize` | `number` | no | `10` | Minimum percentage for each adjacent panel. |
 | `keyboardStep` | `number` | no | `2` | Percentage moved per arrow-key activation. |
-| `disabled` | `boolean` | no | `false` | Prevents resizing and applies `is-disabled`. |
+| `disabled` | `boolean` | no | - | Prevents resizing and applies `is-disabled`. |
 | `onSizesChange` | `(sizes: number[]) => void` | no | noop | Reports normalized percentages after resizing. |
 
 `SplitLayoutItem` accepts `id`, `ariaLabel`, and `className`. Only
 `SplitLayoutItem` children are supported.
+
+## Mediator integration
+
+`SplitLayoutItem` owns pointer resizing through its mediator. Framework
+renderers should forward `pointerdown`, `pointermove`, `pointerup`,
+`pointercancel`, and `lostpointercapture` events to the matching mediator
+methods. The mediator normalizes the framework event internally, manages
+pointer capture, and reports resize deltas to the parent layout context.
+
+The `onSizesChange` prop remains the framework-neutral callback for changed
+pane percentages. Renderers may additionally expose that callback through
+their native event convention, such as Vue's `@sizes-change`.
 
 ## Mediator state
 

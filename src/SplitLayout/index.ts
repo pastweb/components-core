@@ -17,4 +17,5 @@ export type {
   SplitLayoutItemDefaultProps,
   SplitLayoutItemMediator,
   SplitLayoutItemProps,
+  SplitLayoutPointerInput,
 } from './SplitLayoutItem';

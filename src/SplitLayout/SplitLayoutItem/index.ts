@@ -3,6 +3,10 @@ export { splitLayoutItemMediator } from './splitLayoutItem.mediator';
 export type {
   SplitLayoutItemDefaultProps,
   SplitLayoutItemMediator,
+  SplitLayoutItemMediatorVars,
   SplitLayoutItemProps,
   SplitLayoutItemState,
+  SplitLayoutPointerEvent,
+  SplitLayoutPointerInput,
+  SplitLayoutPointerTarget,
 } from './types';
