@@ -14,11 +14,8 @@ import {
   publish,
   selectDate,
   selectYear,
-  setCalendarReference,
   setHoverDate,
   setTime,
-  setTimeToggleReference,
-  setTriggerReference,
   syncOpenState,
   syncPositionUpdates,
   toggle,
@@ -101,10 +98,7 @@ export function dateTimePickerMediator(props: DateTimePickerDefaultProps): DateT
     onKeyDown: event => onKeyDown(props, state, event),
     selectDate: date => selectDate(props, state, date),
     setTime: (part, value) => setTime(props, state, part, value),
-    setCalendarReference: element => setCalendarReference(props, state, vars, element),
     setHoverDate: date => setHoverDate(props, state, date),
-    setTimeToggleReference: element => setTimeToggleReference(vars, element),
-    setTriggerReference: element => setTriggerReference(props, state, vars, element),
     toggle: () => toggle(props, state),
     toggleTimePicker: () => toggleTimePicker(props, state, vars),
     selectYear: year => selectYear(props, state, year),
@@ -112,6 +106,12 @@ export function dateTimePickerMediator(props: DateTimePickerDefaultProps): DateT
       useBeforeUnmount(vars);
       idCache.removeId(uid);
     },
-    useMounted: () => useMounted(props, state, vars),
+    useMounted: (triggerReference, calendarReference, timeToggleReference) => {
+      vars.triggerReference = triggerReference;
+      vars.calendarReference = calendarReference;
+      vars.timeToggleReference = timeToggleReference;
+      syncPositionUpdates(props, state, vars);
+      useMounted(props, state, vars);
+    },
   };
 }

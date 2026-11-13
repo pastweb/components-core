@@ -125,21 +125,6 @@ export function onKeyDown(
   }
 }
 
-export function setTriggerReference(props: DateTimePickerDefaultProps, state: DateTimePickerState, vars: DateTimePickerMediatorVars, element: HTMLElement | null): void {
-  vars.triggerReference = element;
-  if (state.isOpen && !props.inline) startPositionUpdates(vars);
-}
-
-export function setTimeToggleReference(vars: DateTimePickerMediatorVars, element: HTMLButtonElement | null): void {
-  vars.timeToggleReference = element;
-}
-
-export function setCalendarReference(props: DateTimePickerDefaultProps, state: DateTimePickerState, vars: DateTimePickerMediatorVars, element: HTMLDivElement | null): void {
-  vars.calendarReference = element;
-  if (element && state.isOpen && !props.inline) startPositionUpdates(vars);
-  if (!element) stopPositionUpdates(vars);
-}
-
 export function setHoverDate(props: DateTimePickerDefaultProps, state: DateTimePickerState, date: Date | null): void {
   if (props.mode !== 'range' || state.value.length !== 1 || !date || isDateDisabled(props, date)) {
     state.hoverDate = null;
@@ -157,6 +142,7 @@ export function onOutsideClick(props: DateTimePickerDefaultProps, state: DateTim
 
 export function useMounted(props: DateTimePickerDefaultProps, state: DateTimePickerState, vars: DateTimePickerMediatorVars): void {
   if (typeof document === 'undefined') return;
+  if (vars.outsideClickListener) document.removeEventListener('click', vars.outsideClickListener);
   vars.outsideClickListener = onOutsideClick.bind(null, props, state, vars);
   document.addEventListener('click', vars.outsideClickListener);
 }

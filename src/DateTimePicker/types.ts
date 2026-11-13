@@ -138,13 +138,27 @@ export interface DateTimePickerMediator {
   selectDate: (date: Date) => void;
   setTime: (part: 'hour' | 'minute', value: number) => void;
   toggleTimePicker: () => void;
-  setCalendarReference: (element: HTMLDivElement | null) => void;
   setHoverDate: (date: Date | null) => void;
-  setTimeToggleReference: (element: HTMLButtonElement | null) => void;
-  setTriggerReference: (element: HTMLElement | null) => void;
   toggle: () => void;
   useBeforeUnmount: () => void;
-  useMounted: () => void;
+  useMounted: (
+    triggerReference: HTMLElement | null,
+    calendarReference: HTMLDivElement | null,
+    timeToggleReference: HTMLButtonElement | null,
+  ) => void;
+}
+
+export interface DateTimePickerTriggerProps {
+  id: string;
+  role: 'button';
+  tabIndex: number;
+  'aria-label': string | undefined;
+  'aria-labelledby': string | undefined;
+  'aria-disabled': true | undefined;
+  'aria-haspopup': 'dialog';
+  'aria-expanded': boolean;
+  onClick: () => void;
+  onKeyDown: (event: { key: string; preventDefault?: () => void }) => void;
 }
 
 export interface DateTimePickerMediatorVars {

@@ -2,6 +2,14 @@
 
 `DateTimePicker` is a framework-neutral calendar and time-selection mediator. Renderers provide the target and popup integration; the mediator owns value normalization, single/multiple/range selection, calendar navigation, date rules, and keyboard intent.
 
+## Features
+
+- Single, multiple, and range date selection.
+- Optional time selection, calendar-only, and time-only modes.
+- Controlled or uncontrolled popup visibility and selected values.
+- Keyboard calendar navigation, date rules, localized labels, and accessible IDs.
+- A renderer-neutral target-props context for custom trigger implementations.
+
 ```xts
 <DateTimePicker
   mode="range"
@@ -85,3 +93,33 @@ Provide `ariaLabel`, `previousMonthAriaLabel`, `nextMonthAriaLabel`, `yearSelect
   selectTimeAriaLabel="Choose appointment time"
 />
 ```
+
+## Renderer integration
+
+Renderers own their target, calendar, and time-toggle references, then provide
+them together after mounting. This keeps the mediator independent of framework
+ref objects and slot mechanisms.
+
+```xts
+const triggerReference = getTriggerElement();
+const calendarReference = getCalendarElement();
+const timeToggleReference = getTimeToggleElement();
+
+mediator.useMounted(
+  triggerReference,
+  calendarReference,
+  timeToggleReference,
+);
+```
+
+Custom targets consume renderer-provided bindings from the shared
+`DATETIME_PICKER_TRIGGER_PROPS_CONTEXT_KEY`. The core
+`DateTimePickerTriggerProps` contract provides the ID, role, tab index, ARIA
+attributes, and click/keyboard handlers. Each renderer adapts only its own ref
+and event types.
+
+## Summary
+
+Use DateTimePicker when users need to choose a date, date range, or time with
+calendar guidance. Use a native date input when the browser-provided control is
+sufficient and a richer calendar interface is unnecessary.

@@ -1,5 +1,7 @@
 import type { DateTimePickerDefaultProps, DateTimePickerLocale } from './types';
 
+export const DATETIME_PICKER_TRIGGER_PROPS_CONTEXT_KEY = '$$DateTimePickerTriggerProps';
+
 export const DEFAULT_LOCALE: DateTimePickerLocale = {
   months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
   weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
@@ -13,8 +15,6 @@ export const DEFAULT_LOCALE: DateTimePickerLocale = {
 
 export const DEFAULT_PROPS: Partial<DateTimePickerDefaultProps> = {
   mode: 'single',
-  inline: false,
-  disabled: false,
   placeholder: 'Select date',
   ariaLabel: 'Select date',
   previousMonthAriaLabel: 'Previous month',
@@ -27,13 +27,9 @@ export const DEFAULT_PROPS: Partial<DateTimePickerDefaultProps> = {
   labelPlacement: 'top-start' as const,
   label: '',
   className: '',
-  enableTime: false,
-  noCalendar: false,
   time24hr: true,
   minuteIncrement: 5,
   showMonths: 1,
-  weekNumbers: false,
-  yearSelect: false,
   firstDayOfWeek: 1,
   workingWeekDays: 5,
   locale: {},
