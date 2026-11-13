@@ -26,7 +26,7 @@ export function onKeyDown(
   if (event.key === 'Escape') {
     if (!state.isVisible) return;
     event.preventDefault?.();
-    hide(props, state);
+    hide(props, state, vars);
     return;
   }
 
@@ -40,5 +40,5 @@ export function onKeyDown(
     return;
   }
 
-  setVisible(props, state, !state.isVisible);
+  setVisible(props, state, !state.isVisible, vars);
 }

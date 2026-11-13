@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { reactive } from '@pastweb/tools';
 import { dropdownMediator } from '../../src/DropDown';
 import type { DropDownDefaultProps, DropDownMediatorVars } from '../../src/DropDown/types';
-import { hide, isInside, onBlur, onClick, onClickOut } from '../../src/DropDown/utils';
+import { hide, isInside, onBlur, onClick, onClickOut, onMouseLeave } from '../../src/DropDown/utils';
 
 function createProps(overrides: Partial<DropDownDefaultProps> = {}): DropDownDefaultProps {
   return {
@@ -266,5 +266,36 @@ describe('onClickOut', () => {
 
     expect(state.isVisible).toBe(false);
     expect(props.onClickOut).toHaveBeenCalledOnce();
+  });
+});
+
+describe('onMouseLeave', () => {
+  it('given an over dropdown, when the pointer enters its floating content, then it stays visible', () => {
+    const next = {};
+    const props = createProps({ isVisible: true, visibleOn: 'over' });
+    const state = { isVisible: true } as any;
+    const vars = createVars({
+      rootReference: { contains: (node: unknown) => node === next } as HTMLElement,
+      containerReference: { contains: () => false } as unknown as HTMLElement,
+    });
+
+    onMouseLeave(props, state, vars, { relatedTarget: next as EventTarget });
+
+    expect(state.isVisible).toBe(true);
+    expect(props.onMouseLeave).not.toHaveBeenCalled();
+  });
+
+  it('given an over dropdown, when the pointer leaves the root and content, then it hides', () => {
+    const props = createProps({ isVisible: true, visibleOn: 'over' });
+    const state = { isVisible: true } as any;
+    const vars = createVars({
+      rootReference: { contains: () => false } as unknown as HTMLElement,
+      containerReference: { contains: () => false } as unknown as HTMLElement,
+    });
+
+    onMouseLeave(props, state, vars, { relatedTarget: {} as EventTarget });
+
+    expect(state.isVisible).toBe(false);
+    expect(props.onMouseLeave).toHaveBeenCalledOnce();
   });
 });

@@ -37,7 +37,7 @@ export function onClick(
 
     vars.elementClicked = true;
     if (vars.clickTimer) clearTimeout(vars.clickTimer);
-    hide(props, state);
+    hide(props, state, vars);
     vars.clickTimer = setTimeout(() => {
       vars.elementClicked = false;
     }, props.clickTimeGap);
@@ -54,7 +54,7 @@ export function onClick(
     && !isInside(vars.targetReference, event?.target);
 
   if (isContentClick) {
-    hide(props, state);
+    hide(props, state, vars);
     vars.clickTimer = setTimeout(() => {
       vars.elementClicked = false;
     }, props.clickTimeGap);
@@ -64,7 +64,7 @@ export function onClick(
   setPointerPosition(props, vars, event);
   vars.clickTimer = setTimeout(() => {
     vars.elementClicked = false;
-    setVisible(props, state, !state.isVisible);
+    setVisible(props, state, !state.isVisible, vars);
     props.onClick();
   }, props.clickTimeGap);
 }

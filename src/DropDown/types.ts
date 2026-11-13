@@ -126,7 +126,7 @@ export interface DropDownMediator {
   onContext: (event: DropDownContextEvent) => void;
   onKeyDown: (event: DropDownKeyEvent) => void;
   onMouseEnter: (event?: DropDownPointerEvent) => void;
-  onMouseLeave: (event?: { buttons?: number }) => void;
+  onMouseLeave: (event?: { buttons?: number; relatedTarget?: EventTarget | null }) => void;
   setArrowRef: (arrow?: HTMLElement | null) => void;
   state: DropDownState;
   useBeforeUnmount: () => void;

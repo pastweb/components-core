@@ -35,6 +35,6 @@ export function onClickOut(
     isInside(vars.containerReference, event?.target)
   ) return;
 
-  hide(props, state);
+  hide(props, state, vars);
   props.onClickOut();
 }

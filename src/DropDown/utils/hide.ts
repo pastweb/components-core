@@ -1,4 +1,8 @@
-import type { DropDownDefaultProps, DropDownState } from '../types';
+import type {
+  DropDownDefaultProps,
+  DropDownMediatorVars,
+  DropDownState,
+} from '../types';
 import { setVisible } from './setVisible';
 
 /**
@@ -12,6 +16,7 @@ import { setVisible } from './setVisible';
 export function hide(
   props: DropDownDefaultProps,
   state: DropDownState,
+  vars?: DropDownMediatorVars,
 ): void {
-  setVisible(props, state, false);
+  setVisible(props, state, false, vars);
 }

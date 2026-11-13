@@ -1,4 +1,8 @@
-import type { DropDownDefaultProps, DropDownState } from '../types';
+import type {
+  DropDownDefaultProps,
+  DropDownMediatorVars,
+  DropDownState,
+} from '../types';
 import { getAriaLabel } from './getAriaLabel';
 import { getIsDisabled } from './getIsDisabled';
 import { hide } from './hide';
@@ -17,14 +21,15 @@ import { setVisible } from './setVisible';
 export function updateState(
   props: DropDownDefaultProps,
   state: DropDownState,
+  vars?: DropDownMediatorVars,
 ): void {
   state.ariaLabel = getAriaLabel(props);
   state.isDisabled = getIsDisabled(props);
 
   if (state.isDisabled) {
-    hide(props, state);
+    hide(props, state, vars);
     return;
   }
 
-  setVisible(props, state, !!props.isVisible);
+  setVisible(props, state, !!props.isVisible, vars);
 }

@@ -26,7 +26,7 @@ export function onContext(props: DropDownDefaultProps, state: DropDownState, var
 
   vars.clickTimer = setTimeout(() => {
     vars.elementClicked = false;
-    setVisible(props, state, !state.isVisible);
+    setVisible(props, state, !state.isVisible, vars);
     props.onContext();
   }, props.clickTimeGap);
 }

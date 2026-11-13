@@ -53,7 +53,7 @@ export function dropdownMediator(props: DropDownDefaultProps): DropDownMediator 
     triggerId: getTriggerId(id),
   });
 
-  const hide = () => hideDropDown(props, state);
+  const hide = () => hideDropDown(props, state, vars);
   const onClick = (event?: DropDownPointerEvent) => (
     onClickDropDown(props, state, vars, event)
   );
@@ -64,7 +64,7 @@ export function dropdownMediator(props: DropDownDefaultProps): DropDownMediator 
     setArrowRefDropDown(vars, arrow)
   );
 
-  updateState(props, state);
+  updateState(props, state, vars);
 
   effect(
     () => { state.ariaLabel = getAriaLabel(props); },
@@ -72,7 +72,7 @@ export function dropdownMediator(props: DropDownDefaultProps): DropDownMediator 
   );
 
   effect(
-    () => updateState(props, state),
+    () => updateState(props, state, vars),
     () => [props.disabled, props.isVisible],
   );
 
@@ -101,7 +101,7 @@ export function dropdownMediator(props: DropDownDefaultProps): DropDownMediator 
     onContext: event => onContext(props, state, vars, event),
     onKeyDown,
     onMouseEnter: event => onMouseEnter(props, state, vars, event),
-    onMouseLeave: event => onMouseLeave(props, state, event),
+    onMouseLeave: event => onMouseLeave(props, state, vars, event),
     setArrowRef,
     state,
     useBeforeUnmount: () => useBeforeUnmount(uid, vars),

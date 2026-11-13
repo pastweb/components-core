@@ -47,6 +47,23 @@ afterEach(() => {
 });
 
 describe('dropdownMediator content clicks', () => {
+  it('given focused dropdown content, when it hides, then focus returns to the trigger', () => {
+    const { mediator, root, target, item } = mountMediator(createProps({ isVisible: true }));
+    target.tabIndex = 0;
+    document.body.append(root);
+    item.focus();
+
+    expect(document.activeElement).toBe(item);
+
+    mediator.hide();
+
+    expect(mediator.state.isVisible).toBe(false);
+    expect(document.activeElement).toBe(target);
+
+    root.remove();
+    mediator.useBeforeUnmount();
+  });
+
   it('given an open dropdown, when hide is called, then it is not visible', () => {
     const { mediator } = mountMediator(createProps({ isVisible: true }));
 
