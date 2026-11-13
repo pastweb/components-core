@@ -19,14 +19,14 @@ users must be able to open the native picker.
 | `accept` | `string` | no | - | Restricts the native picker to matching file types. |
 | `ariaLabel` | `string` | no | `"Upload a file"` | Names the trigger when no visible `label` is supplied. Pass an empty string to omit the accessible name. |
 | `className` | `string` | no | `""` | Adds classes to the wrapper. |
-| `disabled` | `boolean` | no | `false` | Makes choosing and dropping files unavailable. |
-| `dropzone` | `boolean` | no | `false` | Enables drop-to-add in addition to the native picker. |
+| `disabled` | `boolean` | no | - | Makes choosing and dropping files unavailable. |
+| `dropzone` | `boolean` | no | - | Enables drop-to-add in addition to the native picker. |
 | `formData` | `FormData` | no | `new FormData()` | Supplies the store used for selected files. |
 | `id` | `string` | no | generated | Supplies the root ID. Generated IDs use the `fileUploader` prefix. |
 | `label` | `string` | no | `""` | Supplies the visible accessible label. |
 | `maxNumber` | `number` | no | `1` | Limits how many files can be stored. |
 | `maxSize` | `number` | no | - | Maximum file size in bytes. Oversized files are reported through `onAddFile` and are not stored. |
-| `multiple` | `boolean` | no | `false` | Allows the native picker to select more than one file at a time. |
+| `multiple` | `boolean` | no | - | Allows the native picker to select more than one file at a time. |
 | `name` | `string` | no | - | Supplies the native file input name. |
 | `tabIndex` | `number` | no | `0` | Controls sequential focus order of the trigger. Prefer the default document order. |
 | `onAddFile` | `(file: File, data: FormData) => void` | no | noop | Reports each file after a successful store, and oversized files that were rejected. |
@@ -173,9 +173,12 @@ export function FileUploader(props: FileUploaderProps) {
 }
 ```
 
-Renderers pass native change and drag events through to the mediator. The
-mediator stops drag propagation, prevents the browser from opening dropped
-files, and converts `FileList` values to `File[]`.
+Renderers pass native change and drag events through to the mediator. For a
+native change event, the mediator reads the file input from `event.target` and
+falls back to `event.currentTarget`. This supports both native DOM events and
+renderer event wrappers without renderer-specific adapters. The mediator stops
+drag propagation, prevents the browser from opening dropped files, and converts
+`FileList` values to `File[]`.
 
 ## Keyboard interaction
 

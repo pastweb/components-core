@@ -17,14 +17,11 @@ export const SIZE_UNITS = [
   'YB',
 ] as const;
 
-export const DEFAULT_PROPS = {
+export const DEFAULT_PROPS: Partial<FileUploaderDefaultProps> = {
   ariaLabel: 'Upload a file',
   className: '',
-  disabled: false,
-  dropzone: false,
   label: '',
   maxNumber: 1,
-  multiple: false,
   onAddFile: noop,
   tabIndex: 0,
-} satisfies Partial<FileUploaderDefaultProps>;
+};

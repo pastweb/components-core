@@ -20,6 +20,9 @@ export function onChange(
   state: FileUploaderState,
   vars: FileUploaderMediatorVars,
   event: FileUploaderChangeEvent,
-): void {
-  addFiles(props, state, vars, toFiles(event.currentTarget?.files));
+): File[] {
+  const target = event.target || event.currentTarget;
+  const files = (target as { files?: ArrayLike<File> | null } | null)?.files;
+
+  return addFiles(props, state, vars, toFiles(files));
 }

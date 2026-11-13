@@ -21,16 +21,18 @@ export function addFiles(
   state: FileUploaderState,
   vars: FileUploaderMediatorVars,
   files: File[],
-): void {
-  if (state.isDisabled) return;
+): File[] {
+  if (state.isDisabled) return [];
 
   const data = vars.formData;
+  const reportedFiles: File[] = [];
 
   for (const file of files) {
     if (Array.from(data.keys()).length >= props.maxNumber) break;
 
     if (props.maxSize && file.size > props.maxSize) {
       props.onAddFile(file, data);
+      reportedFiles.push(file);
       continue;
     }
 
@@ -41,8 +43,11 @@ export function addFiles(
     }
 
     props.onAddFile(file, data);
+    reportedFiles.push(file);
   }
 
   if (vars.inputReference) vars.inputReference.value = '';
   updateState(props, state, vars);
+
+  return reportedFiles;
 }

@@ -67,7 +67,8 @@ export interface FileUploaderDragEvent {
 }
 
 export interface FileUploaderChangeEvent {
-  currentTarget?: { files?: ArrayLike<File> | null } | null;
+  target?: EventTarget | null;
+  currentTarget?: EventTarget | null;
 }
 
 export interface FileUploaderContext {
@@ -93,11 +94,11 @@ export interface FileUploaderMediator {
   inputId: string;
   labelId: string;
   onActivate: () => void;
-  onChange: (event: FileUploaderChangeEvent) => void;
+  onChange: (event: FileUploaderChangeEvent) => File[];
   onDragEnter: (event: FileUploaderDragEvent) => void;
   onDragLeave: () => void;
   onDragOver: (event: FileUploaderDragEvent) => void;
-  onDrop: (event: FileUploaderDragEvent) => void;
+  onDrop: (event: FileUploaderDragEvent) => File[];
   onKeyDown: (event: FileUploaderKeyEvent) => void;
   removeFile: (fileName: string) => void;
   state: FileUploaderState;

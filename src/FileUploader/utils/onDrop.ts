@@ -21,9 +21,10 @@ export function onDrop(
   state: FileUploaderState,
   vars: FileUploaderMediatorVars,
   event: FileUploaderDragEvent,
-): void {
+): File[] {
   stopDragEvent(event);
   state.isDragging = undefined;
-  if (state.isDisabled || !props.dropzone) return;
-  addFiles(props, state, vars, toFiles(event.dataTransfer?.files));
+  if (state.isDisabled || !props.dropzone) return [];
+
+  return addFiles(props, state, vars, toFiles(event.dataTransfer?.files));
 }
