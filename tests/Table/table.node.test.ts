@@ -42,4 +42,14 @@ describe('tableMediator', () => {
     expect(onTableFilterChange).toHaveBeenCalledWith('Ada');
     expect(onRowSelectionChange).toHaveBeenCalledWith({ 0: true });
   });
+
+  it('given a scroll callback, when the mediator receives a body scroll event, then it forwards the event', () => {
+    const onScroll = vi.fn();
+    const mediator = tableMediator(createProps({ onScroll }));
+    const event = {};
+
+    mediator.onScroll(event);
+
+    expect(onScroll).toHaveBeenCalledWith(event);
+  });
 });

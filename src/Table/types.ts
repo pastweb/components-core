@@ -281,6 +281,8 @@ export interface TableProps<TData = any> {
    * Handles row pointer activation.
    */
   onRowClick?: (row: Row<TData>) => void;
+  /** Handles scrolling of the table body. */
+  onScroll?: (event: unknown) => void;
 };
 
 export interface TableDefaultProps<TData = any> extends TableProps<TData> {
@@ -308,6 +310,7 @@ export interface TableDefaultProps<TData = any> extends TableProps<TData> {
   onColumnFilterVisiblityChange: (updater: string[]) => void;
   onGroupingChange: (updater: any) => void;
   onExpandedRowsChange: (ids: string[]) => void;
+  onScroll: (event: unknown) => void;
 };
 
 export interface TableState<TData = any> {
@@ -346,5 +349,6 @@ export interface TableMediator<TData = any> {
   table: TableInstance<TData>;
   getContext: () => TableContext<TData>;
   onMounted: (target: HTMLTableElement) => void;
+  onScroll: (event: unknown) => void;
   useBeforeUnmount: () => void;
 };

@@ -123,12 +123,17 @@ export function tableMediator<TData = any>(props: TableDefaultProps<TData>): Tab
     setHeaderGroups(props, state, tableElement);
   };
 
+  const onScroll = (event: unknown): void => {
+    props.onScroll(event);
+  };
+
   return {
     id,
     state,
     table,
     getContext: () => getContext(props, state, table),
     onMounted,
+    onScroll,
     useBeforeUnmount: () => {
       rowIds.clear();
       idCache.removeId(id);

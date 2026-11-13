@@ -20,6 +20,7 @@ row identity records and the generated identifier.
 | `state` | `TableState` | Reactive columns, rows, controlled values, and drag state. |
 | `table` | `TableInstance` | Public table instance used by consumers and slots. |
 | `onMounted` | `(element: HTMLTableElement) => void` | Attaches the rendered table so header groups can be measured. |
+| `onScroll` | `(event: unknown) => void` | Forwards scrolling from the renderer's scrollable table body. |
 | `useBeforeUnmount` | `() => void` | Releases row IDs and the table identifier. |
 
 ## Renderer contract
@@ -60,3 +61,16 @@ export function Table(props: TableProps) {
 Always register `m.useBeforeUnmount` in the framework renderer. Do not create
 table identifiers in a framework-specific hook: a mediator-owned ID makes the
 same accessibility contract portable to every supported renderer.
+
+## Body scrolling
+
+Renderers should attach `m.onScroll` to the scrollable element that contains the
+table body. The core mediator deliberately forwards the event without assuming
+a browser event type, so each renderer can use its native event while consumers
+can implement behaviors such as infinite loading.
+
+```ts
+<div onScroll={m.onScroll}>
+  <table><!-- rows --></table>
+</div>
+```
