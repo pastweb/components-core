@@ -17,7 +17,7 @@ groups that make choices difficult to scan.
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
 | `ariaLabel` | `string` | no | `"Button group"` | Supplies the group's accessible name. Applications should provide a task-specific label; pass an empty string to omit the group semantics. |
 | `className` | `string` | no | `""` | Adds classes to the group wrapper. |
-| `disabled` | `boolean` | no | `false` | Disables descendant Pastweb Button components and marks the group unavailable. |
+| `disabled` | `boolean` | no | - | Disables descendant Pastweb Button components and marks the group unavailable. |
 | `id` | `string` | no | generated | Supplies the group ID. Generated IDs use the `buttons` prefix. |
 
 ## Mediator state

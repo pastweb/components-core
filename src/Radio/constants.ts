@@ -4,7 +4,6 @@ import type { RadioDefaultOption, RadioDefaultProps } from './types';
 export const DEFAULT_PROPS: Partial<RadioDefaultProps> = {
   ariaLabel: 'Radio options',
   className: '',
-  disabled: false,
   label: '',
   orientation: 'horizontal' as const,
   onChange: noop,
@@ -13,6 +12,5 @@ export const DEFAULT_PROPS: Partial<RadioDefaultProps> = {
 };
 
 export const DEFAULT_RADIO_OPTIONS: Partial<RadioDefaultOption> = {
-  disabled: false,
   labelPosition: 'right' as const,
 };

@@ -16,9 +16,9 @@ describe the result of activation.
 |---|---|---:|---:|---|
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
 | `className` | `string` | no | `""` | Adds classes to the native button. The legacy `is-loading` class continues to enable loading behavior. |
-| `disabled` | `boolean` | no | `false` | Makes the action unavailable. |
+| `disabled` | `boolean` | no | - | Makes the action unavailable. |
 | `id` | `string` | no | generated | Supplies the button ID. Generated IDs use the `button` prefix. |
-| `loading` | `boolean` | no | `false` | Marks the action busy, suppresses its click handler, and displays the loading slot without disabling the native button. |
+| `loading` | `boolean` | no | - | Marks the action busy, suppresses its click handler, and displays the loading slot without disabling the native button. |
 | `onClick` | `(event: unknown) => void` | no | noop | Handles an available button activation. Renderers may narrow the event type. |
 | `tabIndex` | `number` | no | `0` | Controls sequential keyboard focus order. Prefer the default document order. |
 | `type` | `'button' \| 'submit' \| 'reset'` | no | `'button'` | Selects native button behavior. |

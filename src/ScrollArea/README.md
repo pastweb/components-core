@@ -16,10 +16,10 @@ areas and never hide an axis when that would make content unreachable.
 | `ariaLabel` | `string` | no | `"Scrollable content"` | Names the region. Pass an empty string to omit the name. Prefer a specific label. |
 | `id` | `string` | no | - | Root ID. |
 | `className` | `string` | no | `""` | Additional root classes. |
-| `hideX` | `boolean` | no | `false` | Applies `hide-x` and suppresses horizontal overflow. |
-| `hideY` | `boolean` | no | `false` | Applies `hide-y` and suppresses vertical overflow. |
-| `scrollRight` | `boolean` | no | `false` | Applies `scroll-right` and requests initial horizontal end alignment. |
-| `scrollBottom` | `boolean` | no | `false` | Applies `scroll-bottom` and requests initial vertical end alignment. |
+| `hideX` | `boolean` | no | - | Applies `hide-x` and suppresses horizontal overflow. |
+| `hideY` | `boolean` | no | - | Applies `hide-y` and suppresses vertical overflow. |
+| `scrollRight` | `boolean` | no | - | Applies `scroll-right` and requests initial horizontal end alignment. |
+| `scrollBottom` | `boolean` | no | - | Applies `scroll-bottom` and requests initial vertical end alignment. |
 | `contentPadding` | `number \| string` | no | - | Inline padding scoped to `.content`. |
 | `tabIndex` | `number` | no | `0` | Makes the scroll viewport keyboard focusable. |
 

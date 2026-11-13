@@ -21,7 +21,7 @@ each panel.
 | `activeTab` | `number` | no | `0` | Controls the active zero-based index. |
 | `ariaLabel` | `string` | no | `"Tabs"` | Names the tab list. An explicit empty string omits the label. |
 | `className` | `string` | no | `""` | Adds root classes, including utilities that determine layout and inherited descendant styling. |
-| `disabled` | `boolean` | no | `false` | Disables all Tab controls and applies `is-disabled` to the root. |
+| `disabled` | `boolean` | no | - | Disables all Tab controls and applies `is-disabled` to the root. |
 | `onChange` | `(index: number) => void` | no | noop | Reports requested selection changes. |
 
 ## Tab props
@@ -31,7 +31,7 @@ each panel.
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves the Tab part, state, and inherited utility classes. |
 | `ariaLabel` | `string` | no | - | Supplies an accessible name when the visible label is insufficient. |
 | `className` | `string` | no | `""` | Adds classes to this Tab list item. |
-| `disabled` | `boolean` | no | `false` | Makes this Tab unavailable for activation and keyboard selection. |
+| `disabled` | `boolean` | no | - | Makes this Tab unavailable for activation and keyboard selection. |
 | `onClick` | `() => void` | no | noop | Reports successful activation after the Tabs mediator updates selection. |
 
 ## Mediator state

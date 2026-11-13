@@ -23,9 +23,9 @@ information, and a dialog when the user must decide before continuing.
 | `delay` | `number` | no | `5` | Auto-dismiss delay in seconds. |
 | `timeUpdate` | `number` | no | `10` | Timer tick interval. |
 | `animation` | `Animation` | no | `slide` | Entry and exit animation. |
-| `closeOnEscKey` | `boolean` | no | `true` | Dismisses on `Escape`. |
-| `pauseTimerOnOver` | `boolean` | no | `true` | Pauses the timer on pointer or keyboard focus. |
-| `resetTimerOnPause` | `boolean` | no | `false` | Resets the timer when pausing. |
+| `closeOnEscKey` | `boolean` | no | - | Dismisses on `Escape`. |
+| `pauseTimerOnOver` | `boolean` | no | - | Pauses the timer on pointer or keyboard focus. |
+| `resetTimerOnPause` | `boolean` | no | - | Resets the timer when pausing. |
 | `onClose` | `() => void` | no | noop | Reports close intent. |
 | `onDestroy` | `() => void` | no | noop | Reports portal removal. |
 | `onKeyDown` | `(event) => void` | no | noop | Observes keyboard input. |

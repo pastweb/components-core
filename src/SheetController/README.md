@@ -20,8 +20,8 @@ its content.
 | `ariaLabel` | `string` | no | `'Sheet'` | Accessible dialog name. Pass an empty string to omit the name. |
 | `className` | `string` | no | `''` | Additional root classes. |
 | `direction` | `'left' \| 'right' \| 'up' \| 'down'` | no | `'left'` | Entry and exit edge. |
-| `backdrop` | `boolean` | no | `false` | Displays the native backdrop button and applies `has-backdrop`. |
-| `modal` | `boolean` | no | `false` | Enables `aria-modal`, focus containment, and `is-modal`. |
+| `backdrop` | `boolean` | no | - | Displays the native backdrop button and applies `has-backdrop`. |
+| `modal` | `boolean` | no | - | Enables `aria-modal`, focus containment, and `is-modal`. |
 | `closeOnBackdropClick` | `boolean` | no | `true` | Allows backdrop activation to close. |
 | `closeOnEscape` | `boolean` | no | `true` | Allows Escape to close unless the event is prevented. |
 | `animationTime` | `number` | no | `400` | Fallback close duration in milliseconds. |

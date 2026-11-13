@@ -6,9 +6,7 @@ export const SELECT_CONTEXT_KEY = '$$SelectContext';
 export const DEFAULT_PROPS: Partial<SelectDefaultProps> = {
   ariaLabel: 'Select an option',
   className: '',
-  disabled: false,
   label: '',
-  loading: false,
   onChange: noop,
   placeholder: 'Select',
   tabIndex: 0,

@@ -19,18 +19,18 @@ relying on `maxLength` alone.
 | `ariaLabel` | `string` | no | `"TextArea"` | Names the field when no visible `label` is supplied. Pass an empty string to omit it. |
 | `className` | `string` | no | `""` | Additional root classes. The `is-loading` class is also treated as a loading signal. |
 | `cols` | `number` | no | - | Native column count. |
-| `disabled` | `boolean` | no | `false` | Makes the field unavailable. |
+| `disabled` | `boolean` | no | - | Makes the field unavailable. |
 | `id` | `string` | no | generated | Native textarea ID. Generated IDs use the `textArea` prefix. |
 | `label` | `string` | no | `""` | Visible accessible label. |
 | `labelPlacement` | `Placement` | no | `'top-start'` | Visual label placement. |
-| `loading` | `boolean` | no | `false` | Marks the field busy and temporarily unavailable. |
+| `loading` | `boolean` | no | - | Marks the field busy and temporarily unavailable. |
 | `maxLength` | `number` | no | - | Native maximum character length. |
 | `name` | `string` | no | - | Native form name. |
 | `onChange` | `(value: string) => void` | no | noop | Reports edited text. |
 | `placeholder` | `string` | no | `""` | Short input hint. Do not use it as the only label. |
-| `readOnly` | `boolean` | no | `false` | Prevents editing and applies `is-readonly`. |
-| `required` | `boolean` | no | `false` | Marks the value as required. |
-| `resizeable` | `boolean` | no | `false` | Enables two-axis web resizing and `is-resizeable`. |
+| `readOnly` | `boolean` | no | - | Prevents editing and applies `is-readonly`. |
+| `required` | `boolean` | no | - | Marks the value as required. |
+| `resizeable` | `boolean` | no | - | Enables two-axis web resizing and `is-resizeable`. |
 | `rows` | `number` | no | - | Native row count. |
 | `tabIndex` | `number` | no | `0` | Sequential focus order. Prefer document order. |
 | `value` | `string` | no | `""` | Controlled value. |

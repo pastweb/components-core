@@ -16,10 +16,10 @@ status. Colour may reinforce meaning but must not be the only indicator. Use
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
 | `ariaLabel` | `string` | no | `""` | Accessible name when visible content is insufficient. Pass an empty string to omit it. |
 | `className` | `string` | no | `""` | Additional classes. |
-| `closeButton` | `boolean` | no | `false` | Displays the native close button. |
+| `closeButton` | `boolean` | no | - | Displays the native close button. |
 | `closeLabel` | `string` | no | `"Close tag"` | Names the close button. |
 | `onClose` | `() => void` | no | noop | Reports close intent. |
-| `rounded` | `boolean` | no | `false` | Applies `is-rounded`. |
+| `rounded` | `boolean` | no | - | Applies `is-rounded`. |
 
 ## CSS Variables
 

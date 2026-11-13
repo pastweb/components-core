@@ -1,10 +1,9 @@
 import type { ButtonsDefaultProps } from './types';
 
-export const DEFAULT_PROPS = {
+export const DEFAULT_PROPS: Partial<ButtonsDefaultProps> = {
   ariaLabel: 'Button group',
   className: '',
-  disabled: false,
-} satisfies Partial<ButtonsDefaultProps>;
+};
 
 export const BUTTONS_CONTEXT_KEY = '$$ButtonsContext';
 

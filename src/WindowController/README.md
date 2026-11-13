@@ -23,7 +23,7 @@ block the rest of the page.
 | `getTaskBarButtonBounds` | `(id) => WindowBounds \| undefined` | no | - | Supplies the matching taskbar button bounds for minimize and restore animation. |
 | `mode` | `'modal' \| 'floating'` | no | `'modal'` | Dialog modality and movement behavior. |
 | `moveCursor` | `boolean` | no | `true` | Enables the move cursor in floating mode. |
-| `resizable` | `boolean` | no | `false` | Enables resize handles and `is-resizable`. |
+| `resizable` | `boolean` | no | - | Enables resize handles and `is-resizable`. |
 | `resizeCursor` | `boolean` | no | `true` | Enables resize cursors. |
 | `width` | `number` | no | - | Initial width in pixels. |
 | `height` | `number` | no | - | Initial height in pixels. |
@@ -52,6 +52,11 @@ portal/controller through the `manager` prop.
 
 The manager is optional. Existing modal and floating windows continue to work
 without one; manager-specific commands then return `false`.
+
+Managed floating windows apply the current `manager.bounds` to their rendered
+position and size. The portal host should therefore cover the intended
+workspace (for example, an absolutely positioned full-layout anchor); a
+zero-sized host causes windows to be measured from the top-left corner.
 
 Modal renderers must contain focus, restore prior focus, expose `aria-modal`,
 and include an obvious close control in the projected content. Floating

@@ -1,10 +1,9 @@
 import { noop } from '@pastweb/tools';
 import type { LinkDefaultProps } from './types';
 
-export const DEFAULT_PROPS = {
+export const DEFAULT_PROPS: Partial<LinkDefaultProps> = {
   href: '#',
   className: '',
-  disabled: false,
   target: '_self' as const,
   onClick: noop,
-} satisfies Partial<LinkDefaultProps>;
+};

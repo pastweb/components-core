@@ -13,6 +13,5 @@ export const DEFAULT_STEP_PROPS: Partial<StepDefaultProps> = {
   className: '',
   label: '',
   description: '',
-  disabled: false,
   onClick: noop,
 };

@@ -46,7 +46,6 @@ export const DEFAULT_PROPS = {
   ariaLabel: 'Window',
   mode: MODE.modal,
   animation: ANIMATIONS.zoom,
-  resizable: false,
   moveCursor: true,
   resizeCursor: true,
   closeOnBackdropClick: true,

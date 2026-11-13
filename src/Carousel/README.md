@@ -17,7 +17,7 @@ understand the page without seeing every slide.
 | `ariaLabel` | `string` | no | `'Carousel'` | Names the carousel region. Supply a content-specific label. |
 | `className` | `string` | no | `""` | Adds classes to the carousel. |
 | `current` | `number` | no | `0` | Sets the current slide index. |
-| `disabled` | `boolean` | no | `false` | Prevents navigation and disables controls. |
+| `disabled` | `boolean` | no | - | Prevents navigation and disables controls. |
 | `id` | `string` | no | generated | Supplies the carousel ID. Generated IDs use the `carousel` prefix. |
 | `showCommands` | `boolean` | no | `true` | Renders navigation controls. |
 | `prevAriaLabel` | `string` | no | `'Previous slide'` | Names the previous control. |
@@ -30,7 +30,7 @@ understand the page without seeing every slide.
 |---|---|---:|---:|---|
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves item classes. |
 | `className` | `string` | no | `""` | Adds classes to the slide. |
-| `disabled` | `boolean` | no | `false` | Disables the slide and exposes its disabled state. |
+| `disabled` | `boolean` | no | - | Disables the slide and exposes its disabled state. |
 
 ## Mediator state
 
@@ -90,11 +90,7 @@ state or methods as slot props.
 
 ## Utility classes
 
-Apply this class through the Carousel `className` prop.
-
-| Class | Description |
-|---|---|
-| `carousel3D` | Adds perspective to the Carousel root for consumer-defined 3D slide transforms. It does not apply a transform by itself. |
+The Carousel does not currently define component-specific utility classes.
 
 ## CSS Variables
 

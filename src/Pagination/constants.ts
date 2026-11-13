@@ -8,7 +8,6 @@ export const DOTS_RIGHT = ' ...';
 export const DEFAULT_PROPS: Partial<PaginationDefaultProps> = {
   ariaLabel: 'Pagination',
   className: '',
-  disabled: false,
   prev: '◄',
   next: '►',
   onChange: noop,

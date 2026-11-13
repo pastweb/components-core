@@ -22,8 +22,8 @@ that should stay visible.
 | `label` | `string` | no | `""` | Visible label. When set, it names the trigger and `ariaLabel` is omitted. |
 | `labelPlacement` | `Placement` | no | `"top-start"` | Places the visible label relative to the trigger. |
 | `placeholder` | `string` | no | `"Select"` | Default text of the styled `content` trigger when that slot is empty. |
-| `disabled` | `boolean` | no | `false` | Makes the Select unavailable. |
-| `loading` | `boolean` | no | `false` | Marks the Select busy and unavailable. |
+| `disabled` | `boolean` | no | - | Makes the Select unavailable. |
+| `loading` | `boolean` | no | - | Marks the Select busy and unavailable. |
 | `className` | `string` | no | `""` | Adds classes to the root. The `is-loading` class also enables loading. |
 | `tabIndex` | `number` | no | `0` | Controls sequential keyboard focus order. |
 | `value` | `any` | no | - | Controlled selected value. |

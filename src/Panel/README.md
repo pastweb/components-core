@@ -28,7 +28,7 @@ Do not use it as a GOV.UK confirmation or interruption panel.
 | `title` | `string` | no | `""` | Supplies the default heading content. |
 | `contentPadding` | `number \| string` | no | `0` | Sets inline padding on the content area. |
 | `onClose` | `() => void` | no | noop | Reports close intent. |
-| `rtl` | `boolean` | no | `false` | Reverses header content order. |
+| `rtl` | `boolean` | no | - | Reverses header content order. |
 
 ## Mediator state
 

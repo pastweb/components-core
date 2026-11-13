@@ -22,14 +22,14 @@ labels. Do not pre-select an option unless a default is required.
 | `name` | `string` | no | generated group ID | Shared native form name. |
 | `options` | `RadioOption[]` | yes | - | Options to render. |
 | `orientation` | `'horizontal' \| 'vertical' \| string` | no | `'horizontal'` | Option layout. |
-| `disabled` | `boolean` | no | `false` | Disables every option and applies `is-disabled`. |
+| `disabled` | `boolean` | no | - | Disables every option and applies `is-disabled`. |
 | `value` | `string` | no | `""` | Selected value. |
 | `onChange` | `(value, event) => void` | no | noop | Reports selection. |
 | `className` | `string` | no | `""` | Additional root classes. |
 
 `RadioOption` accepts `label`, `value`, optional `id`, `name`, `disabled`,
-`tabIndex`, and `labelPosition`. Option defaults are `disabled: false` and
-`labelPosition: 'right'`. Do not set `tabIndex` on every option; native radios
+`tabIndex`, and `labelPosition`. The option default is `labelPosition: 'right'`.
+Do not set `tabIndex` on every option; native radios
 keep only the selected or first available option in sequential tab order.
 
 ## Mediator state

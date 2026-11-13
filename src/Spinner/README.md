@@ -15,7 +15,7 @@ specific to the operation.
 |---|---|---:|---:|---|
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and part classes. |
 | `ariaLabel` | `string` | no | `"Loading"` | Accessible status name. Pass an empty string to omit the name. |
-| `decorative` | `boolean` | no | `false` | Removes status semantics and applies `is-decorative`. |
+| `decorative` | `boolean` | no | - | Removes status semantics and applies `is-decorative`. |
 | `className` | `string` | no | `""` | Additional root classes. |
 
 The default slot supplies the visual glyph and is hidden from assistive

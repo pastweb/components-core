@@ -95,6 +95,8 @@ export function TaskBar(props: TaskBarProps) {
   runs the same manager command as a pointer click.
 - Horizontal overflow remains available when more windows are open than fit in
   the taskbar.
+- The taskbar uses the `--pw_z-index_window-max` layer so its controls remain
+  reachable when floating managed windows overlap the same workspace.
 
 ## Native renderer mapping
 

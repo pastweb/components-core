@@ -17,14 +17,14 @@ labels, such as “On” and “Off”.
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
 | `ariaLabel` | `string` | no | `"Toggle"` | Names the switch when no visible `label` is supplied. Pass an empty string to omit it. |
 | `className` | `string` | no | `""` | Additional root classes. |
-| `disabled` | `boolean` | no | `false` | Disables the control and applies `is-disabled`. |
+| `disabled` | `boolean` | no | - | Disables the control and applies `is-disabled`. |
 | `id` | `string \| number` | no | generated | Native control ID. Generated IDs use the `toggle` prefix. |
 | `label` | `string` | no | `""` | Visible accessible label. |
 | `labelPlacement` | `Placement` | no | `'top-start'` | Visual label position. |
 | `name` | `string` | no | - | Native form name. |
 | `onChange` | `(checked, event) => void` | no | noop | Reports state changes. |
 | `tabIndex` | `number` | no | `0` | Sequential focus order. |
-| `value` | `boolean` | no | `false` | Controlled checked state. |
+| `value` | `boolean` | no | - | Controlled checked state. |
 
 ## Mediator state
 

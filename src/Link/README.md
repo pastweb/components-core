@@ -17,7 +17,7 @@ surrounding text such as “click here.”
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
 | `href` | `string` | no | `"#"` | Supplies the destination. Prefer a real URL. |
 | `className` | `string` | no | `""` | Adds classes to the anchor. |
-| `disabled` | `boolean` | no | `false` | Removes navigation and sequential focus. |
+| `disabled` | `boolean` | no | - | Removes navigation and sequential focus. |
 | `target` | `'_self' \| '_blank'` | no | `'_self'` | Selects the browsing context. New-window links must communicate that behavior in their accessible content. |
 | `id` | `string` | no | - | Supplies the anchor ID. |
 | `onClick` | `(event: unknown) => void` | no | noop | Reports available-link activation. Renderers may narrow the event type. |

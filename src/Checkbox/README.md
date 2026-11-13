@@ -19,11 +19,11 @@ exactly one option must be selected from a group; use radio buttons then.
 | `checkChar` | `string` | no | `✔` | Supplies the default checked mark. |
 | `className` | `string` | no | `""` | Adds classes to the wrapper. |
 | `id` | `string` | no | generated | Supplies the native input ID. Generated IDs use the `checkbox` prefix. |
-| `disabled` | `boolean` | no | `false` | Makes the choice unavailable. |
+| `disabled` | `boolean` | no | - | Makes the choice unavailable. |
 | `label` | `string` | no | `""` | Supplies the visible accessible label. |
 | `labelPlacement` | `Placement` | no | `'top-start'` | Places the visible label around the box. |
 | `name` | `string` | no | - | Supplies the form field name. |
-| `value` | `boolean` | no | `false` | Controls the checked state. |
+| `value` | `boolean` | no | - | Controls the checked state. |
 | `tabIndex` | `number` | no | `0` | Controls sequential focus order. Prefer the default document order. |
 | `onChange` | `(checked: boolean) => void` | no | noop | Reports checked-state changes. |
 

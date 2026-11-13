@@ -1,7 +1,7 @@
 import type { PlaceholderDefaultProps } from './types';
 
-export const DEFAULT_PROPS = {
+export const DEFAULT_PROPS: Partial<PlaceholderDefaultProps> = {
   ariaLabel: 'Loading',
   className: '',
   decorative: true,
-} satisfies Partial<PlaceholderDefaultProps>;
+};

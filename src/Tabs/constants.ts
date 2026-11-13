@@ -7,6 +7,5 @@ export const DEFAULT_PROPS: Partial<TabsDefaultProps> = {
   activeTab: 0,
   ariaLabel: 'Tabs',
   className: '',
-  disabled: false,
   onChange: noop,
 };

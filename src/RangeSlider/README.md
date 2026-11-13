@@ -23,7 +23,7 @@ a numeric input when users must enter an exact value. Always supply a visible
 | `max` | `number` | yes | - | Maximum. |
 | `step` | `number` | no | browser default | Increment. |
 | `value` | `number` | no | range midpoint | Current value. |
-| `disabled` | `boolean` | no | `false` | Disables the native input and applies `is-disabled`. |
+| `disabled` | `boolean` | no | - | Disables the native input and applies `is-disabled`. |
 | `onChange` | `(value, event) => void` | no | noop | Reports each value change. |
 | `onMouseUp` | `(value) => void` | no | noop | Compatibility callback reporting committed pointer or keyboard value. |
 | `className` | `string` | no | `""` | Additional root classes. |

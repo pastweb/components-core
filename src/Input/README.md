@@ -21,9 +21,9 @@ preferred; placeholders do not replace labels.
 | `tabIndex` | `number` | no | `0` | Controls sequential focus order. Prefer document order. |
 | `type` | `'text' \| 'search' \| 'password' \| 'email' \| 'number'` | no | `'text'` | Selects native input behavior. |
 | `placeholder` | `string` | no | `""` | Supplies a short input hint. Do not use it as the only label. |
-| `disabled` | `boolean` | no | `false` | Makes the field unavailable. |
-| `loading` | `boolean` | no | `false` | Marks the field busy and temporarily unavailable. |
-| `required` | `boolean` | no | `false` | Marks the value as required. |
+| `disabled` | `boolean` | no | - | Makes the field unavailable. |
+| `loading` | `boolean` | no | - | Marks the field busy and temporarily unavailable. |
+| `required` | `boolean` | no | - | Marks the value as required. |
 | `name` | `string` | no | - | Supplies the form field name. |
 | `id` | `string` | no | generated | Supplies the native input ID. Generated IDs use the `input` prefix. |
 | `min` | `number` | no | - | Native minimum for number inputs. |

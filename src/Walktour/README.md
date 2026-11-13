@@ -27,9 +27,9 @@ refer back to later; show that content in the interface instead.
 | `maskRadius` | `number` | no | `6` | Highlight corner radius in pixels. |
 | `offset` | `number` | no | `12` | Gap between a target and the tour card in pixels. |
 | `placement` | `WalktourPlacement` | no | `'bottom'` | Default card placement. |
-| `disableMask` | `boolean` | no | `false` | Hides the dimmed mask and spotlight. |
-| `disableMaskInteraction` | `boolean` | no | `false` | Prevents interaction with the highlighted target. |
-| `closeOnMaskClick` | `boolean` | no | `false` | Lets an eligible mask activation close the tour. |
+| `disableMask` | `boolean` | no | - | Hides the dimmed mask and spotlight. |
+| `disableMaskInteraction` | `boolean` | no | - | Prevents interaction with the highlighted target. |
+| `closeOnMaskClick` | `boolean` | no | - | Lets an eligible mask activation close the tour. |
 | `closeOnEscape` | `boolean` | no | `true` | Lets Escape close an eligible tour step. |
 | `scrollIntoView` | `boolean` | no | `true` | Asks web renderers to scroll the current target into view. |
 | `nextLabel` | `string` | no | `'Next'` | Default next control label. The last step uses `Finish`. |

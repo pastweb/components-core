@@ -1,11 +1,9 @@
 import { noop } from '@pastweb/tools';
 import type { ButtonDefaultProps } from './types';
 
-export const DEFAULT_PROPS = {
+export const DEFAULT_PROPS: Partial<ButtonDefaultProps> = {
   className: '',
-  disabled: false,
-  loading: false,
   onClick: noop,
   tabIndex: 0,
   type: 'button',
-} satisfies Partial<ButtonDefaultProps>;
+};

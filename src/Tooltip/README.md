@@ -22,7 +22,7 @@ touch devices.
 | `offset` | `number` | no | `8` | Renderer positioning gap. |
 | `showDelay` | `number` | no | `300` | Pointer-hover opening delay in milliseconds. Focus opens immediately. |
 | `hideDelay` | `number` | no | `100` | Pointer-leave closing delay in milliseconds. Blur and Escape close immediately. |
-| `disabled` | `boolean` | no | `false` | Prevents opening and applies `is-disabled`. |
+| `disabled` | `boolean` | no | - | Prevents opening and applies `is-disabled`. |
 | `className` | `string` | no | `""` | Additional root classes. |
 | `tooltipClassName` | `string` | no | `""` | Additional tooltip-surface classes. |
 

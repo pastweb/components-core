@@ -20,7 +20,7 @@ synchronized with the URL when pages are navigable resources.
 | `total` | `number` | yes | - | Supplies the number of pages. Values are floored and clamped to zero or greater. |
 | `current` | `number` | yes | - | Supplies the current one-based page. It is clamped to the available range. |
 | `ariaLabel` | `string` | no | `"Pagination"` | Names the navigation landmark. Pass an empty string to omit the name. Provide a unique name when more than one pagination control is on the page. |
-| `disabled` | `boolean` | no | `false` | Makes every navigation action unavailable. |
+| `disabled` | `boolean` | no | - | Makes every navigation action unavailable. |
 | `onChange` | `(page: number) => void` | no | noop | Reports a valid changed page. |
 | `className` | `string` | no | `""` | Adds classes to the navigation root. |
 | `prev` | `unknown` | no | `◄` | Supplies previous visual content. |

@@ -19,9 +19,9 @@ pages, or native `details` elements when those are simpler.
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
 | `ariaLabel` | `string` | no | `"Accordion"` | Labels the accordion group. Provide a task-specific label when possible; pass an empty string to omit the group semantics. |
 | `className` | `string` | no | `""` | Adds classes to the accordion wrapper. |
-| `disabled` | `boolean` | no | `false` | Disables every panel trigger. Prefer removing unavailable sections or explaining their unavailable content. |
+| `disabled` | `boolean` | no | - | Disables every panel trigger. Prefer removing unavailable sections or explaining their unavailable content. |
 | `id` | `string` | no | - | Supplies the root ID. |
-| `rtl` | `boolean` | no | `false` | Enables right-to-left layout. |
+| `rtl` | `boolean` | no | - | Enables right-to-left layout. |
 | `transitionDuration` | `number` | no | `500` | Default panel transition duration in milliseconds. |
 
 ## Accordion mediator state
@@ -118,14 +118,14 @@ export function Accordion(props: AccordionProps) {
 |---|---|---:|---:|---|
 | `cls` | `(...args: ClassValue[]) => string` | yes | - | Resolves component and state classes. |
 | `className` | `string` | no | `""` | Adds classes to the panel. |
-| `disabled` | `boolean` | no | `false` | Disables the native trigger button. |
+| `disabled` | `boolean` | no | - | Disables the native trigger button. |
 | `headingLevel` | `1 \| 2 \| 3 \| 4 \| 5 \| 6` | no | `2` | Web renderer property. Selects the heading level required by the surrounding document. |
 | `id` | `string` | no | generated | Supplies the stable base ID used for trigger and panel relationships. |
-| `isOpen` | `boolean` | no | `false` | Sets the panel's initial open state. |
-| `landmark` | `boolean` | no | `false` | Gives the content `role="region"`. Enable selectively to avoid landmark proliferation. |
+| `isOpen` | `boolean` | no | - | Sets the panel's initial open state. |
+| `landmark` | `boolean` | no | - | Gives the content `role="region"`. Enable selectively to avoid landmark proliferation. |
 | `onOpenChange` | `(isOpen: boolean) => void` | no | - | Reports a user-requested state change. |
 | `title` | `string \| number` | no | `""` | Provides the default accessible trigger content. |
-| `rtl` | `boolean` | no | `false` | Enables right-to-left layout for this panel. |
+| `rtl` | `boolean` | no | - | Enables right-to-left layout for this panel. |
 | `transitionDuration` | `number` | no | `500` | Sets this panel's transition duration in milliseconds. |
 
 ## AccordionPanel mediator state
