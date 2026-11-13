@@ -35,12 +35,12 @@
   },
   "peerDependencies": {
     "@floating-ui/dom": "^1.7.2",
-    "@pastweb/tools": "^2.6.0",
+    "@pastweb/tools": "^2.7.0",
     "interactjs": "^1.10.27"
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.7.2",
-    "@pastweb/tools": "^2.6.0",
+    "@pastweb/tools": "^2.7.0",
     "@types/node": "^22.15.17",
     "happy-dom": "^17.4.7",
     "interactjs": "^1.10.27",
