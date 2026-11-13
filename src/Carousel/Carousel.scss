@@ -17,10 +17,6 @@
   margin: 0 auto;
   overflow: hidden;
 
-  &.carousel3D {
-    perspective: 1000px;
-  }
-
   .carouselInner {
     display: flex;
     width: 100%;
