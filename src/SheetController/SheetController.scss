@@ -116,81 +116,81 @@
 
 @keyframes sheetOpenLeft {
   from {
-    right: -100%;
+    transform: translateX(100%);
   }
 
   to {
-    right: 0;
+    transform: translateX(0);
   }
 }
 
 @keyframes sheetCloseLeft {
   from {
-    right: 0;
+    transform: translateX(0);
   }
 
   to {
-    right: -100%;
+    transform: translateX(100%);
   }
 }
 
 @keyframes sheetOpenRight {
   from {
-    left: -100%;
+    transform: translateX(-100%);
   }
 
   to {
-    left: 0;
+    transform: translateX(0);
   }
 }
 
 @keyframes sheetCloseRight {
   from {
-    left: 0;
+    transform: translateX(0);
   }
 
   to {
-    left: -100%;
+    transform: translateX(-100%);
   }
 }
 
 @keyframes sheetOpenUp {
   from {
-    margin-top: 100%;
+    transform: translateY(100%);
   }
 
   to {
-    margin-top: 0%;
+    transform: translateY(0);
   }
 }
 
 @keyframes sheetCloseUp {
   from {
-    margin-top: 0%;
+    transform: translateY(0);
   }
 
   to {
-    margin-top: 100%;
+    transform: translateY(100%);
   }
 }
 
 @keyframes sheetOpenDown {
   from {
-    margin-top: -100%;
+    transform: translateY(-100%);
   }
 
   to {
-    margin-top: 0%;
+    transform: translateY(0);
   }
 }
 
 @keyframes sheetCloseDown {
   from {
-    margin-top: 0%;
+    transform: translateY(0);
   }
 
   to {
-    margin-top: -100%;
+    transform: translateY(-100%);
   }
 }
 

@@ -25,6 +25,8 @@
   --pw_TaskBar_taskButton_minimised_box-shadow: inset var(--pw_size_box-shadow) var(--pw_inset_color_box-shadow);
 
   display: flex;
+  position: relative;
+  z-index: var(--pw_z-index_window-max);
   align-items: center;
   gap: var(--pw_TaskBar_root_default_gap);
   min-height: var(--pw_TaskBar_root_default_min-height);
