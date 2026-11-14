@@ -1175,6 +1175,10 @@
       "import": "./dist/SplitLayout/SplitLayoutItem/types.mjs",
       "require": "./dist/SplitLayout/SplitLayoutItem/types.cjs"
     },
+    "./SplitLayout/SplitLayoutItem/utils": {
+      "import": "./dist/SplitLayout/SplitLayoutItem/utils.mjs",
+      "require": "./dist/SplitLayout/SplitLayoutItem/utils.cjs"
+    },
     "./SplitLayout/types": {
       "import": "./dist/SplitLayout/types.mjs",
       "require": "./dist/SplitLayout/types.cjs"
