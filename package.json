@@ -1,16 +1,16 @@
 {
-  "name": "@pastweb/components",
-  "version": "2.0.0",
+  "name": "@pastweb/components-core",
+  "version": "2.0.1",
   "description": "A components tools package.",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://github.com/pastweb/components#readme",
+  "homepage": "https://github.com/pastweb/components-core#readme",
   "bugs": {
-    "url": "https://github.com/pastweb/components/issues"
+    "url": "https://github.com/pastweb/components-core/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pastweb/components.git"
+    "url": "git+https://github.com/pastweb/components-core.git"
   },
   "author": "Domenico Pasto",
   "funding": "https://github.com/sponsors/pastweb",
