@@ -12,8 +12,8 @@ importers:
         specifier: ^1.7.2
         version: 1.7.2
       '@pastweb/tools':
-        specifier: ^2.6.0
-        version: 2.6.0(@toon-format/toon@2.3.1)(axios@1.11.0)(clsx@2.1.1)(history@5.3.0)
+        specifier: ^2.7.0
+        version: 2.7.0(@toon-format/toon@2.3.1)(axios@1.11.0)(clsx@2.1.1)(history@5.3.0)
       '@types/node':
         specifier: ^22.15.17
         version: 22.16.5
@@ -269,16 +269,19 @@ packages:
   '@oxc-project/types@0.140.0':
     resolution: {integrity: sha512-h5LUOzGArYemnW1NMz/DuuQhBi96J6JL2Bk8zE4kvqxB5Sg3jxmCiH4uyOWHDkiKSt5vWlG4FIwCR/DbstcNRQ==}
 
-  '@pastweb/tools@2.6.0':
-    resolution: {integrity: sha512-VdoJOILb4JRW2o21j/vS2AhFgU6JYlFnhClamrMehSFE1SgpC5NrVzm3kD3AOa7GJ17xumTpEjxbmvFqFRpphA==}
+  '@pastweb/tools@2.7.0':
+    resolution: {integrity: sha512-6obNuuGycOzybeyo8GmUWZMfPhpZbkxcaRB4PiV3zosZewxv5xSmt7RP6ddZ4Q3EW4U1Zfx2YU7TtfJ9y19tlQ==}
     peerDependencies:
       '@toon-format/toon': '*'
+      '@urql/core': ^6.0.3
       axios: '*'
       clsx: '*'
       history: '*'
       i18next: '*'
       sass: '*'
     peerDependenciesMeta:
+      '@urql/core':
+        optional: true
       i18next:
         optional: true
       sass:
@@ -1193,7 +1196,7 @@ snapshots:
 
   '@oxc-project/types@0.140.0': {}
 
-  '@pastweb/tools@2.6.0(@toon-format/toon@2.3.1)(axios@1.11.0)(clsx@2.1.1)(history@5.3.0)':
+  '@pastweb/tools@2.7.0(@toon-format/toon@2.3.1)(axios@1.11.0)(clsx@2.1.1)(history@5.3.0)':
     dependencies:
       '@toon-format/toon': 2.3.1
       axios: 1.11.0
