@@ -7,7 +7,10 @@ interface IdCache {
 }
 
 export const idCache: IdCache = Object.freeze({
-  getId: (prefix?: string) => currentIdCache.getId(ELEMENTS_SCOPE, prefix),
+  getId: (prefix?: string) => currentIdCache.getId(
+    ELEMENTS_SCOPE,
+    prefix ? { prefix } : undefined,
+  ),
   removeId: (id: string) => currentIdCache.removeId(ELEMENTS_SCOPE, id),
   has: (id: string) => currentIdCache.has(ELEMENTS_SCOPE, id),
 });
