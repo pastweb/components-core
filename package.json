@@ -1,6 +1,6 @@
 {
   "name": "@pastweb/components-core",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "description": "A components tools package.",
   "type": "module",
   "license": "MIT",
@@ -15,7 +15,9 @@
   "author": "Domenico Pasto",
   "funding": "https://github.com/sponsors/pastweb",
   "files": [
-    "./dist"
+    "./dist",
+    "README.md",
+    "LICENSE"
   ],
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -1824,6 +1826,7 @@
       "require": "./dist/WindowController/windowController.mediator.cjs"
     },
     "./package.json": "./package.json",
+    "./*/README.md": "./dist/*/README.md",
     "./*.scss": {
       "import": "./dist/*.scss",
       "require": "./dist/*.scss",

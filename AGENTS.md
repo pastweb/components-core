@@ -20,8 +20,7 @@ copying web markup or ARIA attributes.
   semantic state and interaction intent, but it must not access `window`,
   `document`, native views, DOM events, or layout APIs.
 - Keep the contracts usable by React, Vue, Capacitor, NativeScript, and future
-  renderers. Do not introduce a public dependency from the open-source package
-  graph to `closed-source/`.
+  renderers.
 - Keep component types, default props, mediator state and methods, context,
   README tables, slots, styles, and XJS/XTS templates synchronized.
 

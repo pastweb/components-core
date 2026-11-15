@@ -13,9 +13,16 @@ export default defineConfig({
       to: 'dist',
       flatten: false,
     },
+    {
+      from: 'src/**/README.md',
+      to: 'dist',
+      flatten: false,
+    },
   ],
   exports: {
     customExports: {
+      // Component documentation
+      './*/README.md': './dist/*/README.md',
       // SCSS / Style exports
       './*.scss': {
         import: './dist/*.scss',
