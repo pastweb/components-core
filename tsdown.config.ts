@@ -25,14 +25,9 @@ export default defineConfig({
       './*/README.md': './dist/*/README.md',
       // SCSS / Style exports
       './*.scss': {
-        import: './dist/*.scss',
-        require: './dist/*.scss',
-        style: './dist/*.scss',
-      },
-      './**/*.scss': {
-        import: './dist/**/*.scss',
-        require: './dist/**/*.scss',
-        style: './dist/**/*.scss',
+        'import': './dist/*.scss',
+        'require': './dist/*.scss',
+        'style': './dist/*.scss'
       },
     },
   },

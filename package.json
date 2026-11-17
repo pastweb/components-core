@@ -1,6 +1,6 @@
 {
   "name": "@pastweb/components-core",
-  "version": "2.2.0",
+  "version": "2.2.2",
   "description": "A components tools package.",
   "type": "module",
   "license": "MIT",
@@ -1831,11 +1831,6 @@
       "import": "./dist/*.scss",
       "require": "./dist/*.scss",
       "style": "./dist/*.scss"
-    },
-    "./**/*.scss": {
-      "import": "./dist/**/*.scss",
-      "require": "./dist/**/*.scss",
-      "style": "./dist/**/*.scss"
     }
   }
 }
