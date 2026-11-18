@@ -1,6 +1,6 @@
 {
   "name": "@pastweb/components-core",
-  "version": "2.2.2",
+  "version": "2.9.0",
   "description": "A components tools package.",
   "type": "module",
   "license": "MIT",
@@ -37,12 +37,12 @@
   },
   "peerDependencies": {
     "@floating-ui/dom": "^1.7.2",
-    "@pastweb/tools": "^2.7.0",
+    "@pastweb/tools": "^2.9.0",
     "interactjs": "^1.10.27"
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.7.2",
-    "@pastweb/tools": "^2.7.0",
+    "@pastweb/tools": "^2.9.0",
     "@types/node": "^22.15.17",
     "happy-dom": "^17.4.7",
     "interactjs": "^1.10.27",
