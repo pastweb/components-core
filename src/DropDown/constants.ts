@@ -9,8 +9,6 @@ export const DEFAULT_PROPS: Partial<DropDownDefaultProps> = {
   className: '',
   contentClassName: '',
   offset: 2,
-  disabled: false,
-  isVisible: false,
   placement: 'bottom',
   visibleOn: 'click',
   visibleTarget: 'element',
